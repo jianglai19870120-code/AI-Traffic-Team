@@ -5,7 +5,7 @@ description: 优先读取爆款选题库手动输入选题表中的干货型选�
 
 # 干货型文案生成Skill
 
-工作区根路径统一取自环境变量 `GANHUO_AI_TRAFFIC_FACTORY_ROOT`；未设置时默认使用当前 AI 流量工厂根目录。
+工作区根路径统一取自环境变量 `GANHUO_AI_TRAFFIC_FACTORY_ROOT`；未设置时默认使用当前 AI流量团队根目录。
 
 ## 何时调用
 

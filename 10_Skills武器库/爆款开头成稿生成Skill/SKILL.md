@@ -5,7 +5,7 @@ description: 根据手动输入选题表中的选题和文案结构，读取 06_
 
 # 爆款开头成稿生成Skill
 
-工作区根路径统一取自环境变量 `AI_TRAFFIC_FACTORY_ROOT`；未设置时使用当前 AI 流量工厂根目录。
+工作区根路径统一取自环境变量 `AI_TRAFFIC_FACTORY_ROOT`；未设置时使用当前 AI流量团队根目录。
 
 ## 何时调用
 
