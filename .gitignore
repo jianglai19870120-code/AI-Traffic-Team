@@ -1,0 +1,41 @@
+.agents/
+.codex/
+.obsidian/
+tmp/
+_private/
+
+# Legacy local workspaces stay local only
+/讲干货-AI流量工厂/
+/热门播客-AI流量工厂/
+/推荐型-AI流量工厂/
+
+# Generated or personal local outputs
+*.log
+*.tmp
+Thumbs.db
+Desktop.ini
+
+# Local runtime caches
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+10_Skills武器库/**/.tmp/
+10_Skills武器库/**/outputs/
+
+# Public assets are allowed to contain only structure, templates, samples, and anonymized reference cases.
+02_资产中心/**/*.xlsx
+02_资产中心/**/*.xls
+02_资产中心/**/*.csv
+02_资产中心/**/BK[0-9][0-9][0-9]_*.md
+02_资产中心/**/真实*.md
+02_资产中心/**/正式产物*.md
+
+02_资产中心/06_视觉库/**/*
+!02_资产中心/06_视觉库/README.md
+!02_资产中心/06_视觉库/公开样板说明.md
+
+02_资产中心/07_复盘库/**/*.md
+!02_资产中心/07_复盘库/README.md
+!02_资产中心/07_复盘库/公开样板说明.md

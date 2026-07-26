@@ -1,0 +1,17 @@
+{
+  "skillName": "爆款开头成稿生成Skill",
+  "installDirName": "爆款开头成稿生成Skill",
+  "legacyInstallDirNames": [],
+  "entry": "SKILL.md",
+  "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceDependencies": [
+    "_private/assets/04_爆款选题库",
+    "_private/assets/05_爆款开头库",
+    "_private/assets/06_生成正文库",
+    "_private/assets/07_润色成稿库"
+  ],
+  "defaultOutputPaths": [
+    "_private/assets/07_润色成稿库/01_干货型成稿"
+  ],
+  "optionalCommands": []
+}

@@ -1,0 +1,125 @@
+[
+  {
+    "name": "ip-face-anchor-top-left",
+    "path": "refs/ip-face-anchor-top-left.png",
+    "reference_kind": "face-anchor",
+    "variant": "identity-anchor",
+    "expression_intensity": "stable",
+    "is_base_pose": true,
+    "expression": "frontal-neutral",
+    "framing": "upper-body",
+    "tags": [
+      "base",
+      "front",
+      "host",
+      "cartoon-style",
+      "hair-calibration",
+      "skin-calibration",
+      "face-anchor"
+    ],
+    "use_cases": [
+      "角色定标",
+      "主脸模板",
+      "发型校准",
+      "肤色校准",
+      "眼镜校准",
+      "脸型校准"
+    ]
+  },
+  {
+    "name": "ip-ref-02-speaking-mic",
+    "path": "refs/ip-ref-02-speaking-mic.png",
+    "reference_kind": "action-reference",
+    "variant": "speaking-mic",
+    "expression_intensity": "medium",
+    "is_base_pose": false,
+    "expression": "speaking",
+    "framing": "half-body",
+    "tags": ["action-reference", "speaking", "explaining", "host"],
+    "use_cases": ["讲解", "推进", "说明"]
+  },
+  {
+    "name": "ip-ref-03-thinking",
+    "path": "refs/ip-ref-03-thinking.png",
+    "reference_kind": "action-reference",
+    "variant": "thinking",
+    "expression_intensity": "medium",
+    "is_base_pose": false,
+    "expression": "thinking",
+    "framing": "half-body",
+    "tags": ["action-reference", "thinking", "analysis"],
+    "use_cases": ["思考", "判断", "分析"]
+  },
+  {
+    "name": "ip-ref-04-questioning",
+    "path": "refs/ip-ref-04-questioning.png",
+    "reference_kind": "action-reference",
+    "variant": "questioning",
+    "expression_intensity": "medium",
+    "is_base_pose": false,
+    "expression": "questioning",
+    "framing": "half-body",
+    "tags": ["action-reference", "questioning", "explaining"],
+    "use_cases": ["讲解", "说明", "困惑"]
+  },
+  {
+    "name": "ip-ref-05-stop-pose",
+    "path": "refs/ip-ref-05-stop-pose.png",
+    "reference_kind": "action-reference",
+    "variant": "stop-pose",
+    "expression_intensity": "high",
+    "is_base_pose": false,
+    "expression": "blocking",
+    "framing": "full-body",
+    "tags": ["action-reference", "blocking", "warning"],
+    "use_cases": ["强调", "阻挡", "误区"]
+  },
+  {
+    "name": "ip-ref-06-pointing",
+    "path": "refs/ip-ref-06-pointing.png",
+    "reference_kind": "action-reference",
+    "variant": "pointing",
+    "expression_intensity": "high",
+    "is_base_pose": false,
+    "expression": "pointing",
+    "framing": "half-body",
+    "tags": ["action-reference", "pointing", "cta"],
+    "use_cases": ["指向", "号召", "结论"]
+  },
+  {
+    "name": "ip-ref-07-shocked",
+    "path": "refs/ip-ref-07-shocked.png",
+    "reference_kind": "action-reference",
+    "variant": "shocked",
+    "expression_intensity": "high",
+    "is_base_pose": false,
+    "expression": "shocked",
+    "framing": "half-body",
+    "tags": ["action-reference", "shocked", "warning"],
+    "use_cases": ["震惊", "踩坑", "强提醒"]
+  },
+  {
+    "name": "ip-ref-08-confused",
+    "path": "refs/ip-ref-08-confused.png",
+    "reference_kind": "action-reference",
+    "variant": "confused",
+    "expression_intensity": "medium",
+    "is_base_pose": false,
+    "expression": "confused",
+    "framing": "half-body",
+    "tags": ["action-reference", "confused", "stuck"],
+    "use_cases": ["困惑", "卡点", "不理解"]
+  },
+  {
+    "name": "ip-ref-09-idea",
+    "path": "refs/ip-ref-09-idea.png",
+    "reference_kind": "action-reference",
+    "variant": "idea",
+    "expression_intensity": "medium-high",
+    "is_base_pose": false,
+    "expression": "idea",
+    "framing": "half-body",
+    "tags": ["action-reference", "idea", "conclusion"],
+    "use_cases": ["结论", "总结", "顿悟"]
+  }
+]

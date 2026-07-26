@@ -1,0 +1,13 @@
+{
+  "skillName": "ip-ppt-skill",
+  "installDirName": "ip-ppt-skill",
+  "entry": "SKILL.md",
+  "workspaceRootEnv": "GANHUO_AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceDependencies": [
+    "05_视频配图大师"
+  ],
+  "defaultOutputPaths": [
+    "05_视频配图大师/01_短视频PPT配图"
+  ],
+  "optionalCommands": []
+}

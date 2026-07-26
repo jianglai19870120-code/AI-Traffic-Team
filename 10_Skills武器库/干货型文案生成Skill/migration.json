@@ -1,0 +1,18 @@
+{
+  "skillName": "干货型文案生成Skill",
+  "installDirName": "干货型文案生成Skill",
+  "legacyInstallDirNames": [],
+  "entry": "SKILL.md",
+  "workspaceRootEnv": "GANHUO_AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceDependencies": [
+    "_private/assets/04_爆款选题库",
+    "_private/assets/02_内容模块库",
+    "_private/assets/06_生成正文库"
+  ],
+  "defaultOutputPaths": [
+    "_private/assets/06_生成正文库/01_干货型文案"
+  ],
+  "optionalCommands": []
+}
+
+

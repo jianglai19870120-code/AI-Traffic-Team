@@ -1,0 +1,4 @@
+interface:
+  display_name: "爆款开头拆解Skill"
+  short_description: "短视频前5句切分、拆解与爆款开头库落库"
+  default_prompt: "使用 爆款开头拆解Skill，读取 _private/assets/05_爆款开头库/00_爆款开头选中清单.md，再回到 _private/assets/03_对标账号库 的博主 xlsx 中取 文案 和 视频信息。每个选题生成 1 个带独立 BK 编号的开头卡片文件，固定输出原文前5句、逐句拆解、五句推进逻辑、五句结构骨架、适合承载的论证方式和调用匹配规则。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "播客全文观点类型拆解"
+  short_description: "整篇播客全文拆解、观点类型归类与分支观点输出"
+  default_prompt: "Use $boke-neirong-mokuai-chaijie-skill to read a full podcast transcript, generate recommendation, overview, and grouped content-module files."

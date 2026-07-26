@@ -1,0 +1,4 @@
+interface:
+  display_name: "热门播客爆款文案"
+  short_description: "BK爆款开头卡片 + B播客内容模块生成整篇口播稿"
+  default_prompt: "Use $remen-boke-baokuan-wenan-skill to read a chosen BK opening card and a chosen B podcast transcript, ensure the B transcript has viewpoint breakdowns, then generate a full Chinese short-video script with the user-specified number of viewpoints."
