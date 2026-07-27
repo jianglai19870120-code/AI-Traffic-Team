@@ -4,7 +4,8 @@ import re
 from collections import Counter
 from pathlib import Path
 
-from sync_public_templates import sync_public_templates
+from brand_footer import append_brand_footer
+from sync_public_chain import sync_public_chain
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -107,7 +108,7 @@ def read_raw_rows() -> list[dict[str, str]]:
 def scan_uploaded_raw_files() -> list[Path]:
     if not RAW_ROOT.exists():
         return []
-    ignored_root_files = {"00_原始资料输入清单.md", "00_原始资料输入清单模板.md", "README.md"}
+    ignored_root_files = {"00_原始资料输入清单.md", "README.md"}
     files: list[Path] = []
     for path in RAW_ROOT.rglob("*"):
         if not path.is_file():
@@ -222,7 +223,7 @@ def build() -> str:
     recent_audits = []
     if AUDIT_DIR.exists():
         recent_audits = sorted(
-            [p for p in AUDIT_DIR.glob("*.md") if "模板" not in p.name],
+            [p for p in AUDIT_DIR.glob("*.md")],
             key=lambda p: p.stat().st_mtime,
             reverse=True,
         )[:8]
@@ -370,22 +371,11 @@ def build() -> str:
         for item in current_state_excerpt:
             lines.append(f"- {item}")
 
-    lines += [
-        "",
-        "---",
-        "",
-        "品牌尾注：",
-        "",
-        "- 带你用AI，把你的能力变成你的生意。",
-        "- AI流量团队作者：姜来已来2046",
-        "- 有任何使用问题，可以联系我！微信： lact175",
-        "",
-    ]
-    return "\n".join(lines)
+    return append_brand_footer("\n".join(lines))
 
 
 if __name__ == "__main__":
-    sync_public_templates()
+    sync_public_chain()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(build(), encoding="utf-8")
     print(OUT)

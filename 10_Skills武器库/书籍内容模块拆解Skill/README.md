@@ -23,3 +23,8 @@
 - `scripts/run_book_module_breakdown.py`
 - `scripts/execute_book_module_breakdown.py`
 
+---
+• 带你用AI，把你的能力变成你的生意
+• 有使用问题，或加入我的会员答疑群！
+• 姜来已来2046，联系微信： lact175
+---

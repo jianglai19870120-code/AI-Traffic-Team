@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -13,6 +14,11 @@ try:
     from openpyxl import load_workbook
 except ImportError as exc:  # pragma: no cover
     raise SystemExit("缺少依赖 openpyxl，无法读取标准 xlsx。") from exc
+
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from brand_footer import append_brand_footer
 
 
 CATEGORIES = {
@@ -222,7 +228,7 @@ def write_category_table(path: Path, category: str, rows: List[TopicRow]) -> Non
     ]
     for row in rows:
         lines.append("| " + " | ".join(markdown_escape(v) for v in row.to_cells()) + " |")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
 
 
 def read_xlsx(path: Path) -> Tuple[List[str], List[List[str]]]:
@@ -339,7 +345,7 @@ def write_audit(audit_dir: Path, audit: Dict[str, List[str]], totals: Dict[str, 
         else:
             lines.extend(f"- {item}" for item in items)
         lines.append("")
-    path.write_text("\n".join(lines), encoding="utf-8")
+    path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
     return path
 
 

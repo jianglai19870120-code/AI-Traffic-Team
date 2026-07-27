@@ -6,6 +6,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
+from brand_footer import append_brand_footer
+
 
 ROOT = Path(__file__).resolve().parents[3]
 PRIVATE_AUDIT_DIR = ROOT / "01_Agent系统" / "02_小审-质量审核Agent" / "99_审核记录"
@@ -130,8 +133,7 @@ def write_report(path: Path, issues: dict[str, list[str]], passed: bool) -> Path
             lines.extend(f"- {issue}" for issue in section_issues)
             lines.append("")
         lines.extend(["## 退回建议", "", "- 退回小写修正正文方案结构或模块引用。", "- 修正前不允许进入 07_润色成稿库。", ""])
-    lines.extend(["---", "", "品牌尾注：", "", "- 带你用AI，把你的能力变成你的生意。", "- AI流量工厂作者：姜来已来2046", "- 有任何使用问题，可以联系我！微信： lact175", ""])
-    report.write_text("\n".join(lines), encoding="utf-8")
+    report.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
     return report
 
 

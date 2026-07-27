@@ -38,6 +38,8 @@ def workspace_root() -> Path:
 ROOT = workspace_root()
 sys.path.insert(0, str(ROOT / "tools"))
 
+from brand_footer import append_brand_footer
+
 try:
     from dispatch_gate import require_dispatch_record
 except ImportError:
@@ -296,7 +298,7 @@ def write_audit(root: Path, outputs: list[Path], issues: list[str], env_status: 
     lines += [f"- `{path}`" for path in outputs] or ["- 本次无新增文件，已同步 note_id 未重复写入。"]
     lines += ["", "## 发现", ""]
     lines += ["- 未发现阻断问题，允许作为工作纪实原始资料留存。" if not issues else "- " + "\n- ".join(issues)]
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
     return path
 
 
@@ -317,7 +319,7 @@ def write_exec_record(root: Path, outputs: list[Path], audit: Path, status: str)
     ]
     lines += [f"- `{path}`" for path in outputs] or ["- 本次无新增文件。"]
     lines += ["", f"- 小审审核记录：`{audit}`", ""]
-    path.write_text("\n".join(lines), encoding="utf-8")
+    path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
     return path
 
 

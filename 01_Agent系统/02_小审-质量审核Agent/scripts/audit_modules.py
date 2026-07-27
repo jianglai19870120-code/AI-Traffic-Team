@@ -9,6 +9,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
+from brand_footer import append_brand_footer
+
 
 ROOT = Path(__file__).resolve().parents[3]
 PRIVATE_MODULE_ROOT = ROOT / "02_资产中心" / "02_内容模块库" / "01_干货型内容模块"
@@ -444,8 +447,7 @@ def write_report(title: str, passed: bool, findings: dict[str, list[str]], count
             lines.extend(f"- {issue}" for issue in issues)
             lines.append("")
         lines.extend(["## 退回建议", "", "- 退回给小拆按 `书籍内容模块拆解Skill` 充分拆解合同重拆。", "- 未通过前，不允许进入正式文案调用。", ""])
-    lines.extend(["---", "", "品牌尾注：", "", "- 带你用AI，把你的能力变成你的生意。", "- AI流量工厂作者：姜来已来2046", "- 有任何使用问题，可以联系我！微信： lact175", ""])
-    path.write_text("\n".join(lines), encoding="utf-8")
+    path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
     return path
 
 

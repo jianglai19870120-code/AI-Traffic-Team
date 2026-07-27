@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools"))
 
+from brand_footer import append_brand_footer
 from dispatch_gate import require_dispatch_record
 
 PRIVATE_ASSET_ROOT = ROOT / "02_资产中心"
@@ -189,7 +190,7 @@ def remove_quote_section(path: Path, title: str) -> None:
         text = before.rstrip() + "\n" + after[match.start() + 1 :]
     else:
         text = before.rstrip() + "\n"
-    path.write_text(text.rstrip() + "\n", encoding="utf-8")
+    path.write_text(append_brand_footer(text.rstrip()), encoding="utf-8")
 
 
 def cleanup_formal_outputs(title: str) -> None:
@@ -281,7 +282,7 @@ def write_quote_module(base: Path, title: str, quotes: list[str], category: str)
         lines.extend([f"### {label}", ""])
         lines.extend(f"- {item}——《{title}》" for item in items)
         lines.append("")
-    target.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    target.write_text(append_brand_footer("\n".join(lines).rstrip()), encoding="utf-8")
     return target
 
 
@@ -328,26 +329,28 @@ def write_exec_record(title: str, source_rel: str, counts: dict[str, int], statu
     path = PRIVATE_EXEC_DIR / f"{stamp}_拆书内容模块候选执行_{title}.md"
     record = json.loads(sufficiency.read_text(encoding="utf-8"))
     path.write_text(
-        "\n".join([
-            "# 小拆执行记录",
-            "",
-            "- 任务：整本书内容模块拆解",
-            f"- 书名：{title}",
-            f"- 来源：`{source_rel}`",
-            f"- 执行合同：{CONTRACT_VERSION}",
-            "- 执行模式：整本书扫描 -> 候选池 -> 筛选入库 -> 小审核收 -> 正式晋升",
-            f"- 执行状态：{status}",
-            f"- 执行时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-            f"- 原始资料字数：{record['raw_char_count']}",
-            f"- 段落数：{record['paragraph_count']}",
-            f"- 误区候选数量：{record['mistake_candidate_count']}",
-            f"- 入库误区文件：{counts['mistakes']}",
-            f"- 步骤候选数量：{record['step_candidate_count']}",
-            f"- 入库步骤文件：{counts['steps']}",
-            f"- 金句候选数量：{record['quote_candidate_count']}",
-            f"- 入库金句：{counts['quotes']}",
-            f"- 充分拆解记录：`{sufficiency}`",
-        ]) + "\n",
+        append_brand_footer(
+            "\n".join([
+                "# 小拆执行记录",
+                "",
+                "- 任务：整本书内容模块拆解",
+                f"- 书名：{title}",
+                f"- 来源：`{source_rel}`",
+                f"- 执行合同：{CONTRACT_VERSION}",
+                "- 执行模式：整本书扫描 -> 候选池 -> 筛选入库 -> 小审核收 -> 正式晋升",
+                f"- 执行状态：{status}",
+                f"- 执行时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                f"- 原始资料字数：{record['raw_char_count']}",
+                f"- 段落数：{record['paragraph_count']}",
+                f"- 误区候选数量：{record['mistake_candidate_count']}",
+                f"- 入库误区文件：{counts['mistakes']}",
+                f"- 步骤候选数量：{record['step_candidate_count']}",
+                f"- 入库步骤文件：{counts['steps']}",
+                f"- 金句候选数量：{record['quote_candidate_count']}",
+                f"- 入库金句：{counts['quotes']}",
+                f"- 充分拆解记录：`{sufficiency}`",
+            ])
+        ),
         encoding="utf-8",
     )
 
@@ -365,7 +368,7 @@ def promote_to_formal(candidate: Path, title: str) -> None:
                     section = src.read_text(encoding="utf-8", errors="ignore")
                     marker = f"## 《{title}》"
                     section = section[section.index(marker):] if marker in section else section
-                    target.write_text(existing + "\n\n" + section.rstrip() + "\n", encoding="utf-8")
+                    target.write_text(append_brand_footer(existing + "\n\n" + section.rstrip()), encoding="utf-8")
                 else:
                     shutil.copy2(src, target)
             else:
@@ -764,7 +767,7 @@ def write_mistake_modules(base: Path, title: str, category_label: str, topics: l
             lines.extend([f"**误区{mis_idx}：{heading}。**", "", body, ""])
         lines.extend([f"- 一级分类：{category_label}", f"- 来源文件：《{title}》.md"])
         path = base / "02_误区模块" / f"《{title}》_{idx:02d}_错误观点：{slug(wrong)}.md"
-        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
         paths.append(path)
     return paths
 
@@ -781,7 +784,7 @@ def write_step_modules(base: Path, title: str, category_label: str, topics: list
             lines.extend([f"**步骤{step_idx}：{heading}。**", "", body, ""])
         lines.extend([f"- 一级分类：{category_label}", f"- 来源文件：《{title}》.md"])
         path = base / "03_步骤模块" / f"《{title}》_{idx:02d}_{slug(question)}.md"
-        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
         paths.append(path)
     return paths
 

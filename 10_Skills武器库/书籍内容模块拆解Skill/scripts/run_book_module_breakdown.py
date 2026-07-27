@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools"))
 
+from brand_footer import append_brand_footer
 from dispatch_gate import require_dispatch_record
 
 LEDGER = ROOT / "02_资产中心" / "01_原始知识库" / "00_原始资料输入清单.md"
@@ -47,7 +48,7 @@ def write_accept_record(title: str, source_path: str) -> Path:
         f"- 受理时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
         f"- 正式执行器：`{EXECUTOR}`",
     ]
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
     return path
 
 

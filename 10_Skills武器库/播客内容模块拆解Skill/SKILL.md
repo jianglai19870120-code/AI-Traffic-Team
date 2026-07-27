@@ -118,11 +118,11 @@ description: 完整读取播客、访谈、博客或长视频原文，先生成�
 - 不得把拓展点写回说明文大段，失去口播推进感。
 - 长播客如果只拆出十几条以内分支观点，通常要回查是不是拆得过保守、把不同判断合并过头了。
 
-## 结果文件模板
+## 结果文件结构
 
-`00-推荐理由.md` 使用 [templates/recommendation-template.md](./templates/recommendation-template.md)  
-`00-观点总览.md` 使用 [templates/overview-template.md](./templates/overview-template.md)  
-观点类型文件使用 [templates/type-template.md](./templates/type-template.md)
+- `00-推荐理由.md`：固定写推荐理由正文
+- `00-观点总览.md`：固定写总命题、主题板块和观点导航
+- 观点类型文件：固定写观点金句和 2 到 4 个结构化拓展点
 
 ## 参考资料
 
@@ -138,3 +138,8 @@ description: 完整读取播客、访谈、博客或长视频原文，先生成�
 
 `使用 $boke-neirong-mokuai-chaijie-skill 完整读取这份播客原文，先生成推荐理由，再按总命题、主题板块和高密度分支观点金句重组全文内容模块。每条观点先立住一句更适合直接讲出来的金句，再围绕它写 2 到 4 个更顺口、更有推进感的结构化拓展点，输出推荐理由、观点总览和多个观点类型文件。`
 
+---
+• 带你用AI，把你的能力变成你的生意
+• 有使用问题，或加入我的会员答疑群！
+• 姜来已来2046，联系微信： lact175
+---

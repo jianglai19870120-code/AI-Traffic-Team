@@ -8,6 +8,9 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
+from brand_footer import append_brand_footer
+
 
 READABLE_MIN_CHARS = 300
 BAD_PATTERNS = [
@@ -195,18 +198,7 @@ def write_report(report_dir: Path, scope: str, category: str, results: list[Audi
     else:
         lines.append("- 本次没有删除旧原文件。")
 
-    lines += [
-        "",
-        "---",
-        "",
-        "品牌尾注：",
-        "",
-        "- 带你用AI，把你的能力变成你的生意。",
-        "- AI流量工厂作者：姜来已来2046",
-        "- 有任何使用问题，可以联系我！微信： lact175",
-        "",
-    ]
-    report_path.write_text("\n".join(lines), encoding="utf-8")
+    report_path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
     return report_path
 
 

@@ -9,8 +9,11 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from brand_footer import append_brand_footer
+
 SOURCE_DIR = ROOT / "02_资产中心" / "01_原始知识库" / "99_我的工作纪实"
 MODULE_ROOT = ROOT / "02_资产中心" / "02_内容模块库" / "99_工作纪实模块"
 QUOTE_DIR = MODULE_ROOT / "01_金句模块"
@@ -464,7 +467,7 @@ def rebuild() -> tuple[list[Path], list[Path], list[dict[str, object]], list[dic
 
         for item in mistakes:
             out = MISTAKE_DIR / f"工作纪实_错误观点：{slug(str(item['title']))}.md"
-            out.write_text(mistake_module_body(item, source_title_value, str(source_path), note_id), encoding="utf-8")
+            out.write_text(append_brand_footer(mistake_module_body(item, source_title_value, str(source_path), note_id)), encoding="utf-8")
             outputs.append(out)
             index_records.append(index_record("误区", str(item["title"]), source_title_value, str(source_path), out, str(item["summary"])))
 
@@ -472,12 +475,12 @@ def rebuild() -> tuple[list[Path], list[Path], list[dict[str, object]], list[dic
             problem = str(group["problem"])
             filename_title = problem if "怎么" in problem else f"{problem}怎么做"
             out = STEP_DIR / f"工作纪实_{slug(filename_title)}.md"
-            out.write_text(step_module_body(group, source_title_value, str(source_path), note_id), encoding="utf-8")
+            out.write_text(append_brand_footer(step_module_body(group, source_title_value, str(source_path), note_id)), encoding="utf-8")
             outputs.append(out)
             first_step = group["steps"][0] if group["steps"] else {"body": ""}
             index_records.append(index_record("步骤", problem, source_title_value, str(source_path), out, str(first_step.get("body", ""))))
 
-    QUOTE_FILE.write_text(quote_file_body(quote_entries), encoding="utf-8")
+    QUOTE_FILE.write_text(append_brand_footer(quote_file_body(quote_entries)), encoding="utf-8")
     outputs.append(QUOTE_FILE)
     if quote_entries:
         index_records.append(index_record("金句", "工作纪实金句模块", "多篇工作纪实", "工作纪实聚合", QUOTE_FILE, "工作纪实高传播表达聚合"))
@@ -530,55 +533,57 @@ def write_records(
 
     audit = AUDIT_DIR / f"{stamp()}_工作纪实原文直拆审核.md"
     audit.write_text(
-        "\n".join(
-            [
-                "# 小审审核记录",
-                "",
-                f"- 审核时间：{now()}",
-                "- 审核对象：工作纪实原文直拆",
-                f"- 审核结论：{'通过' if not issues else '退回'}",
-                "",
-                "## 输出统计",
-                "",
-                f"- 输入原文：{len(source_files)}",
-                f"- 金句条数：{quote_count}",
-                f"- 误区模块：{mistake_count}",
-                f"- 步骤模块：{step_count}",
-                f"- 索引记录：{len(index_records)}",
-                f"- 逐篇摘要：`{summary_path}`" if summary_path else "- 逐篇摘要：未生成",
-                "",
-                "## 问题",
-                "",
-                *(["- 未发现阻断问题。"] if not issues else [f"- {issue}" for issue in issues]),
-            ]
-        )
-        + "\n",
+        append_brand_footer(
+            "\n".join(
+                [
+                    "# 小审审核记录",
+                    "",
+                    f"- 审核时间：{now()}",
+                    "- 审核对象：工作纪实原文直拆",
+                    f"- 审核结论：{'通过' if not issues else '退回'}",
+                    "",
+                    "## 输出统计",
+                    "",
+                    f"- 输入原文：{len(source_files)}",
+                    f"- 金句条数：{quote_count}",
+                    f"- 误区模块：{mistake_count}",
+                    f"- 步骤模块：{step_count}",
+                    f"- 索引记录：{len(index_records)}",
+                    f"- 逐篇摘要：`{summary_path}`" if summary_path else "- 逐篇摘要：未生成",
+                    "",
+                    "## 问题",
+                    "",
+                    *(["- 未发现阻断问题。"] if not issues else [f"- {issue}" for issue in issues]),
+                ]
+            )
+        ),
         encoding="utf-8",
     )
 
     exec_record = EXEC_DIR / f"{stamp()}_工作纪实原文直拆执行记录.md"
     exec_record.write_text(
-        "\n".join(
-            [
-                "# 小拆执行记录",
-                "",
-                f"- 执行时间：{now()}",
-                "- 任务：工作纪实原文直拆",
-                f"- 执行状态：{'通过' if not issues else '退回'}",
-                "",
-                "## 输入原文",
-                "",
-                *[f"- `{path}`" for path in source_files],
-                "",
-                "## 输出模块",
-                "",
-                *[f"- `{path}`" for path in outputs if path.parent in {QUOTE_DIR, MISTAKE_DIR, STEP_DIR, INDEX_DIR, HISTORY_DIR}],
-                "",
-                f"- 重构前快照：`{archive_dir}`" if archive_dir else "- 重构前快照：无",
-                f"- 小审审核记录：`{audit}`",
-            ]
-        )
-        + "\n",
+        append_brand_footer(
+            "\n".join(
+                [
+                    "# 小拆执行记录",
+                    "",
+                    f"- 执行时间：{now()}",
+                    "- 任务：工作纪实原文直拆",
+                    f"- 执行状态：{'通过' if not issues else '退回'}",
+                    "",
+                    "## 输入原文",
+                    "",
+                    *[f"- `{path}`" for path in source_files],
+                    "",
+                    "## 输出模块",
+                    "",
+                    *[f"- `{path}`" for path in outputs if path.parent in {QUOTE_DIR, MISTAKE_DIR, STEP_DIR, INDEX_DIR, HISTORY_DIR}],
+                    "",
+                    f"- 重构前快照：`{archive_dir}`" if archive_dir else "- 重构前快照：无",
+                    f"- 小审审核记录：`{audit}`",
+                ]
+            )
+        ),
         encoding="utf-8",
     )
 

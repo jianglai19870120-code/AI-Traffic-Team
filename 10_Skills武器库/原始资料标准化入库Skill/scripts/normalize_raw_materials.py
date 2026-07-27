@@ -8,6 +8,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from brand_footer import append_brand_footer
 
 BOOK_EXTENSIONS = {".md", ".txt", ".pdf", ".epub"}
 TEXT_EXTENSIONS = {".md", ".txt"}
@@ -26,8 +30,7 @@ class Result:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="标准化原始资料为正式 md")
-    default_root = Path(__file__).resolve().parents[3]
-    parser.add_argument("--root", default=str(default_root))
+    parser.add_argument("--root", default=str(ROOT))
     parser.add_argument("--scope", choices=["main"], default="main")
     parser.add_argument("--category", default="", help="只处理指定分类目录，如 01_科学创业")
     parser.add_argument("--apply", action="store_true", help="实际写入和改名；默认仅预演")
@@ -234,7 +237,7 @@ def ensure_ledger_entry(
     if marker not in content:
         return
     content = content.replace(marker, marker + "\n" + row, 1)
-    ledger_path.write_text(content, encoding="utf-8")
+    ledger_path.write_text(append_brand_footer(content), encoding="utf-8")
 
 
 def print_report(results: list[Result], apply: bool) -> None:

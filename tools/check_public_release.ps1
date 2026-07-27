@@ -115,7 +115,7 @@ function Assert-NoRetiredMainChainDocs {
         "_private/agent_records",
         "_private/workflow_records",
         "_private/tools",
-        "公开层只保留结构和样板",
+        "模板替身包",
         "私域作为真实工作库",
         "爆款开头卡片拆解",
         "选中开头结构"
@@ -135,7 +135,7 @@ function Assert-NoRetiredMainChainDocs {
     $skipFiles = @(
         (Join-Path $rootPath "tools\check_public_release.ps1"),
         (Join-Path $rootPath "tools\prepare_public_release.ps1"),
-        (Join-Path $rootPath "tools\sync_public_templates.py")
+        (Join-Path $rootPath "tools\sync_public_chain.py")
     ) | ForEach-Object { [System.IO.Path]::GetFullPath($_) }
 
     foreach ($relative in $scanDirs) {

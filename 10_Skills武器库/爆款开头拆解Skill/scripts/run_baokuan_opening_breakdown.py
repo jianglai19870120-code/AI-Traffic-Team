@@ -2,8 +2,14 @@ from __future__ import annotations
 
 import argparse
 import re
+import sys
 from datetime import datetime
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from brand_footer import append_brand_footer
 
 REQUIRED_FIELDS = ["视频信息", "点赞数", "文案"]
 SELECTION_FIELDS = ["博主名", "视频信息", "链接", "状态", "备注"]
@@ -789,7 +795,7 @@ def render_output(path: Path, row: dict[str, str], function_sentences: list[str]
     lines += [
         "",
     ]
-    path.write_text("\n".join(lines), encoding="utf-8")
+    path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
 
 
 def run(root: str, blogger_filter: str = "", input_dir: str = "", output_dir: str = "", selection_file: str = "") -> dict:
@@ -835,20 +841,22 @@ def run(root: str, blogger_filter: str = "", input_dir: str = "", output_dir: st
 
     audit_path = audit_dir / f"{datetime.now().strftime('%Y-%m-%d_%H%M%S')}_爆款开头拆解审核.md"
     audit_path.write_text(
-        "\n".join(
-            [
-                "# 爆款开头拆解Skill运行记录",
-                "",
-                f"- 运行时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-                f"- 输入目录：`{resolved_input_dir}`",
-                f"- 选中清单：`{resolved_selection_file}`",
-                f"- 输出目录：`{resolved_output_dir}`",
-                f"- 运行范围：`{blogger_filter or '全部博主'}`",
-                f"- 清单命中记录数：{selected}",
-                f"- 生成文件数：{generated}",
-                "- 说明：本轮只读取外部选中清单，不新增、不回写、不修改原始 xlsx。",
-                "",
-            ]
+        append_brand_footer(
+            "\n".join(
+                [
+                    "# 爆款开头拆解Skill运行记录",
+                    "",
+                    f"- 运行时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                    f"- 输入目录：`{resolved_input_dir}`",
+                    f"- 选中清单：`{resolved_selection_file}`",
+                    f"- 输出目录：`{resolved_output_dir}`",
+                    f"- 运行范围：`{blogger_filter or '全部博主'}`",
+                    f"- 清单命中记录数：{selected}",
+                    f"- 生成文件数：{generated}",
+                    "- 说明：本轮只读取外部选中清单，不新增、不回写、不修改原始 xlsx。",
+                    "",
+                ]
+            )
         ),
         encoding="utf-8",
     )

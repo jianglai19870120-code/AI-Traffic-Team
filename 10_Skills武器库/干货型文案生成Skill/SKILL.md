@@ -170,5 +170,10 @@ E:\AI流量工厂\01_Agent系统\02_小审-质量审核Agent\scripts\audit_machi
 
 ## 正式参考资料
 
-- [references/prompt-template.md](./references/prompt-template.md)
 - [README.md](./README.md)
+
+---
+• 带你用AI，把你的能力变成你的生意
+• 有使用问题，或加入我的会员答疑群！
+• 姜来已来2046，联系微信： lact175
+---

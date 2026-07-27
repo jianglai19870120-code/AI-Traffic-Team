@@ -135,7 +135,7 @@ function Copy-DirectoryContents {
 Assert-SafeOutputPath -PathToCheck $tempPath
 Assert-SafeOutputPath -PathToCheck $outPath
 
-$syncScript = Join-Path $rootPath "tools\sync_public_templates.py"
+$syncScript = Join-Path $rootPath "tools\sync_public_chain.py"
 if (Test-Path -LiteralPath $syncScript) {
     python $syncScript | Out-Host
 }

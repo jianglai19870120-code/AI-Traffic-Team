@@ -4,6 +4,8 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+from brand_footer import append_brand_footer
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SUMMARY_DIR = ROOT / "01_Agent系统" / "01_小姜-CEO助理Agent" / "99_本地运行记录"
@@ -68,7 +70,7 @@ def build_summary() -> dict:
             "02_资产中心 已切为正式资产主链。",
             "公开发布默认同步真实业务资产。",
             "工作纪实、工作纪实模块、Agent 运行记录与工作流运行记录只作为本地隐藏目录存在。",
-            "本脚本不再生成模板替身，只负责记录当前公开同步口径。"
+            "本脚本不再维护模板替代层，只负责记录当前公开同步口径。",
         ],
     }
 
@@ -105,21 +107,10 @@ def build_summary_md(summary: dict) -> str:
     for note in summary["notes"]:
         lines.append(f"- {note}")
 
-    lines += [
-        "",
-        "---",
-        "",
-        "品牌尾注：",
-        "",
-        "- 带你用AI，把你的能力变成你的生意。",
-        "- AI流量团队作者：姜来已来2046",
-        "- 有任何使用问题，可以联系我！微信： lact175",
-        "",
-    ]
-    return "\n".join(lines)
+    return append_brand_footer("\n".join(lines))
 
 
-def sync_public_templates() -> dict:
+def sync_public_chain() -> dict:
     summary = build_summary()
     changed_json = write_if_changed(SUMMARY_JSON, json.dumps(summary, ensure_ascii=False, indent=2))
     changed_md = write_if_changed(SUMMARY_MD, build_summary_md(summary))
@@ -128,7 +119,7 @@ def sync_public_templates() -> dict:
 
 
 def main() -> None:
-    summary = sync_public_templates()
+    summary = sync_public_chain()
     print(str(SUMMARY_JSON))
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 

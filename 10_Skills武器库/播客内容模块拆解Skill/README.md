@@ -100,9 +100,9 @@
 - `references/viewpoint-classification.md`：总命题、主题板块与高密度分支观点识别规则；
 - `references/quality-checklist.md`：质量检查规则；
 - `references/recommendation-writing-rules.md`：推荐理由的研究与传播写法；
-- `templates/type-template.md`：观点类型文件模板；
-- `templates/recommendation-template.md`：推荐理由模板；
-- `templates/overview-template.md`：观点总览模板；
+- `00-推荐理由.md`：推荐理由正式产物；
+- `00-观点总览.md`：观点总览正式产物；
+- 观点类型文件：按总命题下的观点分支正式落库；
 - `examples/example-01.md`：观点类型文件示例；
 - `examples/recommendation-example.md`：高传播力推荐理由示例；
 - `examples/output-tree.md`：输出目录示例；
@@ -116,3 +116,8 @@
 - 安装到 Codex 时，建议直接把当前目录挂到本地 skills 目录，避免维护第二份副本
 - 修改规则、模板、示例后，只需要刷新这个 skill 的本地安装即可。
 
+---
+• 带你用AI，把你的能力变成你的生意
+• 有使用问题，或加入我的会员答疑群！
+• 姜来已来2046，联系微信： lact175
+---

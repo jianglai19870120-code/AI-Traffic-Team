@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-DISPATCH_DIR = Path("_private") / "agent_records" / "01_小姜-CEO助理Agent" / "调度记录"
+DISPATCH_DIR = Path("01_Agent系统") / "01_小姜-CEO助理Agent" / "99_本地运行记录" / "调度记录"
 
 
 @dataclass(frozen=True)
@@ -38,8 +38,6 @@ def find_dispatch_record(root: Path, *, task_type: str, target_agent: str, input
 
     candidates: list[tuple[float, DispatchRecord]] = []
     for path in dispatch_dir.glob("*.md"):
-        if "模板" in path.name:
-            continue
         text = path.read_text(encoding="utf-8", errors="ignore")
         record = DispatchRecord(
             path=path,

@@ -5,9 +5,11 @@ import re
 from datetime import datetime
 from pathlib import Path
 
+from brand_footer import append_brand_footer
+
 
 ROOT = Path(__file__).resolve().parents[1]
-DISPATCH_DIR = ROOT / "_private" / "agent_records" / "01_小姜-CEO助理Agent" / "调度记录"
+DISPATCH_DIR = ROOT / "01_Agent系统" / "01_小姜-CEO助理Agent" / "99_本地运行记录" / "调度记录"
 
 
 def slug(text: str) -> str:
@@ -53,17 +55,8 @@ def main() -> int:
         "- 专业 Agent 必须先读取自己的能力清单、调用规则、输入合同和输出合同。",
         "- 专业 Agent 执行完成后，正式成果必须按规则交小审审核。",
         "- 小审回读前必须刷新小姜工作台。",
-        "",
-        "---",
-        "",
-        "品牌尾注：",
-        "",
-        "- 带你用AI，把你的能力变成你的生意。",
-        "- AI流量工厂作者：姜来已来2046",
-        "- 有任何使用问题，可以联系我！微信： lact175",
-        "",
     ]
-    path.write_text("\n".join(lines), encoding="utf-8")
+    path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
     print(path)
     return 0
 
