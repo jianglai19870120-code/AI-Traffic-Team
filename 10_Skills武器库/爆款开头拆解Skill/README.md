@@ -83,10 +83,10 @@ python scripts/run_baokuan_opening_breakdown.py --input-dir D:\my-inputs --selec
 - `.pyc`
 - 其他运行产物
 
-<hr>
+---
 
-• 带你用AI，把你的能力变成你的生意  
-• 有使用问题，或加入我的会员答疑群！  
+• 带你用AI，把你的能力变成你的生意
+• 有使用问题，或加入我的会员答疑群！
 • 姜来已来2046，联系微信： lact175
 
-<hr>
+---

@@ -8,13 +8,13 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / "00_系统说明" / "品牌尾注规范.md"
 FALLBACK_BLOCK = "\n".join(
     [
-        "<hr>",
+        "---",
         "",
-        "• 带你用AI，把你的能力变成你的生意  ",
-        "• 有使用问题，或加入我的会员答疑群！  ",
+        "• 带你用AI，把你的能力变成你的生意",
+        "• 有使用问题，或加入我的会员答疑群！",
         "• 姜来已来2046，联系微信： lact175",
         "",
-        "<hr>",
+        "---",
     ]
 )
 
@@ -22,7 +22,7 @@ FALLBACK_BLOCK = "\n".join(
 def load_brand_footer_block() -> str:
     if SPEC_PATH.exists():
         text = SPEC_PATH.read_text(encoding="utf-8", errors="ignore")
-        match = re.search(r"```md\s*(?P<block><hr>.*?<hr>)\s*```", text, flags=re.S)
+        match = re.search(r"```md\s*(?P<block>---.*?---)\s*```", text, flags=re.S)
         if match:
             return match.group("block").strip()
     return FALLBACK_BLOCK

@@ -142,10 +142,10 @@ default_reuse: true
 Recurring IP character: a clean hand-drawn Chinese male host character based on the approved top-left face anchor plus one selected action reference image. Default hairstyle is a neat slicked-back side-part black hairstyle only, and it must stay smooth, flatter, tighter to the scalp, and cleaner like the face-anchor look; no front-combed variant, no curly hair, no wavy texture, no fluffy waves, no airy volume, and no high pompadour-like top. Keep the black rectangular glasses, a natural longer oval face, a clean jawline, a white blazer, and a black inner shirt on every page. Skin tone must stay in the neutral-warm #e8a668 family and clearly deeper than generic pale rendering; do not whiten the skin and do not drift toward a lighter commercial illustration skin. Do not make the face wider, rounder, puffier, slimmer, or like a different person. When shown in full body, use blue jeans and clean white sneakers. Do not replace the blazer with a hoodie, sweatshirt, casual jacket, or any relaxed streetwear silhouette. Keep the same face identity, the same hairstyle direction, and the same glasses structure across pages. Q-style or chibi exaggeration is allowed, but only as a proportion change; it must not change the clothing identity, hairstyle identity, glasses identity, face identity, or the face-anchor identity. For frontal or near-frontal views, keep the eyes consistent with the approved face anchor, with clearer eye shape and gaze inside the glasses, and avoid reducing frontal eyes to tiny dot eyes. Side views or distant views may simplify the eyes slightly, but must still read as the same person. Expressions and body language should be clearly more exaggerated and high-energy, with stronger eyebrows, clearer mouth shapes, wider gestures, forward-leaning, blocking, pointing, pushing, or sudden-realization acting, while still remaining recognizable as the same person. The action reference may guide pose, gesture, and expression tendency only; it must not redefine the face. The character may appear as a large lead figure, a half-body close-up, a small accent figure, or an embedded mini-figure inside a keyword block, process node, or icon area, depending on page composition. The microphone is optional and should appear only on speaking or hosting pages; when it appears, the mic flag may show the Chinese brand text “知富星球”.
 ```
 
-<hr>
+---
 
-• 带你用AI，把你的能力变成你的生意  
-• 有使用问题，或加入我的会员答疑群！  
+• 带你用AI，把你的能力变成你的生意
+• 有使用问题，或加入我的会员答疑群！
 • 姜来已来2046，联系微信： lact175
 
-<hr>
+---
