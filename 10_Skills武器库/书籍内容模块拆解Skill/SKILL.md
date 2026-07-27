@@ -127,8 +127,10 @@ description: 把一本已标准化并通过原始资料入库审核的书，正�
 - `python scripts/run_book_module_breakdown.py --title 低风险创业`
 - `python scripts/execute_book_module_breakdown.py --title 低风险创业 --write-audit`
 
----
-• 带你用AI，把你的能力变成你的生意
-• 有使用问题，或加入我的会员答疑群！
+<hr>
+
+• 带你用AI，把你的能力变成你的生意  
+• 有使用问题，或加入我的会员答疑群！  
 • 姜来已来2046，联系微信： lact175
----
+
+<hr>
