@@ -8,8 +8,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
-PRIVATE_AUDIT_DIR = ROOT / "_private" / "agent_records" / "02_小审-质量审核Agent" / "审核记录"
-BODY_ROOT = ROOT / "_private" / "assets" / "06_生成正文库" / "01_干货型文案"
+PRIVATE_AUDIT_DIR = ROOT / "01_Agent系统" / "02_小审-质量审核Agent" / "99_审核记录"
+BODY_ROOT = ROOT / "02_资产中心" / "06_生成正文库" / "01_干货型文案"
 EXPECTED_HEADER = ["序号", "逻辑关系", "选用模块", "对应来源"]
 EXPECTED_FLOW = ["误区1", "误区2", "过渡句", "步骤1", "步骤2", "步骤3", "过渡句", "步骤1", "步骤2", "步骤3", "金句收口"]
 

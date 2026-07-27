@@ -168,7 +168,8 @@ Remove-ExcludedPaths -BaseRoot $tempPath -RelativePaths $hiddenRelativeDirs
 $retiredPaths = @(
     "_private",
     "02_资产中心\06_视觉库",
-    "02_资产中心\07_复盘库"
+    "02_资产中心\07_复盘库",
+    "02_资产中心\08_视觉库"
 )
 Remove-ExcludedPaths -BaseRoot $tempPath -RelativePaths $retiredPaths
 

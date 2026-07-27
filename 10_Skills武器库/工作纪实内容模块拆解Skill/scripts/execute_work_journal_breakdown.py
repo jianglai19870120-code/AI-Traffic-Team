@@ -11,17 +11,17 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
-SOURCE_DIR = ROOT / "_private" / "assets" / "01_原始知识库" / "99_我的工作纪实"
-MODULE_ROOT = ROOT / "_private" / "assets" / "02_内容模块库" / "99_工作纪实模块"
+SOURCE_DIR = ROOT / "02_资产中心" / "01_原始知识库" / "99_我的工作纪实"
+MODULE_ROOT = ROOT / "02_资产中心" / "02_内容模块库" / "99_工作纪实模块"
 QUOTE_DIR = MODULE_ROOT / "01_金句模块"
 MISTAKE_DIR = MODULE_ROOT / "02_误区模块"
 STEP_DIR = MODULE_ROOT / "03_步骤模块"
 INDEX_DIR = MODULE_ROOT / "05_模块索引"
 HISTORY_DIR = MODULE_ROOT / "99_历史处理记录"
 
-EXEC_DIR = ROOT / "_private" / "agent_records" / "04_小拆-内容拆解Agent" / "执行记录"
-AUDIT_DIR = ROOT / "_private" / "agent_records" / "02_小审-质量审核Agent" / "审核记录"
-SOURCE_RECORD_DIR = ROOT / "_private" / "agent_records" / "04_小拆-内容拆解Agent" / "正式产物来源"
+EXEC_DIR = ROOT / "01_Agent系统" / "04_小拆-内容拆解Agent" / "99_执行记录"
+AUDIT_DIR = ROOT / "01_Agent系统" / "02_小审-质量审核Agent" / "99_审核记录"
+SOURCE_RECORD_DIR = ROOT / "01_Agent系统" / "04_小拆-内容拆解Agent" / "99_执行记录" / "正式产物来源"
 
 QUOTE_FILE = QUOTE_DIR / "工作纪实金句模块.md"
 INDEX_FILE = INDEX_DIR / "模块索引.jsonl"

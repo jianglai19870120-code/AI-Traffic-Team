@@ -16,8 +16,7 @@ from pathlib import Path
 
 
 BASE_URL = "https://openapi.biji.com/open"
-PRIVATE_WORK_RECORD_DIR = Path("_private") / "assets" / "01_原始知识库" / "99_我的工作纪实"
-PUBLIC_WORK_RECORD_DIR = Path("02_资产中心") / "01_原始知识库" / "99_我的工作纪实"
+MAIN_WORK_RECORD_DIR = Path("02_资产中心") / "01_原始知识库" / "99_我的工作纪实"
 STATE_FILE = ".sync-state.json"
 
 
@@ -46,10 +45,7 @@ except ImportError:
 
 
 def work_record_dir(root: Path) -> Path:
-    private_assets = root / "_private" / "assets"
-    if private_assets.exists():
-        return root / PRIVATE_WORK_RECORD_DIR
-    return root / PUBLIC_WORK_RECORD_DIR
+    return root / MAIN_WORK_RECORD_DIR
 
 
 def read_windows_env(name: str, scope: str) -> str:
@@ -276,7 +272,7 @@ def dedupe_notes(notes: list[dict]) -> list[dict]:
 
 
 def write_audit(root: Path, outputs: list[Path], issues: list[str], env_status: dict, fetched: int, new_count: int) -> Path:
-    audit_dir = root / "_private" / "agent_records" / "02_小审-质量审核Agent" / "审核记录"
+    audit_dir = root / "01_Agent系统" / "02_小审-质量审核Agent" / "99_审核记录"
     audit_dir.mkdir(parents=True, exist_ok=True)
     path = audit_dir / f"{stamp()}_得到大脑全部笔记同步入库审核.md"
     lines = [
@@ -305,7 +301,7 @@ def write_audit(root: Path, outputs: list[Path], issues: list[str], env_status: 
 
 
 def write_exec_record(root: Path, outputs: list[Path], audit: Path, status: str) -> Path:
-    exec_dir = root / "_private" / "agent_records" / "03_小息-信息同步Agent" / "执行记录"
+    exec_dir = root / "01_Agent系统" / "03_小息-信息采集Agent" / "99_执行记录"
     exec_dir.mkdir(parents=True, exist_ok=True)
     path = exec_dir / f"{stamp()}_得到大脑全部笔记同步_工作纪实原始库.md"
     lines = [

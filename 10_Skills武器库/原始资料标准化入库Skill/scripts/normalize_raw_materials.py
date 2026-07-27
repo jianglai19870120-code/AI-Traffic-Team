@@ -28,7 +28,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="标准化原始资料为正式 md")
     default_root = Path(__file__).resolve().parents[3]
     parser.add_argument("--root", default=str(default_root))
-    parser.add_argument("--scope", choices=["private", "public", "both"], default="private")
+    parser.add_argument("--scope", choices=["main"], default="main")
     parser.add_argument("--category", default="", help="只处理指定分类目录，如 01_科学创业")
     parser.add_argument("--apply", action="store_true", help="实际写入和改名；默认仅预演")
     parser.add_argument("--limit", type=int, default=0, help="限制处理文件数，0 表示不限制")
@@ -38,15 +38,12 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     root = Path(args.root)
-    private_root = root / "_private" / "assets" / "01_原始知识库" / "01_好书原始资料"
-    public_root = root / "02_资产中心" / "01_原始知识库" / "01_好书原始资料"
-    ledger_path = root / "_private" / "assets" / "01_原始知识库" / "00_原始资料输入清单.md"
+    main_root = root / "02_资产中心" / "01_原始知识库" / "01_好书原始资料"
+    ledger_path = root / "02_资产中心" / "01_原始知识库" / "00_原始资料输入清单.md"
 
     source_roots: list[Path] = []
-    if args.scope in {"private", "both"} and private_root.exists():
-        source_roots.append(private_root)
-    if args.scope in {"public", "both"} and public_root.exists():
-        source_roots.append(public_root)
+    if args.scope == "main" and main_root.exists():
+        source_roots.append(main_root)
 
     results: list[Result] = []
     count = 0

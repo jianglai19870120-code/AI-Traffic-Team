@@ -12,8 +12,8 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from dispatch_gate import require_dispatch_record
 
-LEDGER = ROOT / "_private" / "assets" / "01_原始知识库" / "00_原始资料输入清单.md"
-EXEC_RECORD_DIR = ROOT / "_private" / "agent_records" / "04_小拆-内容拆解Agent" / "执行记录"
+LEDGER = ROOT / "02_资产中心" / "01_原始知识库" / "00_原始资料输入清单.md"
+EXEC_RECORD_DIR = ROOT / "01_Agent系统" / "04_小拆-内容拆解Agent" / "99_执行记录"
 EXECUTOR = ROOT / "10_Skills武器库" / "书籍内容模块拆解Skill" / "scripts" / "execute_book_module_breakdown.py"
 
 

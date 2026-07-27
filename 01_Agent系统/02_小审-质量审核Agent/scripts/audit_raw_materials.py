@@ -30,7 +30,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="原始资料入库审核")
     default_root = Path(__file__).resolve().parents[3]
     parser.add_argument("--root", default=str(default_root))
-    parser.add_argument("--scope", choices=["private", "public"], default="private")
+    parser.add_argument("--scope", choices=["main"], default="main")
     parser.add_argument("--category", default="", help="指定分类目录，如 01_科学创业")
     parser.add_argument("--write-report", action="store_true", help="写入审核记录")
     parser.add_argument("--cleanup-source-files", action="store_true", help="审核通过后删除同目录旧原文件")
@@ -40,14 +40,9 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     root = Path(args.root)
-    if args.scope == "private":
-        base_dir = root / "_private" / "assets" / "01_原始知识库" / "01_好书原始资料"
-        ledger_path = root / "_private" / "assets" / "01_原始知识库" / "00_原始资料输入清单.md"
-    else:
-        base_dir = root / "02_资产中心" / "01_原始知识库" / "01_好书原始资料"
-        ledger_path = root / "02_资产中心" / "01_原始知识库" / "00_原始资料输入清单.md"
-
-    report_dir = root / "_private" / "agent_records" / "02_小审-质量审核Agent" / "审核记录"
+    base_dir = root / "02_资产中心" / "01_原始知识库" / "01_好书原始资料"
+    ledger_path = root / "02_资产中心" / "01_原始知识库" / "00_原始资料输入清单.md"
+    report_dir = root / "01_Agent系统" / "02_小审-质量审核Agent" / "99_审核记录"
     target_dirs = [d for d in sorted(base_dir.iterdir()) if d.is_dir()]
     if args.category:
         target_dirs = [d for d in target_dirs if d.name == args.category]

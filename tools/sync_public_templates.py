@@ -30,6 +30,7 @@ PUBLIC_CHAIN = [
     "02_资产中心/05_爆款开头库",
     "02_资产中心/06_生成正文库",
     "02_资产中心/07_润色成稿库",
+    "02_资产中心/08_视觉配图库",
     "03_工作流中心",
     "10_Skills武器库",
     "tools",
@@ -118,12 +119,18 @@ def build_summary_md(summary: dict) -> str:
     return "\n".join(lines)
 
 
-def main() -> None:
+def sync_public_templates() -> dict:
     summary = build_summary()
     changed_json = write_if_changed(SUMMARY_JSON, json.dumps(summary, ensure_ascii=False, indent=2))
     changed_md = write_if_changed(SUMMARY_MD, build_summary_md(summary))
+    summary["updated"] = changed_json or changed_md
+    return summary
+
+
+def main() -> None:
+    summary = sync_public_templates()
     print(str(SUMMARY_JSON))
-    print(json.dumps({"updated": changed_json or changed_md, **summary}, ensure_ascii=False, indent=2))
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

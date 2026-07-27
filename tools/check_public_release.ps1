@@ -86,7 +86,8 @@ function Assert-RequiredMainChain {
         "02_资产中心\04_爆款选题库",
         "02_资产中心\05_爆款开头库",
         "02_资产中心\06_生成正文库",
-        "02_资产中心\07_润色成稿库"
+        "02_资产中心\07_润色成稿库",
+        "02_资产中心\08_视觉配图库"
     )
 
     foreach ($relative in $required) {
@@ -125,6 +126,7 @@ function Assert-NoRetiredMainChainDocs {
         "02_资产中心[/\\]04_对标结构库",
         "02_资产中心[/\\]06_视觉库",
         "02_资产中心[/\\]07_复盘库",
+        "02_资产中心[/\\]08_视觉库",
         "E:\\AI流量工厂\\_private",
         "C:\\Users\\Administrator"
     )

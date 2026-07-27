@@ -9,8 +9,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
-PRIVATE_AUDIT_DIR = ROOT / "_private" / "agent_records" / "02_小审-质量审核Agent" / "审核记录"
-DRAFT_ROOT = ROOT / "_private" / "assets" / "07_润色成稿库" / "01_干货型成稿"
+PRIVATE_AUDIT_DIR = ROOT / "01_Agent系统" / "02_小审-质量审核Agent" / "99_审核记录"
+DRAFT_ROOT = ROOT / "02_资产中心" / "07_润色成稿库" / "01_干货型成稿"
 
 
 def parse_args() -> argparse.Namespace:

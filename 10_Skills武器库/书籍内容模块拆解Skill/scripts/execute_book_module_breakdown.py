@@ -16,12 +16,12 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from dispatch_gate import require_dispatch_record
 
-PRIVATE_ASSET_ROOT = ROOT / "_private" / "assets"
+PRIVATE_ASSET_ROOT = ROOT / "02_资产中心"
 PRIVATE_RAW_LEDGER = PRIVATE_ASSET_ROOT / "01_原始知识库" / "00_原始资料输入清单.md"
 PRIVATE_MODULE_ROOT = PRIVATE_ASSET_ROOT / "02_内容模块库" / "01_干货型内容模块"
-PRIVATE_EXEC_DIR = ROOT / "_private" / "agent_records" / "04_小拆-内容拆解Agent" / "执行记录"
-PRIVATE_PROVENANCE_DIR = ROOT / "_private" / "agent_records" / "04_小拆-内容拆解Agent" / "正式产物来源"
-CANDIDATE_ROOT = ROOT / "_private" / "agent_records" / "04_小拆-内容拆解Agent" / "候选产物" / "书籍内容模块拆解Skill"
+PRIVATE_EXEC_DIR = ROOT / "01_Agent系统" / "04_小拆-内容拆解Agent" / "99_执行记录"
+PRIVATE_PROVENANCE_DIR = ROOT / "01_Agent系统" / "04_小拆-内容拆解Agent" / "99_执行记录" / "正式产物来源"
+CANDIDATE_ROOT = ROOT / "01_Agent系统" / "04_小拆-内容拆解Agent" / "99_执行记录" / "候选产物" / "书籍内容模块拆解Skill"
 AUDIT_SCRIPT = ROOT / "01_Agent系统" / "02_小审-质量审核Agent" / "scripts" / "audit_modules.py"
 CONTRACT_VERSION = "book_module_v6_independent_mistake_step"
 
@@ -142,7 +142,7 @@ def resolve_source(title: str) -> tuple[Path, str, str]:
         rel = cells[4].strip("`").replace("/", "\\")
         match = re.search(r"01_好书原始资料\\([^\\]+)\\", rel)
         category = match.group(1) if match else "01_科学创业"
-        if rel.startswith(("01_原始知识库\\", "02_内容模块库\\", "03_对标账号库\\", "04_爆款选题库\\", "05_爆款开头库\\", "06_生成正文库\\", "07_润色成稿库\\", "08_视觉库\\", "09_复盘库\\")):
+        if rel.startswith(("01_原始知识库\\", "02_内容模块库\\", "03_对标账号库\\", "04_爆款选题库\\", "05_爆款开头库\\", "06_生成正文库\\", "07_润色成稿库\\", "08_视觉配图库\\", "09_复盘库\\")):
             return PRIVATE_ASSET_ROOT / rel, rel.replace("\\", "/"), category
         return ROOT / rel, rel.replace("\\", "/"), category
     raise FileNotFoundError(f"原始资料输入清单中找不到《{title}》")

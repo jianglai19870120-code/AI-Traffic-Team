@@ -11,9 +11,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
-PRIVATE_MODULE_ROOT = ROOT / "_private" / "assets" / "02_内容模块库" / "01_干货型内容模块"
-PRIVATE_AUDIT_DIR = ROOT / "_private" / "agent_records" / "02_小审-质量审核Agent" / "审核记录"
-PRIVATE_PROVENANCE_DIR = ROOT / "_private" / "agent_records" / "04_小拆-内容拆解Agent" / "正式产物来源"
+PRIVATE_MODULE_ROOT = ROOT / "02_资产中心" / "02_内容模块库" / "01_干货型内容模块"
+PRIVATE_AUDIT_DIR = ROOT / "01_Agent系统" / "02_小审-质量审核Agent" / "99_审核记录"
+PRIVATE_PROVENANCE_DIR = ROOT / "01_Agent系统" / "04_小拆-内容拆解Agent" / "06_正式产物来源"
 CONTRACT_VERSION = "book_module_v6_independent_mistake_step"
 SOURCE_WORDS = ("这本书", "本书", "作者", "书中", "原文", "依据", "提到", "认为", "强调", "相关依据")
 EXEMPT_META_PREFIXES = ("- 来源文件：", "- 一级分类：")
