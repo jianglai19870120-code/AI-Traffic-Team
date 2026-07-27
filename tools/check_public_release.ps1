@@ -10,6 +10,16 @@ $ErrorActionPreference = "Stop"
 $rootPath = (Resolve-Path -LiteralPath $Root).Path
 $violations = New-Object System.Collections.Generic.List[string]
 
+$hiddenRelativeDirs = @(
+    "02_资产中心\01_原始知识库\99_我的工作纪实",
+    "02_资产中心\02_内容模块库\99_工作纪实模块",
+    "01_Agent系统\01_小姜-CEO助理Agent\99_本地运行记录",
+    "01_Agent系统\02_小审-质量审核Agent\99_审核记录",
+    "01_Agent系统\03_小息-信息采集Agent\99_执行记录",
+    "01_Agent系统\04_小拆-内容拆解Agent\99_执行记录",
+    "03_工作流中心\01_短视频主工作流\99_运行记录"
+)
+
 function Add-Violation {
     param([string]$Message)
     $violations.Add($Message) | Out-Null
@@ -26,43 +36,6 @@ function Get-RelativePath {
         return $full.Substring($base.Length)
     }
     return $full
-}
-
-function Test-AllowedPublicFile {
-    param([System.IO.FileInfo]$File)
-
-    $name = $File.Name
-    if ($name -in @(
-        "README.md",
-        "公开样板说明.md",
-        "联系入口模板.md",
-        "成品文案输入模板.md",
-        "00_手动输入选题表.md",
-        "00_手动输入选题表模板.md",
-        "00_原始资料输入清单.md",
-        "00_原始资料输入清单模板.md",
-        "输入说明.md",
-        "输入要求说明.md",
-        "字段模板.md",
-        "00_爆款开头选中清单模板.md",
-        "字段说明.md"
-    )) {
-        return $true
-    }
-
-    if ($name.StartsWith("样板-")) {
-        return $true
-    }
-
-    if ($name.EndsWith("模板.md")) {
-        return $true
-    }
-
-    if ($File.DirectoryName -like "*\参考案例" -and $name.StartsWith("案例-") -and $File.Extension -eq ".md") {
-        return $true
-    }
-
-    return $false
 }
 
 function Assert-NoForbiddenTopLevel {
@@ -88,8 +61,25 @@ function Assert-NoForbiddenTopLevel {
     }
 }
 
-function Assert-PublicAssetDirectoriesClean {
-    $assetDirs = @(
+function Assert-HiddenDirsExcluded {
+    foreach ($relative in $hiddenRelativeDirs) {
+        $full = Join-Path $rootPath $relative
+        if (Test-Path -LiteralPath $full) {
+            Add-Violation "公开发布包不允许包含本地隐藏目录: $relative"
+        }
+    }
+}
+
+function Assert-RequiredMainChain {
+    $required = @(
+        "AGENTS.md",
+        "README.md",
+        "00_系统说明",
+        "01_Agent系统",
+        "02_资产中心",
+        "03_工作流中心",
+        "10_Skills武器库",
+        "tools",
         "02_资产中心\01_原始知识库",
         "02_资产中心\02_内容模块库",
         "02_资产中心\03_对标账号库",
@@ -99,64 +89,18 @@ function Assert-PublicAssetDirectoriesClean {
         "02_资产中心\07_润色成稿库"
     )
 
-    foreach ($relativeDir in $assetDirs) {
-        $fullDir = Join-Path $rootPath $relativeDir
-        if (-not (Test-Path -LiteralPath $fullDir)) {
-            continue
-        }
-
-        $files = Get-ChildItem -LiteralPath $fullDir -File -Recurse -Force -ErrorAction SilentlyContinue
-        foreach ($file in $files) {
-            if (-not (Test-AllowedPublicFile -File $file)) {
-                Add-Violation "公开层资产目录疑似包含真实业务资产: $(Get-RelativePath $file.FullName)"
-            }
-        }
-    }
-}
-
-function Assert-RequiredPublicTemplates {
-    $required = @(
-        "01_Agent系统\01_小姜-CEO助理Agent\00_小姜工作台模板.md",
-        "02_资产中心\01_原始知识库\00_原始资料输入清单模板.md",
-        "02_资产中心\03_对标账号库\字段模板.md",
-        "02_资产中心\04_爆款选题库\README.md",
-        "02_资产中心\04_爆款选题库\00_手动输入选题表模板.md",
-        "02_资产中心\04_爆款选题库\样板-爆款选题分类表.md",
-        "02_资产中心\05_爆款开头库\README.md",
-        "02_资产中心\05_爆款开头库\00_爆款开头选中清单模板.md",
-        "02_资产中心\05_爆款开头库\样板-爆款开头拆解.md",
-        "02_资产中心\06_生成正文库\README.md",
-        "02_资产中心\06_生成正文库\样板-干货型生成正文.md",
-        "02_资产中心\07_润色成稿库\README.md",
-        "02_资产中心\07_润色成稿库\输入说明.md",
-        "02_资产中心\07_润色成稿库\字段说明.md",
-        "02_资产中心\07_润色成稿库\样板-干货型成稿.md",
-        "02_资产中心\02_内容模块库\99_工作纪实模块\README.md",
-        "02_资产中心\02_内容模块库\99_工作纪实模块\01_金句模块\样板-工作纪实金句模块.md",
-        "02_资产中心\02_内容模块库\99_工作纪实模块\02_误区模块\样板-工作纪实误区模块.md",
-        "02_资产中心\02_内容模块库\99_工作纪实模块\03_步骤模块\样板-工作纪实步骤模块.md",
-        "02_资产中心\02_内容模块库\99_工作纪实模块\05_模块索引\字段说明.md",
-        "10_Skills武器库\书籍内容模块拆解Skill\README.md",
-        "10_Skills武器库\书籍内容模块拆解Skill\输入说明.md",
-        "10_Skills武器库\书籍内容模块拆解Skill\输出说明.md",
-        "10_Skills武器库\书籍内容模块拆解Skill\依赖说明.md",
-        "10_Skills武器库\爆款开头成稿生成Skill\README.md",
-        "10_Skills武器库\爆款开头成稿生成Skill\输入说明.md",
-        "10_Skills武器库\爆款开头成稿生成Skill\输出说明.md",
-        "10_Skills武器库\爆款开头成稿生成Skill\依赖说明.md"
-    )
-
     foreach ($relative in $required) {
         $full = Join-Path $rootPath $relative
         if (-not (Test-Path -LiteralPath $full)) {
-            Add-Violation "公开层缺少关键模板或说明文件: $relative"
+            Add-Violation "正式主链缺失: $relative"
         }
     }
 }
 
-function Assert-NoLocalPathDependency {
+function Assert-NoRetiredMainChainDocs {
     $scanDirs = @(
         "README.md",
+        "AGENTS.md",
         "00_系统说明",
         "01_Agent系统",
         "02_资产中心",
@@ -165,34 +109,32 @@ function Assert-NoLocalPathDependency {
         "tools"
     )
 
-    $patterns = @(
-        ("E:" + "\AI流量工厂\_private"),
-        ("_private" + "\00_外部来料区")
+    $literalPatterns = @(
+        "_private/assets",
+        "_private/agent_records",
+        "_private/workflow_records",
+        "_private/tools",
+        "公开层只保留结构和样板",
+        "私域作为真实工作库",
+        "爆款开头卡片拆解",
+        "选中开头结构"
     )
 
     $regexPatterns = @(
-        (("E:" + "\\AI流量工厂\\") + "讲干货-AI流量工厂"),
-        (("E:" + "\\AI流量工厂\\") + "热门播客-AI流量工厂"),
-        (("E:" + "\\AI流量工厂\\") + "推荐型-AI流量工厂")
+        "02_资产中心[/\\]04_选题库",
+        "02_资产中心[/\\]04_对标结构库",
+        "02_资产中心[/\\]06_视觉库",
+        "02_资产中心[/\\]07_复盘库",
+        "E:\\AI流量工厂\\_private",
+        "C:\\Users\\Administrator"
     )
 
-    $literalPatterns = @(
-        ("干货" + "对标开头拆解Skill"),
-        ("播客" + "对标开头拆解Skill"),
-        ("_private/assets/04_" + "对标结构库/01_开头结构"),
-        ("_private/assets/04_" + "选题库"),
-        ("02_资产中心/04_" + "选题库"),
-        ("选中" + "开头结构"),
-        ("爆款" + "开头卡片拆解")
-    )
-
-    $sensitiveFilePatterns = @(
-        "BK001_姜胡说_作弊",
-        "douyin.com/video/",
-        "https://www.douyin.com/video/",
-        "C:\Users\Administrator",
-        "E:\AI流量工厂\_private"
-    )
+    $hiddenFullPrefixes = $hiddenRelativeDirs | ForEach-Object { [System.IO.Path]::GetFullPath((Join-Path $rootPath $_)) }
+    $skipFiles = @(
+        (Join-Path $rootPath "tools\check_public_release.ps1"),
+        (Join-Path $rootPath "tools\prepare_public_release.ps1"),
+        (Join-Path $rootPath "tools\sync_public_templates.py")
+    ) | ForEach-Object { [System.IO.Path]::GetFullPath($_) }
 
     foreach ($relative in $scanDirs) {
         $target = Join-Path $rootPath $relative
@@ -200,16 +142,20 @@ function Assert-NoLocalPathDependency {
             continue
         }
 
-        $items = Get-Item -LiteralPath $target -Force
+        $item = Get-Item -LiteralPath $target -Force
         $files = @()
-        if ($items.PSIsContainer) {
+        if ($item.PSIsContainer) {
             $files = Get-ChildItem -LiteralPath $target -File -Recurse -Force -ErrorAction SilentlyContinue
         } else {
-            $files = @($items)
+            $files = @($item)
         }
 
         foreach ($file in $files) {
-            if ($file.FullName -eq (Join-Path $rootPath "tools\check_public_release.ps1")) {
+            $fullName = [System.IO.Path]::GetFullPath($file.FullName)
+            if ($skipFiles -contains $fullName) {
+                continue
+            }
+            if ($hiddenFullPrefixes | Where-Object { $fullName.StartsWith($_, [System.StringComparison]::OrdinalIgnoreCase) }) {
                 continue
             }
             $allowedExtensions = @(".md", ".ps1", ".py", ".json", ".yaml", ".yml", ".txt", ".gitignore")
@@ -221,27 +167,16 @@ function Assert-NoLocalPathDependency {
             if ($null -eq $content) {
                 continue
             }
-            foreach ($pattern in $patterns) {
-                if ($content.Contains($pattern)) {
-                    Add-Violation "公开层文件含本机或作者私有路径依赖: $(Get-RelativePath $file.FullName) -> $pattern"
-                }
-            }
-
-            foreach ($regexPattern in $regexPatterns) {
-                if ($content -match $regexPattern) {
-                    Add-Violation "公开层文件含本机或作者旧工作区路径: $(Get-RelativePath $file.FullName) -> $regexPattern"
-                }
-            }
 
             foreach ($pattern in $literalPatterns) {
                 if ($content.Contains($pattern)) {
-                    Add-Violation "公开层文件仍含已退役开头链路引用: $(Get-RelativePath $file.FullName) -> $pattern"
+                    Add-Violation "现役文档或脚本仍含旧双轨/退役口径: $(Get-RelativePath $file.FullName) -> $pattern"
                 }
             }
 
-            foreach ($pattern in $sensitiveFilePatterns) {
-                if ($content.Contains($pattern)) {
-                    Add-Violation "公开层文件疑似含真实私域或真实平台数据: $(Get-RelativePath $file.FullName) -> $pattern"
+            foreach ($pattern in $regexPatterns) {
+                if ($content -match $pattern) {
+                    Add-Violation "现役文档或脚本仍含退役路径或作者本机绝对路径: $(Get-RelativePath $file.FullName) -> $pattern"
                 }
             }
         }
@@ -253,46 +188,32 @@ function Assert-NoRuntimeOutputs {
         Where-Object { $_.Name -in @("outputs", ".tmp", "__pycache__") }
 
     foreach ($dir in $runtimeDirs) {
-        if ($dir.FullName -like (Join-Path $rootPath ".git") + "*") {
+        if ($AllowGitMetadata -and $dir.FullName -like (Join-Path $rootPath ".git") + "*") {
             continue
         }
-        Add-Violation "公开发布包不允许包含历史运行产物目录: $(Get-RelativePath $dir.FullName)"
+        Add-Violation "公开发布包不允许包含运行产物目录: $(Get-RelativePath $dir.FullName)"
     }
 
     $runtimeFiles = Get-ChildItem -LiteralPath $rootPath -File -Recurse -Force -ErrorAction SilentlyContinue |
-        Where-Object { $_.Extension -eq ".pyc" }
+        Where-Object { $_.Extension -in @(".pyc", ".pyo") }
 
     foreach ($file in $runtimeFiles) {
-        if ($file.FullName -like (Join-Path $rootPath ".git") + "*") {
+        if ($AllowGitMetadata -and $file.FullName -like (Join-Path $rootPath ".git") + "*") {
             continue
         }
-        Add-Violation "公开发布包不允许包含历史运行产物文件: $(Get-RelativePath $file.FullName)"
+        Add-Violation "公开发布包不允许包含运行产物文件: $(Get-RelativePath $file.FullName)"
     }
 }
 
-function Assert-NoPublicAuditRecords {
-    $auditDir = Join-Path $rootPath "01_Agent系统\02_小审-质量审核Agent\审核记录"
-    if (-not (Test-Path -LiteralPath $auditDir)) {
-        return
-    }
-
-    $records = Get-ChildItem -LiteralPath $auditDir -File -Force -ErrorAction SilentlyContinue |
-        Where-Object { $_.Name -ne "正式资产前置审核单模板.md" }
-
-    foreach ($file in $records) {
-        Add-Violation "公开层不允许保留真实审核记录: $(Get-RelativePath $file.FullName)"
-    }
-}
+Assert-RequiredMainChain
 
 if ($PackageMode) {
     Assert-NoForbiddenTopLevel
-    Assert-PublicAssetDirectoriesClean
+    Assert-HiddenDirsExcluded
 }
 
-Assert-RequiredPublicTemplates
-Assert-NoLocalPathDependency
+Assert-NoRetiredMainChainDocs
 Assert-NoRuntimeOutputs
-Assert-NoPublicAuditRecords
 
 if ($violations.Count -gt 0) {
     Write-Host ""
@@ -306,6 +227,5 @@ if ($violations.Count -gt 0) {
 if ($PackageMode) {
     Write-Host "公开发布包检查通过。"
 } else {
-    Write-Host "本地公开层检查通过。"
+    Write-Host "本地主链检查通过。"
 }
-

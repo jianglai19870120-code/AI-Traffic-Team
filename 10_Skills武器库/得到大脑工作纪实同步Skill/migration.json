@@ -1,6 +1,6 @@
 {
   "version": 1,
   "owner_agent": "小息-信息采集Agent",
-  "private_output": "_private/assets/01_原始知识库/99_我的工作纪实",
+  "private_output": "02_资产中心/01_原始知识库/99_我的工作纪实",
   "public_sample_output": "02_资产中心/01_原始知识库/99_我的工作纪实"
 }

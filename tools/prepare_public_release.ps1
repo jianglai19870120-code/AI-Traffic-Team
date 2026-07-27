@@ -1,7 +1,7 @@
 param(
     [string]$Root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path,
     [string]$OutDir = "E:\AI流量工厂-public",
-    [string]$TempDir = (Join-Path (Resolve-Path (Join-Path $PSScriptRoot "..")).Path "tmp\public-release\AI流量工厂-public")
+    [string]$TempDir = (Join-Path (Resolve-Path (Join-Path $PSScriptRoot "..")).Path "tmp\public-release\AI流量团队-public")
 )
 
 $ErrorActionPreference = "Stop"
@@ -11,25 +11,34 @@ $rootPath = (Resolve-Path -LiteralPath $Root).Path
 $tempPath = [System.IO.Path]::GetFullPath($TempDir)
 $outPath = [System.IO.Path]::GetFullPath($OutDir)
 
+$hiddenRelativeDirs = @(
+    "02_资产中心\01_原始知识库\99_我的工作纪实",
+    "02_资产中心\02_内容模块库\99_工作纪实模块",
+    "01_Agent系统\01_小姜-CEO助理Agent\99_本地运行记录",
+    "01_Agent系统\02_小审-质量审核Agent\99_审核记录",
+    "01_Agent系统\03_小息-信息采集Agent\99_执行记录",
+    "01_Agent系统\04_小拆-内容拆解Agent\99_执行记录",
+    "03_工作流中心\01_短视频主工作流\99_运行记录"
+)
+
 function Assert-SafeOutputPath {
     param([string]$PathToCheck)
 
     $forbiddenTargets = @(
-        (Join-Path $rootPath "_private"),
-        (Join-Path $rootPath "讲干货-AI流量工厂"),
-        (Join-Path $rootPath "热门播客-AI流量工厂"),
-        (Join-Path $rootPath "推荐型-AI流量工厂"),
         (Join-Path $rootPath ".git"),
         (Join-Path $rootPath ".agents"),
         (Join-Path $rootPath ".codex"),
-        (Join-Path $rootPath ".obsidian")
+        (Join-Path $rootPath ".obsidian"),
+        (Join-Path $rootPath "讲干货-AI流量工厂"),
+        (Join-Path $rootPath "热门播客-AI流量工厂"),
+        (Join-Path $rootPath "推荐型-AI流量工厂")
     )
 
     $resolvedOut = [System.IO.Path]::GetFullPath($PathToCheck)
     foreach ($forbidden in $forbiddenTargets) {
         $resolvedForbidden = [System.IO.Path]::GetFullPath($forbidden)
         if ($resolvedOut.StartsWith($resolvedForbidden, [System.StringComparison]::OrdinalIgnoreCase)) {
-            throw "输出目录不能位于私有层、历史工作区或系统目录内: $PathToCheck"
+            throw "输出目录不能位于系统目录、历史工作区或 Git 元数据目录内: $PathToCheck"
         }
     }
 }
@@ -59,6 +68,20 @@ function Copy-PublicItem {
     }
 }
 
+function Remove-ExcludedPaths {
+    param(
+        [string]$BaseRoot,
+        [string[]]$RelativePaths
+    )
+
+    foreach ($relative in $RelativePaths) {
+        $target = Join-Path $BaseRoot $relative
+        if (Test-Path -LiteralPath $target) {
+            Remove-Item -LiteralPath $target -Recurse -Force
+        }
+    }
+}
+
 function Remove-RuntimeArtifacts {
     param([string]$TargetRoot)
 
@@ -73,10 +96,10 @@ function Remove-RuntimeArtifacts {
         Remove-Item -LiteralPath $dir.FullName -Recurse -Force
     }
 
-    $pycFiles = Get-ChildItem -LiteralPath $TargetRoot -File -Recurse -Force -ErrorAction SilentlyContinue |
-        Where-Object { $_.Extension -eq ".pyc" }
+    $runtimeFiles = Get-ChildItem -LiteralPath $TargetRoot -File -Recurse -Force -ErrorAction SilentlyContinue |
+        Where-Object { $_.Extension -in @(".pyc", ".pyo") }
 
-    foreach ($file in $pycFiles) {
+    foreach ($file in $runtimeFiles) {
         Remove-Item -LiteralPath $file.FullName -Force
     }
 }
@@ -140,16 +163,14 @@ foreach ($relativePath in $publicItems) {
     Copy-PublicItem -RelativePath $relativePath -DestinationRoot $tempPath
 }
 
-$legacyPublicDirs = @(
-    (Join-Path $tempPath "02_资产中心\06_视觉库"),
-    (Join-Path $tempPath "02_资产中心\07_复盘库")
-)
+Remove-ExcludedPaths -BaseRoot $tempPath -RelativePaths $hiddenRelativeDirs
 
-foreach ($legacyDir in $legacyPublicDirs) {
-    if (Test-Path -LiteralPath $legacyDir) {
-        Remove-Item -LiteralPath $legacyDir -Recurse -Force
-    }
-}
+$retiredPaths = @(
+    "_private",
+    "02_资产中心\06_视觉库",
+    "02_资产中心\07_复盘库"
+)
+Remove-ExcludedPaths -BaseRoot $tempPath -RelativePaths $retiredPaths
 
 Remove-RuntimeArtifacts -TargetRoot $tempPath
 
@@ -177,4 +198,5 @@ if (Test-Path -LiteralPath $repoCheckScript) {
 }
 
 Write-Host "公开发布仓库已更新: $outPath"
+Write-Host "当前为真实主链公开模式，仅排除本地隐藏目录。"
 Write-Host "下一步可进入公开仓库后执行: git status"

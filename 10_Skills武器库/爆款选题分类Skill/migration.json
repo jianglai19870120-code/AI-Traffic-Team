@@ -4,13 +4,13 @@
   "entry": "SKILL.md",
   "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
   "workspaceDependencies": [
-    "_private/assets/03_对标账号库",
-    "_private/assets/04_爆款选题库",
+    "02_资产中心/03_对标账号库",
+    "02_资产中心/04_爆款选题库",
     "02_资产中心/04_爆款选题库"
   ],
   "defaultOutputPaths": [
-    "_private/assets/04_爆款选题库",
-    "_private/assets/07_复盘库/01_内容生产复盘"
+    "02_资产中心/04_爆款选题库",
+    "03_工作流中心/01_短视频主工作流/99_运行记录"
   ],
   "optionalCommands": [
     "python scripts/classify_benchmark_topics.py --root E:\\AI流量工厂",

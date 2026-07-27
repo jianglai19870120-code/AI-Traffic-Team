@@ -2,7 +2,6 @@
 .codex/
 .obsidian/
 tmp/
-_private/
 
 # Legacy local workspaces stay local only
 /讲干货-AI流量工厂/
@@ -24,18 +23,11 @@ node_modules/
 10_Skills武器库/**/.tmp/
 10_Skills武器库/**/outputs/
 
-# Public assets are allowed to contain only structure, templates, samples, and anonymized reference cases.
-02_资产中心/**/*.xlsx
-02_资产中心/**/*.xls
-02_资产中心/**/*.csv
-02_资产中心/**/BK[0-9][0-9][0-9]_*.md
-02_资产中心/**/真实*.md
-02_资产中心/**/正式产物*.md
-
-02_资产中心/06_视觉库/**/*
-!02_资产中心/06_视觉库/README.md
-!02_资产中心/06_视觉库/公开样板说明.md
-
-02_资产中心/07_复盘库/**/*.md
-!02_资产中心/07_复盘库/README.md
-!02_资产中心/07_复盘库/公开样板说明.md
+# Local-only hidden business directories
+02_资产中心/01_原始知识库/99_我的工作纪实/
+02_资产中心/02_内容模块库/99_工作纪实模块/
+01_Agent系统/01_小姜-CEO助理Agent/99_本地运行记录/
+01_Agent系统/02_小审-质量审核Agent/99_审核记录/
+01_Agent系统/03_小息-信息采集Agent/99_执行记录/
+01_Agent系统/04_小拆-内容拆解Agent/99_执行记录/
+03_工作流中心/01_短视频主工作流/99_运行记录/

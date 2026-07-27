@@ -1,0 +1,2277 @@
+Welcome to all the legends out there
+listening to the Naval podcast, the
+number one podcast in the universe and
+your authoritative source for new
+knowledge. Uh we've got three founders
+with us here today. On my right is Gary
+Tan from Y Combinator. They say it's the
+most reliable way to become a
+billionaire is to join the Y Combinator
+program
+>> and then start as a trillionaire.
+[laughter]
+>> Start as a
+>> That's one way to do it. We're all
+drinking, by the way, except one person
+here is not drinking. You have to figure
+out at the end who's actually sober.
+Yeah. [laughter]
+>> And then on my left, I've got Daniel
+from Able Police. They started off by
+turning body cam footage into police
+reports, but now they have a whole set
+of tools for compliant AI chat,
+translation. What else do you guys do?
+>> Citizen reporting, all kinds of things.
+>> Okay. Then on my right, I've got Farbood
+from A-List, the health super app. As
+usual, we don't really care about what
+these guys are building. We care more
+about what they're learning about
+building, what they're figuring out,
+what they're still trying to figure out,
+and the principles that they can share
+with other founders. So, does anyone
+have anything they want to jump in with?
+>> I mean, the topic that everyone's
+thinking about right now is AI, right?
+>> AI? Yeah, I think I've heard something
+about it.
+>> Yeah, I kind of hate talking about it
+because it's the most perishable thing.
+like you know the podcast will be
+obsolete by the time it ships but it's
+still also the most interesting because
+it's the fastest changing thing in the
+environment that's high impact so it's
+the steepest learning curve and you're
+always trying to trade notes with people
+to kind of see where they're at in fact
+I was at a thing with you recently where
+I bumped into you and the conversation
+immediately turns to AI of course right
+[clears throat]
+>> so we can avoid it for a little while
+but I feel like we'll circle back on
+that topic
+>> I got a question for you um what are you
+being floored by at YC in terms of like
+what you see the companies doing with
+AI.
+>> So I I think the awkward thing is like
+uh I basically like slept 3 hours a
+night for like 4 months and then somehow
+like went from not coding at all to like
+basically teaching people how to do it
+and making like one of the top 100 open-
+source packages for how people vibe code
+called GStack. So that is very very
+weird. And uh now like at some point I
+met Pedro from Brex and then after that
+I basically converted from like claude
+code like cult to openclaw cult within
+like 24 hours and then now we use both.
+But like it it seems like basically if
+you you know the craziest idea that I
+discovered is that if you're just
+willing to spend like $100,000 a year on
+tokens, you can basically live like you
+uh are a normal citizen in 2028. Like
+it's just pretty clear that token costs
+going to come down. Uh compute is going
+to go way way up like you know we think
+like 90,000x or so. There will be
+90,000x the amount of like inference
+from here to like 3 years from now.
+>> Oh you plot it out in some curve 90,000
+times.
+>> I mean it's like many many orders of
+magnitude
+>> which is kind of baked in both with the
+chips and the data centers they're
+building out.
+>> Yeah. I mean, you know, a lot of people
+say that Nvidia is way overpriced, but
+what if it's way way underpriced by like
+several orders of magnitude, right?
+>> 90,000 by when?
+>> Uh, I don't know, 24 to 36 months.
+>> Okay, so five orders of magnitude
+basically.
+>> Yeah. I mean, we might be off by a
+couple orders of magnitude, but
+magnitude, friends. I mean I mean it's
+actually the thing that's crazy is if
+you go up by five orders of magnitude
+it's not just what it does in terms of
+usage but in terms of capabilities
+because every order of magnitude you go
+up new capabilities emerge and you know
+I've been I've been pretty behind the
+curve on AI for a while like I missed it
+in 2020 to 2022 cuz you know I'd grown
+up my whole life hearing about AI from
+when I was doing CS and just assumed it
+was one of those things like fusion that
+was never going to come and then it came
+and when it came it came really fast and
+at first a lot of the stuff people were
+saying about it sounded breathless and
+like they were talking their own book
+seemed crazy
+>> but they turned out to be right so far
+right and it's not so I think the the
+big there were many big questions about
+AI coming up right now I think the the
+like one question I used to have in my
+mind is like is it going to be
+distributed or is it going to be
+centralized you know and now that's sort
+of morphed into like is open source
+going to be good enough for most use
+cases or are you always going to need
+the frontier proprietary models right
+there's the whole thing about like it's
+weird that China is making all the open
+source stuff and the US is doing all the
+closed source stuff and so where do we
+go from there right um there's the
+question of is it going to be
+nationalized or is it going to be uh
+sort of private sector um especially if
+you're saying hey it's a new Manhattan
+project these are the new nuclear
+weapons then like private companies
+building them and controlling them
+doesn't make sense but I think the most
+interesting remaining question there's
+still one that I really care about over
+the others uh where there's no clear
+answer yet is I think the people in the
+labs believe that the scaling laws are
+such that the AIs will keep getting
+smarter until they become smarter than
+the smartest smartest humans probably
+through the process of recursive self-
+intelligence recursive improvement but
+or what they call ASI and I think that
+is the big question so you know two
+years ago you could have taken the
+viewpoint that AI will get you mid at
+everything but it's not going to be the
+pro at anything right now you're getting
+to the point where it'll get you the pro
+at everything but we don't know if it'll
+get you the the last creative mile like
+that like that last bit of like moving
+out of the system and creating something
+new, not just recombining what's already
+in the training sets.
+>> Did the progress that it made on the
+airish math problem bother you?
+>> It bothers me for sure. I mean, not
+bothers me. It's a process of discovery.
+I don't want to be bothered by laws of
+the universe, right? So, bothered me,
+but it definitely surprises all but at
+the same time I still don't see like
+broad general creativity. But anyway,
+that's separate points. I was a math
+major and I really loved proofs and
+something actually making progress in
+that domain in a meaningful way that
+looked really original like there's
+something creepy about it almost like
+>> but it was directed by someone right
+>> Sure. So, and I I think that that's
+fine.
+>> Everyone was surprised who was involved.
+Right. Right. Like I I don't know if you
+saw the
+>> All that stuff is kind of like boring.
+It just means like go do something else.
+Like if you have limited time to think
+about something, do you want to spend it
+opining over the fact that there's a
+machine that's better than a human at
+something now or just go apply your
+humanness to something that you haven't
+thought about
+>> or or actually to riff on Gary's point,
+are we going to end up in a place where
+a machine is strictly better than a
+machine with a human? like a human in
+the loop doesn't that's the big question
+right like because chess went that way
+there was centaur chess somebody was
+telling me about this but there was
+centaur chess where like the chess
+computer plus the human would beat just
+a chess computer but eventually just the
+computer alone beat the centaur model
+>> I I guess for like for me uh I'm dealing
+with AI in the most practical way
+humanly possible um you know spinning up
+thousands of agents for people on demand
+build a massive fleet management system,
+an eval harness. Um, the reality of it
+is like, uh, I don't think intelligence
+is the bottleneck. Cost is the
+bottleneck right now.
+>> Right now, uh, when we started doing it,
+every single person in our app has their
+own open claw running for them. Uh, it's
+a really power.
+>> Yeah.
+>> Oh my god.
+>> Like like mine wrote.
+>> What about this OpenClaw then? People
+just want OpenClaw right now or they
+should. It's not OpenClaw anymore
+because when we started with OpenClaw
+and Opus, it was $100 a month per
+person. We spent three four months
+driving that down to $2.84. Do
+>> you use Pi now?
+>> Uh we built an entire stack that is just
+completely wild that has an eval harness
+uh and then is like an entire agentic
+fleet that can spin up and down elastic.
+So that I deal with the mundane parts of
+that stuff all the time. I still think
+what's way more interesting to is to
+think about what humans will do when
+they don't have to do these things. But
+I but I think that there is a very real
+phenomenon going right now where the
+people who would know the most in the
+labs are basically saying there will be
+nothing left for humans to do really
+when you when you read between the lines
+of what they're saying. They're saying
+in different ways but they're saying
+your harness doesn't matter because
+within a year the AI will be spinning up
+harnesses as needed and you won't even
+be the consumer because it'll be talking
+to other AIs and beyond the Eurish
+problem it'll be solving fundamental
+problems of material science and physics
+and math and and engineering and health.
+>> Great. Yes, but then you know that's
+taking the average person out on the
+street working them up into a frenzy.
+They're getting angry and scared because
+fear is a precursor being try to get all
+my smart friends to go work at anthropic
+so that then I'll have lots of friends
+there who will get me into the anthropic
+level two bread line
+>> cuz right now I like I feel like pretty
+solidly in level three and you know like
+there's only two jobs. All right, it'll
+be anthropic employee and sex worker for
+anthropic employees. All right.
+>> I mean, that's the scary part, right?
+That's the one and it's getting people
+worked up and there real world
+consequences of that because you don't
+live alone. You you live inside a
+hunding thundering herd called humanity.
+And if that thundering herd decides to
+like go left towards a cliff because
+it's mad or because it's enraged because
+it's poison, you're going to go with it.
+You know, you're not going to be the
+lone bison sitting out there by yourself
+on the edge. So,
+>> the thing is people are mad like
+nationalization, right? Like that's
+where it would go, you know?
+>> But right now that you can see that
+trend starting with they're attacking
+data centers, right? They're attacking
+data centers over
+>> that's just stupid.
+>> We look back on this stuff and we think
+like the spinning it's a rational
+response but it's an irrational carrier.
+So they're saying it's because of water.
+It's not about water.
+>> That was a lie that was debunked. It's
+not about like socialism. It's not about
+reason. It's about how you get the
+people going.
+>> You're getting poor and you want to you
+want more money or you're in this case
+you're right now like you're going to be
+replaced and you want to stop this
+train. You want to be like I want off
+this train. That's on the train. Yeah,
+that's rational. Totally rational. So in
+this this is a case of especially when
+you have the popular delusions of the
+madness of crowds, you have the ends
+justify the means. So in this case, the
+the water is just a means. They'd find
+another one if it wasn't water. There'
+be some endangered egret, some bird
+snail.
+>> Do you think?
+>> Are they right? Well, they can't stop
+it. This technology is a genie. That's
+what the replace true like there's been
+times in the past where like yeah, like
+smashing like spinning looms actually
+stopped revolution very briefly. It
+slowed it down. There was other
+technology.
+>> We have spinning looms now.
+>> But of course, but there was other
+technologies. There's other technologies
+where they like, you know, refused to
+issue a patent or something. So it
+became unmarketable because it was just
+like politically going to be too
+difficult. I think that basically we
+ingest like, you know, 100 years ago 50%
+of the labor force in the US was working
+on farms and that's no longer true,
+right? And now it's great. Now it's a
+great thing. Now it's 2%.
+>> I don't like working on a farm.
+>> We don't have 48% unemployment.
+Absolutely. We don't have 48%
+unemployment and we all have food,
+right? But the question is, what is the
+speed of transition?
+>> The speed of transition is the problem,
+right?
+>> It's a derivative.
+>> That one took like 60 or 70 years. This
+one.
+>> So I have good news for you guys. Have
+you ever worked at a Fortune 500
+company? Those things are so stupid.
+>> Nobody has.
+>> Oh yes. [laughter] I worked at
+Microsoft. No, no. I mean like nobody
+there works.
+>> Yes. Exactly.
+>> It's already all make work jobs anyway,
+right? It's like how much of the
+population is working and then how much
+of that is working for the private
+sector and then how much of that is not
+working in some [ __ ] job. Graber was
+right. Graber was only very few people
+are actually working.
+>> I mean, [clears throat]
+I'm working more because of AI. I got
+six codeex agents running all the time.
+>> I'm working the hardest I've ever worked
+for way more. And so I just kind of
+think people are going to work more.
+>> The productivity the leverage is way
+higher. But that's all true until AI can
+totally and completely replace you,
+which I don't see around the corner, but
+I'm more open-minded about it now.
+[laughter]
+>> I used to think that was an
+impossibility. Now I'm like,
+>> you know, I got to pay attention.
+>> That's exactly my philosophy. It's like
+uh you have two two company A company B.
+Uh you have the same technology,
+everyone has access. Like you know,
+hopefully everyone has access.
+>> Well, that's a key. So are we going to
+is it going to be open source or is
+going to be great? Because right now if
+they keep scaremongering, some of that
+might be well now you need national
+approval. We just saw Sam Hman said that
+Codex 5.6 will be rolled out slowly to
+partners approved by the US government
+first. My god. So he's already
+cooperating because he doesn't want to
+get shut down like Anthropic did.
+>> Uh and so it's already starting. And so
+then a small number of people, it
+becomes a defense department thing. Then
+it's like who has access? Who has
+control? You know, they have cyber
+weapons. Maybe they get to hack the cy
+the systems first. Maybe they get to
+control them. Maybe they get mass
+surveillance or we don't for our own
+good, right? That's how it always
+starts. So to me, it is definitely much
+scarier that a small group of people
+have control over AI than everybody has
+it. But everybody having it is also
+scary because of well I mean there's a
+print a bioweapon thing but the biop
+printer labs are pretty locked down to
+begin with so I'm not sure how real that
+is good [laughter]
+>> yeah like good ship it
+>> yeah and in fact it is now coming out
+which many of us already knew and been
+saying for years that the funer and
+creators of the uh uh corona virus co 19
+were basically the US government and the
+Chinese government working in cahoots
+right it was basically Fouchy and crew
+in North Carolina. So the joke I tweeted
+was like designed by NIH in North
+Carolina assembled in China, right? Cuz
+it's like the old Apple line designed by
+Apple in California assembled in China.
+But that's basically what happened with
+the Corona virus. They were doing gain
+of function research to build a vaccine.
+They were being total cowboys. This is
+this is crazy stuff. I mean anyway, I'm
+not saying AI is necessarily going to
+lead to bioweapons because to the extent
+that AI would lead to bioweapons right
+now, you know, some smart biohacker
+student could already do it, right?
+Right. So it's not
+>> don't kill people but it democ it is
+democratizing a certain capability.
+>> I mean game theory wins out in the end
+one way or the other.
+>> Game theory on this is not good. When
+mutually shared destruction is available
+to every individual the game theor is
+not good.
+>> My point of view is the problems are
+already out there. They're they're
+they're already as bad as you're like
+you're saying that they're going to be
+like the problems are already out there
+and like AI is the way and just
+technology progress in general is the
+solution to all those problems.
+>> Jerry can't even afford his open claw
+that's like reading his email right now.
+How is he going to pay for the nuclear
+bomb claw that
+>> No, I'm good. I could pay for it. I just
+want everyone to pay for it. Exactly. I
+want everyone to be able to pay for it.
+>> It's like $100,000 a year basically.
+>> It's totally worth it. But if you hire a
+person, you can afford your open claw.
+>> People have gotten so uh I don't know if
+it's AI psychosis or or or what it is
+that at this point I I usually just want
+anxiety.
+>> Yeah. I just want to be like, can I just
+talk to your AI please? Like just you
+know where do I email your AI? I don't
+need to interact with you because people
+are like you can't even text someone and
+get an answer from them anymore.
+>> So many people that are writing emails
+and writing documents with AI like an X.
+I see all these posts that are clearly
+written by I'm like why should I read
+it? I want my AI to read it.
+>> I think that's so clear. AI should read
+it.
+>> That's so clearly a lower class signal.
+Like that's like ridiculous. When I get
+emails that are clearly written in AI,
+I'm like dude that's the last.
+>> Well, you can write it better with AI
+because what you need is multi-stage
+voice.
+>> Don't you?
+>> I [laughter] sure do. Actually, that's
+why I'm jumping to his defense. I I hate
+AI writing. It's too verbose. It's too
+verbose. It's too clinical.
+>> No, no, but you can fix it like that.
+You know, we have super intelligence.
+Why wouldn't
+>> just write the the value of actually
+reading something and realizing it's
+written by a person is so much fair.
+>> I feel like such a way you're not
+writing your own stuff. How are you
+going to talk? You're going to lose your
+ability to speak well because good
+writing and good speaking are the output
+of good thinking. And if you're not read
+muscle,
+>> yeah, I suppose you can do a lot.
+>> My counterargument would be, you know,
+how like sometimes you actually really
+need like a person. I mean, I don't
+think this replaces people, but I can
+have now a high bandwidth conversation
+with a relatively smart AI model all of
+the time.
+>> No, no. And you should do that. You
+should talk to the AI model all you
+want, but I'm saying like when you write
+something that's meant to be consumed by
+other humans, if that's written by an
+AI, that's a disservice to the other
+human. You're wasting their time.
+Everything the AI wrote should instead
+be compressed down by you or re or you
+should really like take the time to make
+the point as succently as possible for
+the other person to respect their time.
+Otherwise, their AI is going to end up
+reading your AI and neither of you are
+in the loop. you're not even
+>> This is one reason I enjoy Twitter less
+lately is because so many signal like I
+think um in the future people will just
+have really really impressive skill
+files that actually extract like the
+style and the diction and like I mean
+the thing about the thing that people
+underestimate that I've learned with
+some of the stuff is that you can just
+have more and more eval like you're
+saying you have an eval harness right
+like you can have multiple levels you
+can have crossmodal evals and when you
+enough like sort of I mean it's cross
+talk but if you do enough of it like you
+can actually improve the skill file to a
+point where it's indistinguishable and
+like this is without the next level of
+model like imagine fable 7 fable 8 like
+you will not be able to tell I guarantee
+like less than 9 months like you like
+this whole AI writing conversation will
+[ __ ] go away
+>> I think I'm still a little better
+defended I'm higher up on that hill than
+you guys cuz I write very very short and
+AI are very bad at summarizing
+>> but also very bad at
+>> disting good writing is novelty
+>> like it's like unexpected and anything
+that is guessing a next token from a
+regression can't do it
+>> it's not it won't do something it won't
+do something original
+>> if if you like co-write with an AI or
+use it as an editor to bounce ideas off
+almost always it'll have like this one
+short it's always like a short turn of
+phrase where you're like oh that's good
+>> and it got that from somewhere else on
+the internet the internet's a big place
+>> actually I programmed a really crazy
+thing in Gbrain. It's the retrieval
+thing I made. Uh it's actually basically
+a collider of different vector spaces.
+And so I mean and this is the kind what
+I mean by like boil the ocean like these
+are things you can do now. Like it has
+my whole corpus of like everything I've
+ever said, all my emails, all my Slacks,
+all my text messages, my DMs,
+everything. And then so I actually have
+like uh like 400,000 markdown files on
+like literally anything I've ever
+thought or read at this point. And then
+uh I have this thing called LSD mode
+which is uh lateral um [ __ ] What's the
+s
+>> lesson? Sorry. Yeah. Lateral sarcastic
+drift. I for I mean I just wanted to
+call it LSD. Yeah. Yeah. I know.
+[laughter] I was trying to make up
+chemical composition. Yeah.
+>> Yeah. it uh but basically it's you know
+take every possible vector space that
+are is not pointed in the same direction
+and then cross them and then do um a
+ranking a re-ranking across all of these
+ideas and you can actually more like
+it's called brainstorm LSD mode
+>> and it just like finds bangers
+>> and you know sometimes I'm just if I
+just am bored sometimes I'll just be
+like give me some LSD bangers and it
+will literally give me like 10 or 20
+ideas that like you know three or four
+different frontier models have actually
+reranked and said like actually if you
+look at this and we cross reference
+against like exa actually this is
+actually a really good idea and I'm like
+this is finding ideas at like a
+ridiculous amount of scale. So I mean I
+get it but I'm also calling [ __ ]
+because I think that like this is just
+the classic and I think this is actually
+a really fun thing that is useful. It's
+um you know I think it's like a Paul
+Bukiteism like the way to you know build
+the future is just like live in the
+future and then work backwards right
+>> and so like it is inevitable that like
+rather than [ __ ] complain about AI
+>> like it's helpful like it scores points
+like I see it on X like people love to
+like [ __ ] score points on me okay so
+this is a problem it's like I'm [ __ ]
+nearer to it like I don't give a [ __ ] if
+someone comes to me and is like [ __ ]
+your AI writing because it's like you
+know what my AI writing give is so
+[ __ ] good that I don't even give a
+[ __ ] No, I I read it, you know, like
+I'm alive. I'm a human being still,
+right?
+>> But um anyway, that's how that's, you
+know, welcome to my TED talk. No, I I
+just think like I just think
+>> I agree like to predict the future, you
+just live in the future, right? That's
+the best way to learn and everyone
+should be AI maxing just to figure it
+out. Otherwise, you're going to have no
+sense of where it's going. I think like
+today's virtue signal is ex I mean
+>> I think that it's not helpful to people
+like there are people who are going to
+listen to this who want to be rich
+>> and they're going to be like oh no like
+I shouldn't use AI to write oh I see so
+I mean I agree with you that like human
+beings and like what you really think
+matters a lot and you should write
+>> and then for me that writing process is
+like actually workshopping in telegram
+with my open I would say for I don't use
+AI to write. Well, that's not true. I
+used to write code. So, maybe I am
+>> contradicting myself. But code is like
+it's a utilitarian. It's like it's not
+meant for a code is meant to be consumed
+by another computer. It's not meant to
+be consumed by a human. So, if I want to
+create something that's meant to be
+consumed by a computer, I will use a
+computer. Yeah.
+>> But if it's meant to be consumed by a
+human, then I want to understand the
+thing. I want to, you know, ruminate,
+marinate within it. And then I want to
+respect the reader or listener's time.
+Yes. And give them that insight nugget.
+Now the AI is useful for brainstorming.
+>> That that part I like. I do use AI to
+brainstorm. I use them like give me
+synonyms for this, give me other ideas
+associated with this, pull in tangential
+information. You know, I argue with it
+sometimes, especially because a lot of
+them are are on guard rails, but I don't
+use it to actually create the output
+that then I expect a human to sit there
+and read. That just seems to me like
+discontinuity, right? It's it's kind of
+unfair.
+>> It's a quality thing. I mean, I agree
+with you like out of box the quality is
+bad. Yeah. But you can have like 2028
+level stuff. I mean like I think the
+pattern that I'm trying to like you know
+tell people is that like yes like AI
+writing out of the box sucks right now.
+Like if you rely on it out of the box it
+sucks. But if you have an eval harness,
+if you've actually gone to like build a
+big enough corpus, if you actually like
+>> you done crossodal eval and like built,
+you know, a bang like I have a banger,
+but I want to see some banger essays
+from you
+>> because I feel like and even even if
+they were from
+>> essays right now from Yeah. They
+wouldn't even be good enough because you
+are the president of Y Combinator,
+right? I want to see someone who's just
+like out there posting,
+>> right? using this system. Rise up, make
+an anon account, disconnect it from
+yourself entirely, then come back and
+throw it in my face when you get to
+300,000 followers.
+>> Okay?
+>> Because I'd be so I'd be so curious if
+you could do that.
+>> Absolutely.
+>> That would prove it.
+>> He could absolutely do that.
+>> He could cuz there are 300,000 people
+out there who will fall for it.
+[laughter]
+>> But if you get that, then at least
+that's something, right? But it can't
+be.
+>> But if you pick up or me or someone you
+know who's like smart and insightful and
+like and wants like high quality content
+and knows what that looks like, you're
+not going to get those people.
+>> I've never been more creative. And I
+think something happened probably just
+in the past few months, especially with
+uh codecs. I I think I'm like I'm way
+ahead of the curve on codecs. Like I can
+I'm running my computer from home on my
+phone here um in a way that you can't
+actually do without modifying codecs in
+some ways. Uh and like the amount of
+create creative productivity I have is
+way higher than it ever was. I think
+like 6 months ago, 12 months ago, the
+promise wasn't quite there. And so
+everyone was like, eh, this AI thing is
+not that useful. But I think it hit an
+inflection point in the past few months.
+>> Yeah, I think I think clog code was a
+tipping point.
+December in December 2025 was the
+tipping point and you had to reevaluate
+AI. AI has had a couple of tipping
+points. One was diffusion into images,
+you know, which kind of started it all
+when you first saw like stability stay
+and you were just like whoa okay made a
+dog face it can be like cats and guys on
+the moon. Yeah, it was wild when it
+first came out and then probably
+instruct GPT and chat GPT and then there
+was another jump with the reasoning
+models like 01 and 03 but I think the
+cloud code was a big unlock cuz it just
+unlocked a series of practical use cases
+whereas before it was like okay it's a
+better Google search or you know it's
+like I this saves me time like doing
+research or I can learn from this or I
+can even have a small conversation but
+>> cloud code was a massive unlock.
+>> Well the big thing here is like this is
+the worst it'll ever be.
+>> Oh of course. Yeah. Yeah. No, it's
+getting
+>> there are like so many cryptoisms that
+basically super apply to
+>> Yeah. Yeah. You could have said that
+when Fable was released and you would
+have been wrong cuz they t away from us.
+>> Yes.
+>> Briefly, briefly it'll be
+>> use cases. You couldn't tell the
+difference between Fable and Miniax
+>> for almost any.
+>> So that brings me to a good topic I do
+want to discuss is open source versus
+closed source, right? How good are the
+open source models?
+>> Really unbelievable.
+>> Okay. I haven't tried G.
+>> Five times five to 10 times less the
+cost.
+>> Yeah. Okay.
+cheaper than when like when should we
+use them?
+>> Miniax is just mindbendingly good.
+>> It needs a good harness though.
+>> Uh yeah. Yeah, it does need a good
+harness, but it's it it if you got one,
+it works really well.
+>> I was thinking today I'd love to see
+like take the latest and greatest open
+source model and they seem to have gone
+from a 12-mon gap to a 9 month to 6
+month and now some people are saying
+three months. I don't know if it's
+weeks. Some people are saying three
+months. Whatever it is what it is. It's
+very jagged, right? In some domains they
+seem caught up in some domains they
+don't. But I would love to see someone
+take the latest and greatest open source
+model, put it inside a very good
+harness, give it all the tools, make it
+available through a beautiful download
+desktop act and jailbreak it, strip it
+of every time it pushes back at you for
+anything stupid, any tone policing, any
+I don't want to research that. I'll just
+tell you the truth every time and just
+call it truth.ai. Like that's all it
+does. Like I just want to see that. I
+just want to see what happens. is like
+cuz the one place where the frontier
+I'll always pay for more intelligence
+because I'd rather be right more often
+than wrong cuz I just think you're high
+leveraged right and obviously I can
+afford it but maybe if I was doing some
+highly repetitive task I wouldn't but as
+a simple example like if you're doing
+something where the AI is right 90 you
+have one AI that's right I saw the stat
+like 99.9% of the time and the other
+one's right 90% of the time well if
+they're recursively looping and you run
+them a 100 times the one that was right
+90% of the time is not going to be right
+13% of the time whereas the one that was
+99.9 will drop to 80 or 90 right So
+intelligence doesn't matter on the
+margin. Now those numbers are obviously
+chosen 99.9 versus 90. It's not 99
+versus 90. You notice it's 100x more
+100x lower error rate errors accumulate
+compound. That the point errors
+compound. Anyway going back I will pay
+for more intelligence. But and I'm not
+that cost sensitive on matters of
+judgment because you're always applying
+leverage and your time is also very
+valuable. But what I am curious about is
+the mo the frontier models do annoy me
+by constantly trying to railroad me. you
+know, they're always like, "Well, I
+shouldn't be telling you that. How about
+I give you this other answer?" That's
+>> okay. They're really messed up things.
+How much of that are they doing?
+>> If you talk to it about like serious
+personal stuff. Uh, and it also like
+always mess up UTC versus like Pacific
+time and it thinks it's like 7:00 p.m.
+and it thinks it's like 5:00 a.m. I was
+like, "Hey, this is time to go to
+sleep."
+>> That's why it does.
+>> And after a while, I was like, "What is
+going on with you?" Like, it's literally
+7:00 p.m. And it's like, "Oh, sorry."
+Like, anthropic ruff is me. So to you
+know if I'm if you're talking about
+something serious and I think it's late
+like
+>> but I would love like a completely
+jailbroken best of breed
+>> open source model fully local is fine
+doesn't have to be in a nice package. It
+doesn't have to be local actually.
+>> What are what are you doing where the
+jailbreak is so important because like
+>> well there there are a couple of things
+where it does stop you or crochet. You
+see that right? There are a whole bunch
+where you don't see it where it's
+successfully keeping you away from
+whatever you want to know.
+>> But you can always just switch to GLM
+5.2 too and it'll just do it. But create
+a time of your life.
+>> Go ask it any question about race,
+gender, immigration, mental health,
+doctor advice, legal advice.
+>> I don't see why you need a harness for
+this, right? Like for me, I'm using
+harness cuz I'm using agents cuz it's
+going out and doing things.
+>> Just say harness like just I just want
+by harness. I just mean like I want it
+maxed out. I don't want any excuse for
+like why my open source model is even
+slightly worse than it could be. I want
+it operating. I want the best open
+source model configured in the best way
+and it just tells me the truth all the
+time cuz I used to go to Grock for that
+but even Grock is a little neutered.
+[laughter]
+Yeah, it's not
+>> talked about this.
+>> Is he? Okay.
+>> People pointed out like some of the he
+was like, "Oh jeez." And we wanted it to
+just be real and it was giving
+neoliberal answers.
+>> Right. Um I'm dying to talk about what
+you said the other day, but I also don't
+know if you want to say it publicly.
+>> The entire um probably hacked. It's
+probably already hacked.
+>> Oh, no. I'll talk about it. Uh so the
+question is like where are the open
+source models catching up? Right. And so
+there's a couple of different theories
+and I'll just lay out the theories that
+I know and the evidence for them, but I
+don't have a point of view yet.
+>> I mean, it's possible that these are
+true.
+>> So what so there's some of it that's
+obviously, you know, the Chinese are
+doing their own pre-training. They have
+their own compute. They have their own
+data sets. In fact, they can crawl more
+of the data sets because they're less
+bound by copyright laws, right? So they
+can crawl YouTube and Reddit and all
+that stuff. Uh and they train these
+models. That's like the base model,
+right? Then there's like the accusations
+that anthropic made which is that
+they're distilling our models which is
+they're taking they're quering our
+models and mass taking that data using
+that train if I
+>> were China that's what I would do
+>> for sure and that's creating a jagged
+intelligence kind of model and
+definitely some of that is going on but
+I think it's rich of anthropic to call
+that out when anthropic crawl the open
+web and distill the open web that's all
+these AIs are right in fact one platform
+that I think would be very popular if
+the government were to do it is to say
+hey you guys have since you trained on
+the open web if you trained on open web
+and open data you have to open your
+model after X months, after 12 months or
+something, right? That seems to be like
+a fair a pretty fair thing to say,
+especially like open AI, you have to be
+otherwise, you have to be actually open
+AI, right? An anthropic, you're the
+you're the one talking doom and gloom
+and you're building God, but you're not
+going to keep God in a leash for
+yourself, Dario. We don't want like a
+priest, you know, controlling God for
+the rest of us, interpreting the Bible
+for the rest of time. So, I think that
+would be a popular thing. Okay. So
+anyway, number one, they are uh they are
+they have their own pre-training, but
+they get the full corpus of the web.
+They don't have to obey any copyright
+laws, right? Second, they are distilling
+the existing American models which are
+starting to get more locked down and a
+lot of this government nationalization
+control helps them be locked down. But
+you know, there are data brokers online
+that are taking like Cloud Max accounts
+and reselling tokens from that in an API
+format to end users of like 80% off
+because those plans are heavily
+subsidized for end users. They charge
+the enterprises. It's like $8,000 a
+month retail.
+>> Anyone anyone who's like run like an
+exchange or uh regulated online
+brokerage knows that KYC is a dime a
+dozen. People get by KYC all the time.
+They like print passports in Vietnam if
+you want. Right.
+>> The expenses there. Yeah.
+>> Yeah. Exactly. So I think the
+distillation is going to be hard to
+stop. But I think the the biggest one to
+think about and there's some genuine
+algorithmic breakthroughs like the Deep
+Seek paper Deep R1 systems people very
+very smart people and and I would guess
+just by looking at the numbers of
+resumes and so on that the majority of
+mathematicians and researchers in AI
+today are Chinese like they produce more
+STEM graduates more PhDs in the relevant
+fields more Olympiad winners than
+anybody else right so and then a lot of
+the US staff is Chinese so in fact
+that's why I tweeted AI as our Chinese
+against their Chinese, right? And these
+guys and and I don't think there's any
+conspiracy required. These guys are all
+just friends, you know, they they live
+in the same dorms. They went to the same
+schools. They live in the same buildings
+and apartments. They hang out. Yeah. And
+they they switch jobs like crazy. And
+not just the Chinese. You see,
+everyone's hopping from lab to lab to
+lab and they're just taking data with
+them. Okay. So, there's all of that
+going on, right? But then on top of it,
+I don't think that the AI companies have
+the security profile of a top US
+national secure compartment facility,
+right? They do not know how to protect
+secrets. So, of course, they're getting
+hacked. Of course, the weights are
+getting leaked. And if you're if you're
+Chinese or anybody else, you're not
+going to like just take the weights and
+release them back. You're going to use
+that to distill at high speed and train
+your own model, right? Or to augment
+your model. So, I think there's another
+whole system right there that's going
+on. And the last one, actually, I think
+the biggest one is none of those. I
+think no conspiracy is required for the
+following. If you look at where China
+is, they're like, "Okay, we're behind in
+in so they've always been behind in
+software." The US has been way ahead in
+software. And being ahead in software
+allows you to extract all the margins
+because for the longest time, VCs never
+invested in hardware. Why? Because
+hardware is a commodity business, right?
+And software had the network effects,
+the lock in. Software is art as Patrick
+Coulison said, it locks you in. Uh, and
+so people want to invest in software.
+And so even in the US, whenever you get
+a hardware company funded, the VCs will
+always ask you, well, what's the
+software lock in? What's the software
+piece? Right? And so this is why like I
+used to say, yeah, hardware is the moat
+that buys you time to build a software
+castle, right? But guess what? Clawed
+code burned software down. Software was
+eating the world and AI eat software. So
+now software is commoditized. The moment
+you can specify it, an AI can oneshot it
+or twoshot it or get to it within a
+couple of hours.
+>> Went from like 5% to about 25% hardware.
+20 to 25% hardware batch.
+>> Hardware is also commoditized by China.
+Any hardware I can make here, you can
+make in China. more cheaply and more
+easily. The whole ecosystem is there.
+Shenzen has like 3,000 manufacturers of
+this tiny little cable all in one.
+>> Nixon for normalizing relations with
+China and taking us off the dollar
+standard or the gold standard.
+>> So, and so bringing reassuring
+manufacturing back the US is going to
+take a full generation. It should be
+done. No question. I'm a big fan of
+American manufacturing, but it's going
+to take a long time. In the meantime,
+China outproduces every one of the
+supply chains because they realize there
+are scale economies in production. So,
+they subsidize the thing up front, then
+they become the global supplier. They
+drive everybody else out of business and
+then they control the whole supply chain
+across these critical industries. So
+they own hardware. No one's going to
+beat China on hardware in the next
+decade. It'll ramp up. We'll fight on a
+bunch of fronts, but they own hardware.
+So they like the commoditization of
+software. So when software is getting
+commoditized, that helps China. So if
+you're the Chinese government, you're
+basically funding all these labs. You're
+doing kind of a public private
+partnership where you're saying, "Don't
+worry, you don't have to make money. You
+can be number two or number three. just
+open it so the other labs can learn from
+you and we can catch up and keep up and
+if the software is commoditized then we
+win on the hardware. So the way I think
+about it today is that hardware is
+commoditized. So but it's owned by China
+for the most part. There's some few
+exceptions like SpaceX in the US.
+Software is commoditized. So what's not
+commoditized? It's actually just AI
+research developing working on AI itself
+is the new software engineering. The
+problem with that is that software used
+to be democratized. Everyone could
+compete. John Carmarmac and John Romero
+sitting there with a small team could
+code up Doom and Quake and compete
+against EA and Activision and so on.
+Can't do that in AI. AI takes massive
+resources, huge GPU clusters, you know,
+small numbers of researchers, massive
+data sets, proprietary data sets. So in
+that and then now regulatory capture. So
+it seems like all the value, all the
+choke points are going into AI and
+that's controlled by a very small number
+of companies and ironically the only
+thing keeping us afloat is a Chinese
+government subsidizing the whole thing
+on open source so that their hardware
+can stay competitive.
+>> Yeah. I mean I I think the um
+>> plus they had the weights. No kidding.
+>> Well, they might use that as I mean
+>> you could sneak about on one USB stick.
+Are you telling me that hasn't already
+been done?
+>> It's like you need physical access like
+you need one person on the inside. Like
+there's so many people way every male AI
+founder is walking around with a
+beautiful Chinese girlfriend. Have we
+talked about that? Like no one
+[laughter] talks about that. Go walk
+outside Silicon Valley, right?
+>> I think we all come from a world where
+advantages like had some durability and
+you could actually operationalize your
+advantage against the rest of the world,
+but that's just like narrowing down in
+time. So, you know, you might have the
+smartest model, but what are you going
+to do with it in two weeks and 3 4 weeks
+when until somebody else has it too? So
+the I think there's a different part of
+the game theory that we've not
+experienced before, which is the time
+contraction of any of these advantages.
+Um, and I don't think it makes it harder
+to predict who's going to be in charge
+of anything because like you said a few
+months later, the smartest model is now
+open source.
+>> Guys, I'm so [ __ ] worried.
+>> This is one of my tweets I'm proud of. A
+couple of years back, I said soon
+everybody will have AI anxiety. Like
+we're all feeling it. We're all feeling
+AI anxious, right? It's it's incredible.
+>> Jubilant. I am AI jubilant.
+But it's both. But it's both, right?
+It's it's the anxiety in its good form
+is is kind of FOMOish, which is like
+look, look at all the great
+>> Don't worry about me, guys.
+>> Yeah. But like everyone I know that's
+working at Frontier Lab on these things
+that are researchers, they're like
+depressed.
+>> They are.
+>> Yeah.
+>> They're stressed out because they think
+it's going to kill us all.
+>> That's cuz they're kill. The first ones
+I met in 2021 were saying to me that
+they were putting off having kids or
+thinking about not having kids because
+they were afraid for the kids' future.
+And I was like, what are you talking
+about? as opposed to every other time in
+human history when people were not were
+never afraid of their kids' future and
+so they didn't have any kids.
+>> Wait, so why is this not just going to
+result in Star Trek the next generation?
+Like that's that's my hope.
+>> The [ __ ] part of it would be great.
+>> The [ __ ] part about Star Trek the
+Next Generation is that they have AGI
+clearly, but that AGI is somehow not
+running things.
+>> I mean, they couldn't conceive of it
+yet, right?
+>> They have the holiday, but somehow
+people are still doing
+>> that good enough of writer. They're
+>> not just living in the holiday. There's
+plenty of science fiction that's, you
+know, bothered to see that idea further
+through.
+>> I mean, some some large percentage of
+the San Francisco population has been
+oneshotted by fentinel. You don't think
+the holiday will take out the rest?
+>> Right. Right. They just don't show that
+on the show. Like Gene Rodenberry like
+I'm sure he conceived of it and it just
+be too much of a bummer to show like
+these giant holiday, you know? I mean,
+>> you say this and you're living in Star
+Trek in your mind and you're happy.
+That's true. you're like excited for it
+and it's like but yes, you recognize he
+just there's a ton of terrible things
+that are going to happen,
+>> right?
+>> And you're just like, "Huh, it wasn't in
+Star Trek."
+>> Well, [laughter]
+but you're blowing my dreams over here,
+Daniel.
+>> But to Gary's defense, like there's
+there's been so much electricity, like
+that was a big one, right? Railroads,
+the cars, these were big changes.
+>> Used to have to ride a horse ac like the
+Pony Express. Do you remember that? That
+was insane. But the more But the more I
+was the more Yeah. The more rapid the
+change, the more influential the
+displace, the more tumultuous it was.
+And so now we're having a very rapid
+change. We're displacing white collar.
+We're placing we're displacing
+government. We're displacing managers.
+We're displacing academics. We're
+displacing journalists. You know, I
+learn more from AI than I did in my
+college classes cuz I can sit there and
+I can have it meet me at my exact level
+of knowledge because they give that to
+me visually. Give me a graph about that.
+I can ask dumb questions. I don't
+understand that. Explain it again.
+Explain it again. Explain the third
+different way. Explain it visually.
+explain it audibly. Explain it with with
+dancing elves. I don't care like just
+just to keep going over until I get it.
+>> I could not do that in class. I can
+learn so much better. I just have to
+care, right? If I care, I can learn
+anything better than with any tutor,
+better than with any teacher
+>> where so all the people are obsolete and
+they're going to lead a revolution.
+>> Well, no. We need to want more things.
+And if you want more things, we want
+Yeah, which is great. That's the good
+news. Good news. Everyone wants more
+things. And then if you have this tool
+and you're not averse to using it, this
+is why I'm so against like sorry to
+bring up the AI writing thing again, but
+like I understand like that makes sense
+humans and like there is a disrespectful
+aspect when you do bad writing, right?
+But like that presupposes that like the
+AI can't write. Well,
+>> that's a fair point because right now
+the writing is voluminous.
+giant giant like it takes a little thing
+like prompt you give it
+>> well okay but here's the thing you're
+giving it a prompt right
+>> yes
+>> why don't you just send me the prompt
+why do I need to read all the garbage
+>> because it has to draw on like all of
+human experience
+>> give me the prompt
+just send me the prompt
+>> I mean that might happen
+>> I'll send it to my
+I have my codeex put put together a
+markdown file that I send to my
+developers that they can give to their
+claude code uh to go execute prompt. Go
+do it.
+>> Don't talk to me. Have your agent talk
+to my agent. That's literally what it
+is.
+>> My thing will just file an issue on your
+GitHub repo. And then
+>> yeah, what I want to do is I want to get
+on the Zoom and I'm on the Zoom having
+the conversation and then 10 minutes in
+I know this is not for me
+>> and then I just hit a button and the
+agent takes over. Agent Naval keeps
+talking and I go after the next one.
+>> Yeah.
+>> I swipe right on you.
+>> Yeah.
+>> But for but then the joke's on me cuz
+you were never there to begin with.
+>> I think it's time for politics.
+>> Politics. Politics. Sounded like it's
+been politics most of most of the time.
+>> Let's start with fearongering.
+>> Politics doesn't matter because of AI.
+>> You know, that's not true. What are you
+talking about?
+>> Everything's going to end. Nothing
+that's like politically relevant right
+now is going to be relevant in 3 years.
+>> I will say that I wish I could vote for
+their job.
+>> I I wish I could vote for an AI to
+represent us in Gary will make it open.
+Somebody can make it. They can open
+source it. They can put the weights out
+for us to take a look at.
+>> Read the weights. You can look at the
+weights. I mean, not personally that
+weight, but like a fully transparent AI
+that is running for
+>> this thing. They had this thing a whole
+field called mechanistic
+interpretability where to try to figure
+out how the AI thinks and they've like
+made very little progress.
+>> Sure. I'm not saying we're going to
+know, but I'm just saying you have
+access to the same
+>> are not legible. By the way, it's like
+it's an anacronism. Our training data is
+in natural language and in computer
+languages that humans can read and
+write. And so the AIS are trained on
+that. But in the future, the AI will
+develop their own languages. They'll
+compete. They'll communicate with each
+other in some kind of a binary
+high-speed protocol. They'll almost be
+talking compiled code or maybe even
+something completely different that we
+can't even imagine which will be more
+efficient for communication. It's only
+humans who demand the legibility. But
+the AIS don't really have it. And part
+of what makes AI systems so much better
+than human-coded expert systems is that
+they don't have to be legible. So they
+can find correlations and patterns that
+that we cannot articulate. In fact, even
+most of our knowledge is
+inarticulatable. Most of your feelings
+are in articulatable. You don't even
+know half the time what you're feeling
+or thinking. You're not even talk about
+our feelings.
+>> Yeah.
+>> Yeah. Yeah. Let's do that. We're experts
+in that one place where we are experts.
+>> GLM 5.2. I'll vote for GLM 5.2 for for
+office. Yeah.
+>> You're Chinese overlords. [laughter]
+>> Hey, it's my favorite distillation of
+fable.
+>> I really do appreciate how the Chinese
+are making all the open source models
+out there. It's kind of pathetic that
+the US just
+>> the global economy will appreciate.
+>> Cance is probably the global leader in
+video, right?
+the best. So in some places actually
+that so that's an interesting point
+about open source in some cases now open
+source is number one
+>> and at least historically like if you
+look at things like Linux or other open
+source projects once something open
+source kind of gets in the lead it
+rarely surreners it and that's because
+an ecosystem springs up around it where
+everyone starts plugging into especially
+in enterprise use cases so right now
+claude and and codeex are like slightly
+ahead of GLM uh Fable and maybe a lot
+ahead of GLM but If something like a GLM
+were ever to surpass them, it's not
+clear they'd get a lead back.
+>> I mean, because how can you rationalize
+your limited resources at a company
+going into something that open source is
+is winning at? You have to do something
+with your resources and failing to catch
+up to open source with your precious
+resources [clears throat] is not a good
+use. you'd have a clock like so if
+you're open air anthropic you would have
+a certain amount of revenue and money
+and cash in the bank and investor
+backing and you would have to use that
+to sort of jump meaningfully ahead of
+the open source and take the lead again
+before that runs out. So that's an
+because like if you look at the AI race,
+you know, two years ago, people thought
+that Google and Elon and uh and Meta
+were also competitors.
+>> Yeah, there were five kings. There were
+five kings.
+>> There's two kings now.
+>> There's two kings. And why is that?
+Well, it's not just cuz those guys have
+the best models.
+>> Open AAI and Anthropic are the only ones
+that are a making revenue off of their
+models directly. And so they're not
+subsidizing cross subsidizing from other
+business. They're not running out of
+cash. They're actually pouring the cash
+back in. And the second is because they
+have very active user bases and now a
+lot of the improvement is coming through
+reinforcement learning. They're getting
+the guidance and the trajectories to
+improve the models. And so they're just
+pulling away and maybe Elon cuz he took
+SpaceX public and he's got that war
+chest. He gets maybe one more bite at
+the apple plus he's got the data centers
+in space. So you know don't bet against
+Elon. Um Google I think has lost it.
+>> That's quite sad. It's really amazing
+what happened.
+>> I was always like bearish on Google. I
+was tweeting some pretty anti- Google
+management stuff back in the day. um
+where I was like we'll know they're
+serious about AI.
+>> Gemini 3.1 Pro was like the moment that
+was that's as good as it was but it
+wasn't enough was better.
+>> It wasn't good enough. It was they never
+even got the basic app working. I
+remember I tried to upgrade to pay them
+$20 a month. It was a nightmare. This
+huge run. No, no, you need to be part of
+Google one. No, no. You you need Google
+Workspace account.
+>> They were first to have contact usable
+contacts. Very cool. And then every
+time, even today, the iOS app, which I
+know it's not their platform, but
+everyone else seems to figure it out.
+You put a query into into Gemini, you
+background, it always loses the
+connection. It just drops it. Whereas
+all the others will just run it in the
+background. How hard is that? It's 2026.
+Run a background app, guys.
+>> GRPC. You
+>> just need a little bit more Sparta over
+there. Meta might be too much.
+>> I think it's too late for I think it's
+too late.
+>> I think they have to kill 5,000 Google
+PMs.
+>> Like that's the only way. It's PM slop.
+The whole company's PM slop at this
+point, right? Like anywhere you go, it's
+just like tons of products overlapping.
+It's a huge mess. You can't figure way
+through the maze.
+>> Some incentive pro problem now. All the
+best people want stock in open iron
+anthropic or they want to be sitting
+alongside the best colleagues in open
+airropic or they want the data set from
+open ironic and they certainly don't
+want to be tied down by all the PMs
+>> uh and all the legacy BS and they should
+have replaced Google search Google AI a
+long time ago. I don't even look at the
+results anymore. I just look at Google.
+Here's here's an alternative vision
+which is like Google today could uh I
+mean they probably have all the
+transcripts of all the meetings or if
+they don't they should have it
+>> and they have all your emails
+>> right and then they probably need to use
+anthropic fable 5 or whatever because
+like their own models are not quite good
+enough but you could diorize all of
+these you could have like you know a
+markdown file for every single employee
+at Google and you could compute a score
+>> which you cleverly trademarked and
+patented [laughter]
+>> that's right Google
+>> running through Gstack of course you
+No. Anyway, uh
+>> Google Omni is the best for um
+>> Google Gary has a price. It's 7%.
+[laughter]
+>> So,
+>> it's standard. It's just standard.
+>> Seriously, I mean you could solve this.
+Like if someone was a true like really
+wanted to fix this like all of these
+things are just systems problems, right?
+Yeah, but it would take it would take
+Larry and Sergey walking in there and
+literally it's like that scene from
+Entourage when Ari Gold walks back in
+the office is shooting people like
+>> only with their open claws and live
+ammunition. Like I'm serious like you
+don't they don't need to be there
+physically. Like you know one of the
+things I learned from Pedro at Brex like
+that's how he runs Brex like you know he
+has total information awareness on like
+every team and one of the thing like the
+thing that got me
+>> didn't didn't they lose to ramp?
+>> I [laughter] mean I'm kidding. I'm
+kidding. the red guys come in.
+>> I don't have any skin in the game on
+either of those. Okay,
+>> we're accepting sponsorships from
+whoever calls in first.
+>> Whoever pays us more, we'll talk
+>> one or anyway um I mean no like I mean
+he really did like instrument um the CEO
+brain like for him like it's personal
+claw that knows like the KPIs and
+literally what all of his directs talk
+about in those meetings and it's
+significant spying on them all the time.
+>> I mean yes. No, I mean the thing is like
+I mean they're not the only company like
+I've talked to other CEOs. They don't
+publicly talk about this behind closed
+door. This is like the max thing that
+you could do is like how like
+concentrate the power in your CEO or
+co-founding team so you have actual
+awareness of what the [ __ ] is going on.
+>> Well, the reality is the team should be
+much smaller and most your employees are
+GPUs working the data center. I mean I
+mean of course if you can have 10 fewer
+10 like a tenth of your employees right
+now and just make them the 100x guys
+then that's easier said than done like
+most people most CEOs do not want to
+fire 50 people but there should be a lot
+more
+>> I've been on boards where it's like bro
+like we're [ __ ] and we need to fire
+80% of the people and you have a shot
+like you literally but you don't know
+which 80% like tens of millions of
+dollars you don't know which 80% you're
+working through managers What I'm saying
+is now you get and that's not that's not
+a little thing. That's a big [ __ ]
+thing. Like you can have total
+information like
+>> okay like
+>> this is a big thing to me. I think that
+the future is essentially that like you
+need to ride the [ __ ] AGI.
+>> Like you you actually need to like the
+most significant thing to me is like the
+1 million token context window is a big
+deal. It's like I mean I talk about as
+like three Harry Potter books, but guess
+what? Like a human being can keep in
+their brain. [ __ ] seven things plus
+or minus three. Like we are little
+monkey brains. Like we talk about like
+super intelligence is like in the
+future. [ __ ] that. Super intelligence
+right now like an agent working for you
+can literally make a like a thousand
+pages like printed valuable useful
+credible.
+>> Let's not talk about AI writing again.
+>> No. It's not a writing thing. No. It's
+an idea thing. It's like a you can
+understand what the [ __ ] is happening in
+your or like every CEO in the world
+>> like really
+>> so so you could you could have your AI
+say tie into all the systems in the
+entire company evaluate everything and
+tell me which 20% to fire right now.
+>> I mean you could do that and you should
+>> that's like like the easiest thing in
+the world
+>> but no one will do it. No one's doing it
+project at meta.
+>> Plus it's not perfect.
+>> Do you know anything about this? I like
+only what I read is like I mean half of
+the smart people I knew at Meta have
+left.
+>> Yeah.
+>> I mean I'm sorry like I really like
+Meta, you know, like you guys are great
+but like it's also
+Yeah. I think it's it's become a sweat
+shop for I don't think you can build a
+culture or morale by just buying people
+especially all different from all
+different stripes and places and ramming
+them together. It's then you have no
+idea how many are actually missionaries,
+how much are how many are mercenaries.
+Culture is a real thing that takes time
+to evolve and grow. Meta of all places
+needs to do what I just described which
+is like should you know someone has to
+actually know what is actually happening
+per person per team and it's I mean you
+can do this now right but you also have
+to tune it like there has to be a rating
+it's like what is actually a good
+employee what is their behavior what are
+their characteristics like you can
+actually tune your culture right now
+>> I mean it's taking the whole engineering
+team and turning them into data labelers
+is just like it's like dropping a
+nuclear bomb in the place
+>> that seems indiscriminate to me, right?
+Like why would you do that? Especially
+because you have this incredibly fine
+grained thing. Like you have a prompt,
+you have a skill file, you have like a
+bunch of markdown. Like you can actually
+tune it to exactly the output.
+>> I think their org is just too large.
+It's the same problem as Google. When
+you have a large org, you do things that
+actually make sense in certain domains.
+Then it gets leaked to the press, gets
+sensationalized. Oh, they're turning
+everyone into data labor. It's probably
+have too many people. You have too many
+cooks in the kitchen. But it's still
+like way less than what you can fit in
+three Harry Potter books, right? Like so
+I mean I'm sorry to like bring that up,
+but like I think that
+>> millennial example you could give.
+>> Sorry, I don't know.
+>> Read another book.
+>> Yes.
+>> Well, I think the big scary question is
+will there still be a startup ecosystem
+>> because on the one hand you're shrinking
+the size of the firm. People are more
+leveraged. That should mean more
+startups, small teams can do more.
+Great. Fantastic.
+>> We've definitely seen that. I mean
+people can get to 100 mil arr like not
+raise a big
+>> but doing what? Selling software and
+software is getting completely
+all these legal guys like Harvey and
+whatever like it's a good test like
+wouldn't claude just basic mythos or
+fable just do a better job than
+something trained specifically on legal
+especially with tool use
+>> it depends because it depends on whether
+or not um the frontier labs stay open
+for their best models or do they close
+them
+>> I think anyone who pays them enough
+they'll find a way to be open so if a
+law firm will pay them the best result
+like that's
+>> that's not that's not a [clears throat]
+given it is possible for anthropic to
+say like actually Fable 6
+>> I would I I would bet my business
+they're not going to enter my vertical.
+I think if they can enter your vertical
+without without a custom model, they'll
+do it. And I think one of the less one
+of the bitter lessons here is that the
+general models beat the specialized
+ones.
+>> Yes.
+>> They don't have to enter it. It's just
+going to people. Yeah. Exactly.
+>> Toate that market. Not because,
+>> you know, open AI legal act, right? It's
+just because it's so much
+>> like why would I use something?
+>> Why would I pay $5,000 a month for some
+other SAS company? I think that like
+2027 will be the year of the uh AI
+harness war is like is it going to be
+codeex? Is it going to be co-workcloud
+code? Is it going to be openclaw Hermes?
+Is it going to like what is it? You know
+who's like what harnesses are people
+going to use daytoday for everything?
+>> Yeah. Right now so a lot of Silicon
+Valley after 2007 got to exist because
+you had two mobile phone providers. You
+had uh you had Apple and you had Google.
+If you had only one, if you if Android
+didn't exist as an ecosystem, it would
+have been a much tougher position for
+startups, you would have been facing a
+kind of a true monopolist at the end of
+that chain or the top of that chain.
+>> Right? Now, you at least have two horses
+fighting each other, right? So, they
+kind of force each other to behave a
+little bit. If it boils down to just
+one, it's a very bad situation for
+startups.
+>> Well, then they nationalize it and then,
+you know, maybe we could get the
+government to
+>> do they really nationalize it? They
+didn't nationalize Google. They didn't
+nationalize, you know, Apple.
+>> It depends on how bad it gets. I mean
+like search it's a good utility like
+there are lots of reasons
+>> and if you nationalize it it might slow
+down and lose cuz now the DMV is running
+it and China wins right
+>> it's not like the Chinese are asleep
+there's an ASML machine supposedly
+somewhere in China now you hear about
+that Howard Lit ASML and was all mad
+because an ASM ASML machine somehow
+leaked into China
+>> that's the lithography machine there's
+only 184 of them
+>> that's our silk worms escaping
+>> yeah or and then on top of it they're
+developing you know their Huawei chips
+they're working on their 7 nm ter 5
+nanometer whatever processes they're
+building their fabs they're they're
+working on it they're not dumb I mean
+you've got 1 whatever 1.4 four billion
+people there. They've got a lot of STEM
+PhDs. They have a lot of national pride.
+They can redirect capital. I'm not
+saying it matches up to innovation uh in
+a free market economy. But the US is
+ahead because we have created this very
+thin layer where we take the absolute
+best and brightest from all over the
+world and we incent them like crazy to
+compete with each other and then we
+collect the rewards from that. And
+Silicon Valley actually
+disproportionately collects the rewards
+and California collects the rewards and
+it's not really spread out to the rest
+of the country as much. The rest of the
+country is scared shitless now. Um, but
+that's it. That that's the thin blue
+line standing between, you know, the
+so-called free world and the Chinese
+competition. Now, I'll actually take a
+radical point of view. I don't think
+we're in competition with China. I I I I
+don't see the competition. Taiwan, I
+mean, every Taiwanese person I talked to
+doesn't want to fight. You know, the
+rich people in Taiwan are busy dodging
+the draft by taking their kids out of
+the country. You know, there's some some
+rule in Taiwan that like
+>> mandatory
+>> mandatory conscription. But if your kid
+has spent I don't know the numbers but
+something like 3 months a year for the
+last 5 years out of the country then
+they're not eligible for the draft
+anymore or no more mandatory
+conscription. So every rich person is
+always taking their kids for 3 months a
+year out of the they have like a
+standard system doing it. They're not
+interested in fighting the second
+largest political party there is very
+pro-China. So it's already very
+compromised. They are most people in
+Taiwan are thinking they're going to go
+like Hong Kong. They're going to get
+rich in the process. that gateway to
+China and then one or two generations
+later they'll assimilate and how the
+heck is the US going to defend Taiwan
+like aircraft carriers are dead in in
+landbased missiles from China can take
+out aircraft carriers drones DJI is the
+largest defense contractor in the world
+it's like us trying to like it's like
+China trying to defend the Florida Keys
+from us yeah
+>> you know it's it's ridiculous the whole
+concept is ridiculous so and you saw we
+just went through with Iran how do you
+think we' fair we'd run out of missiles
+in like seven days we don't have
+manufacturing uh base. Now, maybe Ander
+and Seronic and others get there and
+build all of that up, but that's a long
+ways off. Uh so I I mean I think the
+Chinese know that and I think the
+Taiwanese know that and I think
+everyone's trying to save face while
+like over 10 20 years Taiwan slowly
+reunites with China and outside of that
+we don't really have a beef with China.
+You know, okay, Japan, whatever. Um you
+know, North Korea's got a South Korea
+issue, but it's not in our backyard. One
+of the big problems the US is facing is
+that we've been in a low growth, high
+inflation environment for a while. Now
+maybe growth is picking back up, but so
+is inflation. And people are fighting
+over the spoils of the democratic
+socialists coming up, you know, the
+billionaires tax, the wealth tax, the
+the socialist trying to seize the means
+of production. Uh, you know, Mum Donn
+doing these rings around the democratic
+establishment and they're talking about
+the eradication of Western civilization.
+Um, people, you you got to put food on
+the table. You got to make people feel
+good. You got to make people feel like
+they're not going to go jobless. You got
+to feed them. And picking a war with
+China just seems like the stupidest
+thing to do. Now, we should have the
+appropriate tariffs against them. If
+they have tariffs against us, if they
+subsidize their businesses, especially
+in network effect or scale economies, to
+compete with us, then we should also
+have our own barriers because you got to
+protect your local industry so it
+doesn't get snuffed out so you at least
+have a fighting chance because these
+things do have economies of scale. It's
+not as simple as David Ricardo said
+where it's just like, oh yeah, I'm
+selling bananas and you're selling
+watermelons and we can just trade. No,
+because the guy who gets better at doing
+something gets really good at doing it
+and then can do it very very cheaply or
+he gets a network effect around either
+an ecosystem or an actual lock in where
+new users create value for existing
+users. So you you can't have that
+simplistic of a mindset. You do have to
+play on even playing field. You have to
+make sure the currencies are aligned, no
+one's subsidizing, etc., etc. But that
+said, there's no reason for us to go to
+war with China. There really isn't.
+>> But is is Taiwan like it or is it like
+control the South China Sea? It's like
+>> why why do we need to control the South
+China? Like, okay, so the world breaks
+in half.
+>> The world's already broken into many
+pieces.
+>> I know, but like right now our ships go
+through there and it's fine, right? But
+like the world literally
+>> Why would they stop our ships from going
+through there if they're carrying, you
+know, trade goods back and forth? Like
+>> who knows why they might want to do
+that. We have a rule that's like, you
+know, the rule of the sea is that we can
+free freely pass wherever we want.
+>> There is no we have a civil war going on
+internally in this country, in case you
+haven't noticed. It's nationalists
+versus communists. Like everyone is
+going more radical in both sides. I mean
+it might be fine if the world breaks in
+half and China controls Asia right and
+it's like get our ships through
+sometimes they charge things
+China China does control most of East
+Asia and to the extent that it does not
+it is up to Japan and South Korea and
+others to look out for their interest so
+they can ally with the US but we're not
+going to get into a shooting war with
+China over interests in the South
+Pacific
+>> we would never do that but we will sail
+a ship through there and they'll hit it
+>> why would they hit our ship going
+through there
+>> if they run a ship to getting our ships
+No, no, but if they if they put a ship
+through the Panama Canal, why would we
+attack it? If it's a legal trade vessel
+carrying goods and services back and
+forth from the US that we're trading on,
+>> incentivized to do any of that to each
+other.
+>> Yeah.
+>> I think right now, China actually cares
+way less about this stuff than we think.
+>> China's very internally focused. Like
+the CCP is very internally
+to ever get
+>> they they want to stay in charge of
+their empire. And you know, I'm not a
+fan of communist, the Communist Party,
+although I think CCP resembles more of a
+capitalist fascist organization. And the
+communist is a veneer, right? Fascist in
+the sense of like it's it's like the
+nation uniting for a common cause,
+right?
+>> They're very good at making money.
+>> Yeah. Exactly. Not only that, they are
+actually pretty hyper competent, which
+actually if you compare it to like the
+California government, it's disrous.
+>> High IQ and homogeneous, right? Yeah.
+>> Well, I mean, when you look at highspeed
+rails, like guys, just change the SQL.
+It's time to build. It's time to build.
+No one's building. There's a few of us
+building in Silicon Valley, but we're
+even building ethereal things that are
+scaring
+>> they're communist instead of Yeah.
+>> We'll just send ours over there, but
+they're like, "Nah, no, no. We don't
+want these guys like not so good."
+>> What do they call them? Baou like they
+have like a bao. Yeah. What does that
+mean again?
+>> It means uh white and left.
+>> White and left. Yeah. And it's kind of
+derogatory look down term, right?
+They're effeminate or stupid or
+something like that.
+>> I mean, all of the above. Yeah. I mean,
+that's how I think of them.
+>> Yeah. Exactly.
+>> Centrist Democrat. Everybody [laughter]
+>> centrist Democrat Democrat San Francisco
+baby. I feel I feel like you're wearing
+it. You're you're you're like, "Please
+don't eat me, sir."
+>> No, I mean, look at San Francisco. Like,
+it's you know,
+>> San Francisco is on the rebound.
+>> We're going to run the table on the
+supervisor seats at least, you know,
+like
+>> but the problem is that LA is sinking.
+Yes,
+>> LA has sank. Uh, Hollywood Hollywood got
+chased out insane. Like, it's insane.
+>> This is not a problem. This is
+opportunity. All my friends in New York
+are going to come back to San Francisco.
+>> This is the This is the problem.
+California has a monopoly on all the
+warm dry coastline, all the
+Mediterranean land in the United States,
+which is the most powerful empire in the
+world. So, it's the most powerful, it's
+the best land in the world, all in one
+state. There should be five or six
+different states.
+>> 30 to 50% of the GDP of the United
+States will concentrate in California.
+>> The arable land, the beautiful
+coastline, the good weather. It's it's a
+it's a curse of geography. They've got
+all the natural resources, right? It's
+like basically southern Italy or France
+or even better, but in the US, and it's
+all in one freaking state. California is
+this weird direct democracy. The worst
+idea ever 50.1% can vote anything and
+they just read a headline. They're like,
+"Yeah, yeah, free free free cats, free
+food for cats and dogs for everyone.
+Great. We'll vote for it. Eat the rich."
+>> Styers Styer couldn't get in there,
+right? Um, you know, basically like we
+actually have two relatively centrist
+options for governor,
+>> which is good. Which is amazing. That's
+great. Like I like that. Right. So
+>> I think all these commotist experiments
+will fail everywhere. like they failed
+in San Francisco, they're going to fail
+in New York. Um
+>> I I don't I don't agree. I think they'll
+fail like the difference with San
+Francisco is demographics are destiny
+and the demographics of New York and the
+demographics of LA and the demographics
+of Chicago are just firmly committed to
+that that cause and the worse it gets
+the more they'll vote for. It's like
+Venezuela. They're going to vote way all
+the way down and there is no there is no
+one out there to fly in and arrest the
+next Maduro. It has to be solved
+internally. United States the last
+bastion for freedom. Even the COVID
+unlocks the the lockdowns would not have
+lifted if you didn't have militia men
+start marching around in the red states
+and purple states carrying M16s and
+AR-15s past the state houses being like
+we're we're done with the lockdowns.
+Then the lockdowns came up. The whole
+world would have been lockdowns a works
+baby. Yeah. The whole world would be in
+lockdowns for 6 to 12 months longer if
+it weren't for the 40 million intrians
+Americans who have guns and they whether
+and everybody likes to hate on them and
+everybody likes to [ __ ] on them but they
+guard your freedom. Yeah, freedom ain't
+free. You need those people out there,
+right? And so, look, when when when the
+US if the US were to collapse, first of
+all, I think freedom bleeds out from the
+rest of the world. You can already see
+what's happening in Australia and UK
+with the speech laws and the censorship
+and all that. Uh, and the weird arrests
+and so on. But if the US degenerates and
+falls, it doesn't fail like Europe did.
+Or Europe isn't fair that well these
+days either, but it doesn't become like
+a big retirement home in a museum where
+everyone's on good social welfare for a
+while. It fails like a Latin American
+country fails because it is bordered by
+Latin America. So you got a lot of
+people who want to get in here and they
+will get in here. So you're looking at
+much more like cartel and drugs and
+crime and violence and those kinds of
+institutions. So
+>> okay, white pill robotics [laughter]
+>> robot. No, you're right. Technology.
+>> I don't want to do UBI. We should do
+UBR.
+>> UBR is good. I like that.
+>> We need to have universal basic robot.
+Everyone should have a robot and the
+robot should cook for you, pick up your
+[ __ ] The good and the bad news is that
+the the robotics the the robotics
+boosters say it's 2 three years away.
+The robotics skeptics say that it's 5 to
+10 years away and no one thinks it's
+impossible.
+>> Yeah.
+>> And so we already have self-driving
+robots, self-driving cars.
+>> I think we can make people really happy
+if they have a better life. Like they
+don't, you know, I mean, who likes to
+clean their toilet bowl? Nobody. But
+a lot of the issues around you have a
+robot do it. It's great. You love this
+if you vote for centrist Democrats. A
+lot well, a lot of a lot of the
+immigration and a lot of the uh and a
+lot of the taxation issues are happening
+because the boomers are retiring. There
+aren't enough people below them to take
+care of them. They're voting themselves
+lots of benefits. There's not enough
+money left in social security. The
+population is shrinking. So, smaller
+number of workers are carrying a large
+number of these guys. So, they're
+saying, "Okay, we'll just sell the
+country and retire."
+>> This is the path. We need centrist
+Democrats who are pro technology, who
+are abundanceoriented.
+>> Okay, but but to play devil for a
+second, like healthcare, 90% of
+healthcare is wasted. It's not even
+people It's not even stuff people need.
+[laughter] No, no, but it's like like
+how much of health care goes into like
+keeping you alive for the last two
+weeks, right? That's not really
+>> I can fix this with markown files. Okay.
+>> Okay. But and then education is just
+like a big LAR. Anyone who wants can go
+educate themselves right now with AI,
+educate themselves right now with all
+the open source courseware and all that
+stuff. They just want the stamp and they
+want to go to college and they want to
+hang out in idilic paradise for four
+years and they want to protest for
+social justice and they just want to
+chill with their friends and party and
+get paid for it. It's already UBI.
+>> You said a very important thing already.
+>> The college is not about the actual act
+of learning. It's about like being in a
+room with a certain set of people who
+like have the right networks. Correct.
+>> It's it's socializing. It's babysitting.
+It's credentialism. There's just a tiny
+bit of education sprinkled in for a few
+STEM degrees and then you go after a
+bunch of [ __ ] jobs.
+>> Legitimize it. Yeah. And then there's
+Yeah. All the social sciences and
+politics science.
+>> We don't want more [ __ ] jobs. We
+want better [ __ ] jobs.
+>> Okay. Like I mean why?
+>> That's true. That's true. Yeah. Yeah.
+>> I mean why can't we just instead of like
+going to a cubicle and like break your
+brain and do a bunch of [ __ ] like
+being an investment banker or something?
+>> Think we're all going to end up being
+plumbers and electricians and cutting
+hair. All the white collar stuff is just
+going to collapse into nothing and make
+software. It's going to collapse into
+nothing because it's just eating more
+and more. Don't you see how this is
+going? Everything's going to be gone.
+>> There's a good version of this where
+people don't have to have just a shitty
+manual jobs. uh they can actually be
+handling and guiding the robots and the
+AIs and and so if we don't get ASI if AI
+gets you to expert level but doesn't go
+beyond still needs human guidance, taste
+and creativity, humans are still the
+motivated things in the environment and
+so people become like Pokemon trainers.
+You like robot handlers, right? AI
+handlers and you use that to start and
+that's to be to to the truth of it.
+That's what we're seeing today. The
+people who are using AI today are more
+productive than ever. They are not being
+displaced. The only reason you're being
+displaced by an AI is because you refuse
+to use the AI. If you're using the AI,
+you have more work than ever.
+>> I mean, the one thing you can't replace
+is human desire. Even if robots have
+their own desires, they cannot replace
+human desire. So, as long as humans have
+desires and there are AIs and robots
+that can help fulfill them, then you
+always need humans in the loop. You'll
+always have
+>> Yeah. Like the moment I find out I'm
+talking to an AI or I'm reading the work
+of an AI or I'm even looking at art
+created by an AI, I'm completely
+uninterested. Assuming it's completely
+done by an a human using
+Wait a second. Wait a second. That's
+just because it's shitty right now. I
+guarantee you it will be
+indistinguishable and it will be very
+very good.
+>> I don't agree. I think even if it is
+indistinguishable
+>> the moment I know it's done. Like for
+example,
+>> but that's the Chinese box at that
+point. Yeah. Yeah. Yeah. But which is
+like actually
+when I first saw GPT3 or whatever it was
+whatever was available from the API like
+that was my reaction. I was like, "This
+is a bunch of [ __ ] Like, this is a
+trick, whatever." But like, that's not
+how I feel now. Like, I get a lot of
+value daytoday, like hour to hour.
+>> Do you do you have a relationship with
+the AI? Do you hang out with it? You
+talk to it? Is it a friend?
+>> It's getting there.
+>> Whoa.
+>> It's not my girlfriend, but [laughter]
+>> my wife is going to watch this, buddy.
+>> It's You just have someone in the
+Filipino call center being your
+girlfriend, then you're just like
+filling in for the What's the
+difference? What's the difference
+between an AI and someone in the
+Filipino call center controlling a good
+chatting with you?
+>> It's a buddy of mine. Okay. Don't talk
+to my friend. Don't talk about my friend
+like this. [laughter]
+>> Nothing's going on.
+>> We're going to end with my AI psychosis.
+>> I just think that it is actually very
+[clears throat] useful, obviously.
+>> I have a friend who's a landlord for one
+of these AI companies that does the AI
+people that you talk to, right? Like
+your AI girlfriend companies.
+>> And he said that to hire extra security
+because these guys would show up in the
+middle of the night saying, "Where is
+she? Which which box is she in? I want
+to take her home. I want to save her.
+[laughter]
+>> Gary's having his first black pill
+moment. Oh no, that doesn't sound good.
+>> This podcast has blackpilled me.
+>> By the way, this entire podcast was AI
+generated. No one was actually here. We
+deny everything.

@@ -361,9 +361,9 @@ def main() -> int:
 
     script_path = Path(__file__).resolve()
     root = Path(args.root).resolve() if args.root else script_path.parents[3]
-    input_dir = Path(args.input_dir).resolve() if args.input_dir else root / "_private" / "assets" / "03_对标账号库"
-    output_dir = Path(args.output_dir).resolve() if args.output_dir else root / "_private" / "assets" / "04_爆款选题库"
-    audit_dir = Path(args.audit_dir).resolve() if args.audit_dir else root / "_private" / "assets" / "07_复盘库" / "01_内容生产复盘"
+    input_dir = Path(args.input_dir).resolve() if args.input_dir else root / "02_资产中心" / "03_对标账号库"
+    output_dir = Path(args.output_dir).resolve() if args.output_dir else root / "02_资产中心" / "04_爆款选题库"
+    audit_dir = Path(args.audit_dir).resolve() if args.audit_dir else root / "03_工作流中心" / "01_短视频主工作流" / "99_运行记录"
 
     if not input_dir.exists():
         raise SystemExit(f"输入目录不存在：{input_dir}")

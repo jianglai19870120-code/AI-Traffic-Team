@@ -4,15 +4,15 @@
   "entry": "SKILL.md",
   "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
   "workspaceDependencies": [
-    "_private/assets/03_对标账号库",
-    "_private/assets/05_爆款开头库",
-    "_private/assets/05_爆款开头库/00_爆款开头选中清单.md",
+    "02_资产中心/03_对标账号库",
+    "02_资产中心/05_爆款开头库",
+    "02_资产中心/05_爆款开头库/00_爆款开头选中清单.md",
     "02_资产中心/03_对标账号库/字段模板.md",
     "02_资产中心/05_爆款开头库",
     "02_资产中心/05_爆款开头库/00_爆款开头选中清单模板.md"
   ],
   "defaultOutputPaths": [
-    "_private/assets/05_爆款开头库"
+    "02_资产中心/05_爆款开头库"
   ],
   "optionalCommands": [
     "python scripts/run_baokuan_opening_breakdown.py --root E:\\AI流量工厂",

@@ -4,7 +4,7 @@
 调用“播客爆款文案生成Skill”。
 
 BK开头卡片：
-_private/assets/05_爆款开头库/BK001_样板博主_反常识纠偏开头.md
+02_资产中心/05_爆款开头库/BK001_样板博主_反常识纠偏开头.md
 
 B播客原稿：
 01_热门播客/01_播客文稿/[English (auto-generated)] Riding AGI, AI Anxiety, Who Funded COVID, Defending Taiwan, and Californi.txt

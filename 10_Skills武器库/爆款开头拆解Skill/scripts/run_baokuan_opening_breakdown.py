@@ -794,10 +794,10 @@ def render_output(path: Path, row: dict[str, str], function_sentences: list[str]
 
 def run(root: str, blogger_filter: str = "", input_dir: str = "", output_dir: str = "", selection_file: str = "") -> dict:
     root_path = Path(root)
-    resolved_input_dir = Path(input_dir) if input_dir else (root_path / "_private" / "assets" / "03_对标账号库")
-    resolved_output_dir = Path(output_dir) if output_dir else (root_path / "_private" / "assets" / "05_爆款开头库")
+    resolved_input_dir = Path(input_dir) if input_dir else (root_path / "02_资产中心" / "03_对标账号库")
+    resolved_output_dir = Path(output_dir) if output_dir else (root_path / "02_资产中心" / "05_爆款开头库")
     resolved_selection_file = Path(selection_file) if selection_file else (resolved_output_dir / "00_爆款开头选中清单.md")
-    audit_dir = root_path / "_private" / "assets" / "07_复盘库" / "01_内容生产复盘"
+    audit_dir = root_path / "03_工作流中心" / "01_短视频主工作流" / "99_运行记录"
     resolved_output_dir.mkdir(parents=True, exist_ok=True)
     audit_dir.mkdir(parents=True, exist_ok=True)
 
