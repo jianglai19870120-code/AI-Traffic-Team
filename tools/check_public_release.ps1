@@ -70,6 +70,26 @@ function Assert-HiddenDirsExcluded {
     }
 }
 
+function Assert-NoRawBookSources {
+    $rawBookRoot = Join-Path $rootPath "02_资产中心\01_原始知识库\01_好书原始资料"
+    if (Test-Path -LiteralPath $rawBookRoot) {
+        $unexpected = Get-ChildItem -LiteralPath $rawBookRoot -File -Recurse -Force -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -notin @("README.md", ".gitkeep") }
+        foreach ($file in $unexpected) {
+            Add-Violation "公开发布包不允许包含完整书籍原文: $(Get-RelativePath $file.FullName)"
+        }
+    }
+
+    $ledger = Join-Path $rootPath "02_资产中心\01_原始知识库\00_原始资料输入清单.md"
+    if (Test-Path -LiteralPath $ledger) {
+        $dataRows = Get-Content -LiteralPath $ledger -Encoding UTF8 |
+            Where-Object { $_ -match '^\|\s*\d+\s*\|' }
+        if ($dataRows.Count -gt 0) {
+            Add-Violation "公开版原始资料输入清单必须是空白模板，当前仍含 $($dataRows.Count) 条业务记录"
+        }
+    }
+}
+
 function Assert-RequiredMainChain {
     $required = @(
         "AGENTS.md",
@@ -212,10 +232,28 @@ Assert-RequiredMainChain
 if ($PackageMode) {
     Assert-NoForbiddenTopLevel
     Assert-HiddenDirsExcluded
+    Assert-NoRawBookSources
 }
 
 Assert-NoRetiredMainChainDocs
-Assert-NoRuntimeOutputs
+if ($PackageMode) {
+    Assert-NoRuntimeOutputs
+    $consistencyScript = Join-Path $rootPath "tools\check_system_consistency.py"
+    if (Test-Path -LiteralPath $consistencyScript) {
+        python $consistencyScript --root $rootPath --public-package
+        if ($LASTEXITCODE -ne 0) {
+            Add-Violation "公开包正式合同一致性检查失败"
+        }
+    }
+} else {
+    $runtimeCount = @(
+        Get-ChildItem -LiteralPath $rootPath -Directory -Recurse -Force -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -in @("outputs", ".tmp", "__pycache__") }
+    ).Count
+    if ($runtimeCount -gt 0) {
+        Write-Warning "母库存在 $runtimeCount 个被发布器排除的运行缓存目录；最终公开包仍会严格阻断。"
+    }
+}
 
 if ($violations.Count -gt 0) {
     Write-Host ""

@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(os.environ.get("AI_TRAFFIC_FACTORY_ROOT") or Path(__file__).resolve().parents[3]).resolve()
 sys.path.insert(0, str(ROOT / "tools"))
 
 from brand_footer import append_brand_footer

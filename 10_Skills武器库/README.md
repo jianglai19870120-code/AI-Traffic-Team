@@ -26,8 +26,8 @@
 
 安装与使用说明：
 
-- 作者工作母体：`E:\AI流量工厂`
-- 公开仓库：`E:\AI流量工厂-public`
+- 工作母体：当前检出的 AI流量团队工作区
+- 公开仓库：由 `tools/prepare_public_release.ps1` 指定的发布目录
 - Codex 本机安装目录：`$CODEX_HOME/skills`
 - Skill 对外规则以当前仓库内 `SKILL.md` 为准，安装副本需要与源目录保持同步
 

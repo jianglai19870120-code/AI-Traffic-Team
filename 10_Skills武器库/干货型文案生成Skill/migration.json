@@ -3,7 +3,7 @@
   "installDirName": "干货型文案生成Skill",
   "legacyInstallDirNames": [],
   "entry": "SKILL.md",
-  "workspaceRootEnv": "GANHUO_AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
   "workspaceDependencies": [
     "02_资产中心/04_爆款选题库",
     "02_资产中心/02_内容模块库",

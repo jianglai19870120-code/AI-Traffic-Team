@@ -1,13 +1,16 @@
 {
-  "version": 1,
-  "owner_agent": "小拆-内容拆解Agent",
-  "private_input": "02_资产中心/01_原始知识库/99_我的工作纪实",
-  "private_output": "02_资产中心/02_内容模块库/99_工作纪实模块",
-  "output_subdirs": [
-    "01_金句模块",
-    "02_误区模块",
-    "03_步骤模块",
-    "05_模块索引",
-    "99_历史处理记录"
+  "skillName": "工作纪实内容模块拆解Skill",
+  "installDirName": "工作纪实内容模块拆解Skill",
+  "entry": "SKILL.md",
+  "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceDependencies": [
+    "02_资产中心/01_原始知识库/99_我的工作纪实",
+    "02_资产中心/02_内容模块库/99_工作纪实模块"
+  ],
+  "defaultOutputPaths": [
+    "02_资产中心/02_内容模块库/99_工作纪实模块"
+  ],
+  "optionalCommands": [
+    "python scripts/run_work_journal_breakdown.py --source-file <source-file>"
   ]
 }

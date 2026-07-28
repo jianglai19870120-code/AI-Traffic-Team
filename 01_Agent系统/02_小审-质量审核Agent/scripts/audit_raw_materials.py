@@ -11,6 +11,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
 from brand_footer import append_brand_footer
 
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 
 READABLE_MIN_CHARS = 300
 BAD_PATTERNS = [
@@ -171,6 +177,7 @@ def write_report(report_dir: Path, scope: str, category: str, results: list[Audi
         "",
         f"- 审核范围：{scope} / {category}",
         f"- 审核时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+        f"- 审核结论：{'通过' if failed == 0 else ('退回' if passed == 0 else '部分退回')}",
         f"- 通过数：{passed}",
         f"- 退回数：{failed}",
         "",

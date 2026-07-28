@@ -5,7 +5,6 @@
   "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
   "workspaceDependencies": [
     "02_资产中心/03_对标账号库",
-    "02_资产中心/04_爆款选题库",
     "02_资产中心/04_爆款选题库"
   ],
   "defaultOutputPaths": [
@@ -13,7 +12,7 @@
     "03_工作流中心/01_短视频主工作流/99_运行记录"
   ],
   "optionalCommands": [
-    "python scripts/classify_benchmark_topics.py --root E:\\AI流量工厂",
+    "python scripts/classify_benchmark_topics.py --root <workspace-root>",
     "python scripts/classify_benchmark_topics.py --input-dir <your-input-dir> --output-dir <your-output-dir> --audit-dir <your-audit-dir>"
   ]
 }

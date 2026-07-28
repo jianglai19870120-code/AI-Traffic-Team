@@ -22,6 +22,10 @@ HIDDEN_DIRS = [
     "03_工作流中心/01_短视频主工作流/99_运行记录",
 ]
 
+EXCLUDED_PUBLIC_PATHS = [
+    "02_资产中心/01_原始知识库/01_好书原始资料",
+]
+
 PUBLIC_CHAIN = [
     "00_系统说明",
     "01_Agent系统",
@@ -63,12 +67,14 @@ def existing_hidden_dirs() -> list[str]:
 def build_summary() -> dict:
     return {
         "synced_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "mode": "真实主链公开 + 少量本地隐藏目录",
+        "mode": "正式系统与衍生资产公开 + 原始书源和本地业务目录排除",
         "public_chain": PUBLIC_CHAIN,
         "hidden_dirs": existing_hidden_dirs(),
+        "excluded_public_paths": EXCLUDED_PUBLIC_PATHS,
         "notes": [
             "02_资产中心 已切为正式资产主链。",
-            "公开发布默认同步真实业务资产。",
+            "公开发布同步正式系统、可公开业务资产和书籍衍生模块。",
+            "完整书籍原文不进入 GitHub，公开清单使用空白模板。",
             "工作纪实、工作纪实模块、Agent 运行记录与工作流运行记录只作为本地隐藏目录存在。",
             "本脚本不再维护模板替代层，只负责记录当前公开同步口径。",
         ],
@@ -98,6 +104,14 @@ def build_summary_md(summary: dict) -> str:
             lines.append(f"- {item}")
     else:
         lines.append("- 当前未发现本地隐藏目录。")
+
+    lines += [
+        "",
+        "## 公开包额外排除",
+        "",
+    ]
+    for item in summary["excluded_public_paths"]:
+        lines.append(f"- {item}")
 
     lines += [
         "",

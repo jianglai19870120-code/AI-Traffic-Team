@@ -1,18 +1,42 @@
 from __future__ import annotations
 
 import argparse
+import json
+import os
 import re
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(os.environ.get("AI_TRAFFIC_FACTORY_ROOT") or Path.cwd())
 sys.path.insert(0, str(ROOT / "tools"))
 
-from brand_footer import append_brand_footer
+try:
+    from brand_footer import append_brand_footer
+except ModuleNotFoundError:
+    def append_brand_footer(text: str) -> str:
+        # Standalone installs may not include the project-level brand helper.
+        return text.rstrip() + "\n"
+
+try:
+    import openpyxl
+except ImportError as exc:  # pragma: no cover
+    raise SystemExit("缺少依赖 openpyxl，无法读取标准 xlsx。") from exc
+
+try:
+    import xlrd
+except ImportError:  # pragma: no cover
+    xlrd = None
 
 REQUIRED_FIELDS = ["视频信息", "点赞数", "文案"]
-SELECTION_FIELDS = ["博主名", "视频信息", "链接", "状态", "备注"]
+SELECTION_FIELDS = ["序号", "选题", "链接", "状态", "备注"]
+LEGACY_SELECTION_FIELDS = ["博主名", "视频信息", "链接", "状态", "备注"]
+PENDING_STATUS = "待拆解"
+DONE_STATUS = "已拆解"
+FAILED_STATUS = "拆解失败"
+XLS_SIGNATURE = bytes.fromhex("D0CF11E0A1B11AE1")
+XLSX_SIGNATURE = b"PK"
 FUNCTION_LABELS = [
     "利益承诺",
     "结果承诺",
@@ -44,7 +68,15 @@ FUNCTION_LABELS = [
     "冲突制造",
     "故事引入",
     "结果悬念",
+    "经历背书",
+    "质疑回应",
+    "可行性证明",
+    "身份冲突",
+    "规则反转",
 ]
+UNKNOWN_FUNCTION = "待人工判断"
+SOFT_SENTENCE_LIMIT = 70
+HARD_SENTENCE_LIMIT = 100
 ARG_ONLY_TOKENS = {"能", "对", "是", "没错", "好", "那么", "所以"}
 FILLER_PREFIX_RE = re.compile(r"^(呃|嗯|啊|诶|额|那个|就是)[，,、\s]*")
 CLAUSE_SPLIT_HINTS = (
@@ -59,7 +91,13 @@ CLAUSE_SPLIT_HINTS = (
     "如果",
     "那么",
     "好",
+    "虽然",
+    "一个合适",
+    "今天",
 )
+
+DEPENDENT_PREFIXES = ("虽然", "尽管")
+DEPENDENT_CONTINUATIONS = ("但", "但是", "可", "可是")
 
 
 def clean_filename(value: str) -> str:
@@ -84,10 +122,31 @@ def clean_script(value: str) -> str:
         "Cloud code": "Claude Code",
         "claude code": "Claude Code",
         "gemini": "Gemini",
+        "开始盈有上次": "开始盈利？上次",
+        "标题打了": "标题党",
+        "完两套": "两套",
+        "模仿局这边的生意": "模仿的生意",
+        "为了实现这个事儿呢": "为了实现这件事",
+        "我前后总共是": "我前后",
+        "但是在整个经历里面，我觉得最值得说的一个点其实是": "但在整个经历里，我觉得最值得说的只有",
+        "只有4个字，叫做不要创业": "只有4个字：不要创业",
+        "我说这个话从我嘴里说出来会比较奇怪": "这话从我嘴里说出来会比较奇怪",
+        "因为你去看我账号主页的视频，我可能一半以上都在讲": "因为我账号主页一半以上的视频都在讲",
+        "但是我连续经历三次的情况，就是在我辞职离开公司的那一刻，我所面临的情况和我后面所经历的创业的情况，它是完全相反的": "我连续经历三次后发现，辞职离开公司时面临的情况，和后来创业时完全相反",
+        "我第一次辞职是我大学本科毕业的第一年": "我第一次辞职是在大学本科毕业的第一年",
+        "那我当时想从职场脱离出来的这个情况，就跟所有想要经历这个状态的人一样，对吧？": "我和所有想从职场脱离出来的人一样。",
+        "上次发这个卡是2024年啊": "我上次发布这张卡是在2024年",
+        "这真的是一个可以实现的事情": "这确实是一件可以实现的事",
+        "一个合适的参考对标是真的可以让你在几个小时以内就建立起自己的生意的": "一个合适的参考对标，可以让你在几个小时内建立起自己的生意",
+        "今天给大家公开一个这个我的表格工作法，可以让你只用这么一个Excel表格就找到适合自己去模仿的生意": "今天给大家公开我的表格工作法，只用一个Excel表格，就能找到适合自己模仿的生意",
+        "今天给大家公开一个这个我的表格工作法，可以让你只用这么一个Excel表格就找到适合自己去模仿的生意": "今天给大家公开我的表格工作法，只用一个Excel表格，就能找到适合自己模仿的生意",
     }
     for old, new in replacements.items():
         text = text.replace(old, new)
+    text = text.replace("不上班儿", "不上班")
+    text = re.sub(r"(?<=\d年)啊", "", text)
     text = re.sub(r"\s+", " ", text)
+    text = re.sub(r"因为虽然", "虽然", text)
     return text.strip()
 
 
@@ -100,9 +159,21 @@ def title_from(info: str) -> str:
     return title[:40] if title else text[:40]
 
 
-def read_xlsx(path: Path) -> tuple[list[str], list[dict[str, str]]]:
-    import openpyxl
+def normalize_topic_match(value: str) -> str:
+    return normalize_match(title_from(value))
 
+
+def detect_excel_format(path: Path) -> str:
+    with path.open("rb") as file_obj:
+        head = file_obj.read(8)
+    if head.startswith(XLSX_SIGNATURE):
+        return "xlsx"
+    if head.startswith(XLS_SIGNATURE):
+        return "xls"
+    return "unknown"
+
+
+def read_xlsx(path: Path) -> tuple[list[str], list[dict[str, str]]]:
     try:
         wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
         ws = wb.active
@@ -119,6 +190,32 @@ def read_xlsx(path: Path) -> tuple[list[str], list[dict[str, str]]]:
             continue
         data.append({headers[idx]: str(value or "").strip() for idx, value in enumerate(row) if idx < len(headers)})
     return headers, data
+
+
+def read_xls(path: Path) -> tuple[list[str], list[dict[str, str]]]:
+    if xlrd is None:
+        raise RuntimeError("缺少依赖 xlrd，无法读取老式 Excel。")
+    workbook = xlrd.open_workbook(path)
+    sheet = workbook.sheet_by_index(0)
+    if sheet.nrows <= 0:
+        return [], []
+    headers = [str(value or "").strip() for value in sheet.row_values(0)]
+    data: list[dict[str, str]] = []
+    for row_index in range(1, sheet.nrows):
+        row = sheet.row_values(row_index)
+        if not any(cell not in ("", None) for cell in row):
+            continue
+        data.append({headers[idx]: str(value or "").strip() for idx, value in enumerate(row) if idx < len(headers)})
+    return headers, data
+
+
+def read_excel(path: Path) -> tuple[list[str], list[dict[str, str]]]:
+    file_format = detect_excel_format(path)
+    if file_format == "xlsx":
+        return read_xlsx(path)
+    if file_format == "xls":
+        return read_xls(path)
+    raise RuntimeError(f"{path.name} 不是可识别的 Excel 文件")
 
 
 def split_markdown_row(line: str) -> list[str]:
@@ -145,8 +242,15 @@ def split_markdown_row(line: str) -> list[str]:
     return cells
 
 
+def markdown_escape(value: str) -> str:
+    text = str(value or "")
+    text = text.replace("\\", "\\\\").replace("|", "\\|")
+    text = text.replace("\r\n", "<br>").replace("\n", "<br>").replace("\r", "<br>")
+    return text
+
+
 def is_separator_row(cells: list[str]) -> bool:
-    return all(re.fullmatch(r":?-{3,}:?", cell.strip()) for cell in cells if cell.strip())
+    return all(re.fullmatch(r":?-+:?", cell.strip()) for cell in cells if cell.strip())
 
 
 def read_selection_file(path: Path) -> list[dict[str, str]]:
@@ -157,8 +261,8 @@ def read_selection_file(path: Path) -> list[dict[str, str]]:
     if len(table_rows) < 2:
         raise RuntimeError(f"选中清单未找到标准 markdown 表格: {path}")
     headers = [cell.strip() for cell in table_rows[0]]
-    missing = [field for field in SELECTION_FIELDS if field not in headers]
-    if missing:
+    if headers != SELECTION_FIELDS and headers != LEGACY_SELECTION_FIELDS:
+        missing = [field for field in SELECTION_FIELDS if field not in headers]
         raise RuntimeError(f"选中清单缺少字段: {missing}")
     records: list[dict[str, str]] = []
     for cells in table_rows[1:]:
@@ -167,40 +271,71 @@ def read_selection_file(path: Path) -> list[dict[str, str]]:
         row = {headers[idx]: (cells[idx].strip() if idx < len(cells) else "") for idx in range(len(headers))}
         if not any(row.values()):
             continue
+        if headers == LEGACY_SELECTION_FIELDS:
+            row = {
+                "序号": "",
+                "选题": row.get("视频信息", ""),
+                "链接": row.get("链接", ""),
+                "状态": row.get("状态", ""),
+                "备注": row.get("备注", ""),
+            }
         records.append(row)
     if not records:
         raise RuntimeError(f"选中清单没有有效记录: {path}")
     return records
 
 
-def resolve_blogger_xlsx(input_dir: Path, blogger_name: str) -> Path:
-    if not blogger_name:
-        raise RuntimeError("选中清单存在缺少 `博主名` 的记录")
-    expected = input_dir / f"{blogger_name}.xlsx"
-    if expected.exists() and not expected.name.startswith("~$"):
-        return expected
-    normalized = normalize_match(clean_filename(blogger_name))
-    matches = [
-        path
-        for path in input_dir.glob("*.xlsx")
-        if not path.name.startswith("~$") and normalize_match(clean_filename(path.stem)) == normalized
+def write_selection_file(path: Path, rows: list[dict[str, str]]) -> None:
+    lines = [
+        "# 爆款开头选中清单",
+        "",
+        "|序号|选题|链接|状态|备注|",
+        "|-|-|-|-|-|",
     ]
-    if len(matches) == 1:
-        return matches[0]
-    if not matches:
-        raise RuntimeError(f"找不到博主表格: {blogger_name}，目录: {input_dir}")
-    raise RuntimeError(f"博主名 `{blogger_name}` 命中多个 xlsx: {[path.name for path in matches]}")
+    for index, row in enumerate(rows, start=1):
+        lines.append(
+            "|"
+            + "|".join(
+                [
+                    str(index),
+                    markdown_escape(row.get("选题", "")),
+                    markdown_escape(row.get("链接", "")),
+                    markdown_escape(row.get("状态", "")),
+                    markdown_escape(row.get("备注", "")),
+                ]
+            )
+            + "|"
+        )
+    path.write_text(append_brand_footer("\n".join(lines)), encoding="utf-8")
+
+
+def iter_source_files(input_dir: Path) -> list[Path]:
+    files: list[Path] = []
+    for pattern in ("*.xlsx", "*.xls"):
+        for path in sorted(input_dir.glob(pattern)):
+            if path.name.startswith("~$"):
+                continue
+            files.append(path)
+    deduped: list[Path] = []
+    seen: set[str] = set()
+    for path in files:
+        key = str(path.resolve())
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(path)
+    return deduped
 
 
 def find_source_row(source_path: Path, selection: dict[str, str]) -> tuple[dict[str, str], int]:
-    headers, rows = read_xlsx(source_path)
+    headers, rows = read_excel(source_path)
     missing = [field for field in REQUIRED_FIELDS if field not in headers]
     if missing:
         raise RuntimeError(f"{source_path.name} 缺少字段: {missing}")
     link = normalize_space(selection.get("链接", ""))
-    video_info = normalize_space(selection.get("视频信息", ""))
-    if not link and not video_info:
-        raise RuntimeError(f"选中清单记录无效，`链接` 和 `视频信息` 不能同时为空: {selection}")
+    topic = normalize_space(selection.get("选题", ""))
+    if not link and not topic:
+        raise RuntimeError(f"选中清单记录无效，`链接` 和 `选题` 不能同时为空: {selection}")
     if link:
         matches = [
             (idx, row)
@@ -211,17 +346,47 @@ def find_source_row(source_path: Path, selection: dict[str, str]) -> tuple[dict[
             return matches[0][1], matches[0][0]
         if len(matches) > 1:
             raise RuntimeError(f"{source_path.name} 中链接重复，无法自动判断: {link}")
-        raise RuntimeError(f"{source_path.name} 未按链接命中记录: {link}")
+        return {}, -1
     matches = [
         (idx, row)
         for idx, row in enumerate(rows, start=2)
-        if normalize_match(row.get("视频信息", "")) == normalize_match(video_info)
+        if normalize_match(row.get("视频信息", "")) == normalize_match(topic)
     ]
     if len(matches) == 1:
         return matches[0][1], matches[0][0]
     if len(matches) > 1:
-        raise RuntimeError(f"{source_path.name} 中 `视频信息` 重复，必须在清单补充链接: {video_info}")
-    raise RuntimeError(f"{source_path.name} 未按视频信息命中记录: {video_info}")
+        raise RuntimeError(f"{source_path.name} 中 `视频信息` 重复，必须在清单补充链接: {topic}")
+    fuzzy_matches = [
+        (idx, row)
+        for idx, row in enumerate(rows, start=2)
+        if normalize_topic_match(row.get("视频信息", "")) == normalize_topic_match(topic)
+    ]
+    if len(fuzzy_matches) == 1:
+        return fuzzy_matches[0][1], fuzzy_matches[0][0]
+    if len(fuzzy_matches) > 1:
+        raise RuntimeError(f"{source_path.name} 清洗后 `视频信息` 仍重复，必须在清单补充链接: {topic}")
+    return {}, -1
+
+
+def resolve_source_record(input_dir: Path, selection: dict[str, str]) -> tuple[Path, dict[str, str], int]:
+    link = normalize_space(selection.get("链接", ""))
+    topic = normalize_space(selection.get("选题", ""))
+    matches: list[tuple[Path, dict[str, str], int]] = []
+    for source_path in iter_source_files(input_dir):
+        row, row_number = find_source_row(source_path, selection)
+        if row_number >= 0:
+            matches.append((source_path, row, row_number))
+            if link:
+                break
+    if len(matches) == 1:
+        return matches[0]
+    if not matches:
+        if link:
+            raise RuntimeError(f"未在任何账号表按链接命中记录: {link}")
+        raise RuntimeError(f"未在任何账号表按选题命中记录: {topic}")
+    if link:
+        raise RuntimeError(f"链接在多个账号表中重复，无法自动判断: {link}")
+    raise RuntimeError(f"选题在多个账号表中重复，必须在清单补充链接: {topic}")
 
 
 def strip_leading_title_lines(text: str) -> str:
@@ -302,19 +467,55 @@ def maybe_split_by_comma(sentence: str) -> list[str]:
 
 def extract_function_sentences(script: str, limit: int = 5) -> list[str]:
     function_sentences: list[str] = []
+    pending_dependent = ""
     for base in split_base_sentences(script):
         for item in maybe_split_by_comma(base):
             normalized = clean_function_sentence(item)
             if not normalized or is_connector_only(normalized):
                 continue
+            body = normalized.strip("。！？!?")
+            if body.startswith(DEPENDENT_PREFIXES) and not any(token in body for token in DEPENDENT_CONTINUATIONS):
+                pending_dependent = body
+                continue
+            if pending_dependent:
+                if body.startswith(DEPENDENT_CONTINUATIONS):
+                    normalized = clean_function_sentence(f"{pending_dependent}，{body}")
+                    pending_dependent = ""
+                else:
+                    function_sentences.append(clean_function_sentence(pending_dependent))
+                    pending_dependent = ""
+                    if len(function_sentences) >= limit:
+                        return function_sentences
             function_sentences.append(normalized)
             if len(function_sentences) >= limit:
                 return function_sentences
+    if pending_dependent and len(function_sentences) < limit:
+        function_sentences.append(clean_function_sentence(pending_dependent))
     return function_sentences
 
 
 def detect_core_function(sentence: str, index: int, total: int) -> str:
     text = sentence.strip()
+    if re.search(r"(第\d+年|连续\d+年|多年).*(裸辞|辞职|创业|做过|经历).*\d+次", text):
+        return "经历背书"
+    if re.search(r"(上次|此前|之前).*(发布|发过|发这个|做过|使用).*(涨了|增长|获得|带来).*\d+", text):
+        return "案例证明"
+    if re.search(r"(虽然|听起来).*(标题党|不可信|夸张|很难).*(但|可是|实际|真的|确实)", text):
+        return "质疑回应"
+    if re.search(r"(从我嘴里说出来|我的身份|我一直|账号主页).*(奇怪|冲突|相反|一半以上)", text):
+        return "身份冲突"
+    if re.search(r"(辞职|离开公司).*(创业|自己做).*(完全相反|两套.*规则|不同的游戏规则)", text):
+        return "规则反转"
+    if re.search(r"(合适的|正确的).*(参考|对标|方法).*(几个小时|短时间|一天|24小时).*(建立|找到|实现)", text):
+        return "可行性证明"
+    if re.search(r"^(如何|怎么).*(\d+\s*(分钟|小时|天)|以内|从\s*0\s*到\s*1).*(找到|建立|实现|赚到)", text):
+        return "结果承诺"
+    if re.search(r"(最值得说|最重要的结论|最后的结论).*(不要|别再|不能|并不是)", text):
+        return "反常识判断"
+    if re.search(r"(今天|接下来|下面).*(公开|分享|教你|讲清楚).*(方法|步骤|表格|工具|路径)", text):
+        return "方法预告"
+    if re.search(r"(第一次|那一年|当时).*(辞职|创业|离开|开始).*(毕业|岁|公司|职场|状态)", text):
+        return "故事引入"
     if re.search(r"(不是.+而是|恰恰相反|真正的问题|可以作弊|正大光明的作弊|不是你|而是你)", text):
         return "反常识判断"
     if re.search(r"(我们真的要|提前为自己想想出路|来不及|已经晚了|别再|一定要小心)", text):
@@ -325,6 +526,8 @@ def detect_core_function(sentence: str, index: int, total: int) -> str:
         return "连续确认"
     if re.search(r"(内容会很长|没打草稿|聊到哪儿|数据呢.*无所谓|随时可能会把它删|简单分享)", text):
         return "降低防备"
+    if re.search(r"(肯定|一定).*(会|还会).*(很长|非常长|继续展开|讲下去)", text):
+        return "内容预告"
     if re.search(r"(报告|数据|统计|研究|显示|公布|预测|达到|同比|增长到|下降到)", text):
         if re.search(r"(在\d{2,4}年|到了\d{2,4}年|过去|现在|今年|去年|前年|年底|下半年)", text) and re.search(r"\d", text):
             return "时间对比" if index >= 4 else "数据证明"
@@ -351,11 +554,23 @@ def detect_core_function(sentence: str, index: int, total: int) -> str:
         return "痛点描述"
     if index == 1:
         return "结果承诺"
-    return "内容预告"
+    return UNKNOWN_FUNCTION
 
 
 def build_structure(sentence: str, core_function: str) -> str:
     text = sentence.strip()
+    if core_function == "经历背书":
+        return "持续时间＋重复经历＋经验可信度"
+    if core_function == "案例证明":
+        return "既往行动＋具体数据＋结果证明"
+    if core_function == "质疑回应":
+        return "常见质疑＋转折验证＋可行结论"
+    if core_function == "可行性证明":
+        return "关键条件＋时间门槛＋可实现结果"
+    if core_function == "身份冲突":
+        return "说话者身份＋既有立场＋结论冲突"
+    if core_function == "规则反转":
+        return "前后处境＋直接反差＋规则结论"
     if core_function == "认知提问":
         if re.search(r"(靠.+还是靠|主要是靠)", text):
             return "目标结果＋两个认知选项＋直接提问"
@@ -363,6 +578,8 @@ def build_structure(sentence: str, core_function: str) -> str:
     if core_function == "悬念追问":
         return "前置信息＋意义追问＋等待解释"
     if core_function == "结果承诺":
+        if re.search(r"(小时|分钟|天|以内).*(找到|建立|实现)", text):
+            return "目标结果＋时间限制＋问题钩子"
         return "明确结果＋目标对象＋结果承诺"
     if core_function == "危机提醒":
         return "共同人群＋未来风险＋行动提醒"
@@ -383,8 +600,12 @@ def build_structure(sentence: str, core_function: str) -> str:
     if core_function == "结果对比":
         return "两种结果＋差异放大＋结果对比"
     if core_function == "反常识判断":
+        if re.search(r"(最值得说|最重要).*(\d+|几个).*(字|句话)", text):
+            return "经验总结＋字数包装＋反常识结论"
         return "常识对象＋反常识判断＋强化表达"
     if core_function == "方法预告":
+        if re.search(r"(公开|分享).*(表格|工具|方法).*(只用|一个|一套)", text):
+            return "工具公开＋低门槛载体＋方法结果"
         return "目标问题＋方法数量＋方法预告"
     if core_function == "内容预告":
         return "主题限定＋后文安排＋内容预告"
@@ -405,15 +626,23 @@ def build_structure(sentence: str, core_function: str) -> str:
     if core_function == "权威背书":
         return "权威来源＋核心观点＋现实关联"
     if core_function == "故事引入":
+        if re.search(r"(第一次|那时).*(毕业|岁|职场)", text):
+            return "首次经历＋年龄身份＋人群代入"
         return "人物出现＋特殊处境＋故事开场"
     if core_function == "结果悬念":
         return "异常结果＋原因留白＋结果悬念"
-    return "关键信息＋表达动作＋句内承诺"
+    if core_function == UNKNOWN_FUNCTION:
+        raise RuntimeError(f"核心功能无法稳定判断：{sentence}")
+    raise RuntimeError(f"缺少 `{core_function}` 对应的写作结构：{sentence}")
 
 
 def detect_argument_pattern(sentences: list[str], functions: list[str]) -> str:
     joined = " ".join(sentences)
     function_set = set(functions)
+    if functions == ["经历背书", "反常识判断", "身份冲突", "规则反转", "故事引入"]:
+        return "个人经历＋反常识冲突"
+    if functions == ["结果承诺", "案例证明", "质疑回应", "可行性证明", "方法预告"]:
+        return "结果承诺＋案例证明＋方法预告"
     if "连续确认" in function_set or ("案例引入" in function_set and "认知提问" in function_set):
         return "历史案例＋连续追问"
     if "数据证明" in function_set and "时间对比" in function_set:
@@ -432,10 +661,44 @@ def detect_argument_pattern(sentences: list[str], functions: list[str]) -> str:
         return "权威观点＋现实解释"
     if re.search(r"(场景|你在|如果你是|对普通人来说)", joined):
         return "场景代入＋身份共鸣"
-    return "历史案例＋连续追问"
+    raise RuntimeError(f"无法从五句功能链稳定判断论证方式：{' → '.join(functions)}")
 
 
 def build_skeleton(argument_pattern: str, functions: list[str], structures: list[str]) -> tuple[list[str], list[str]]:
+    if argument_pattern == "个人经历＋反常识冲突":
+        return (
+            [
+                "先用持续时间和重复经历建立亲历者可信度",
+                "从长期经历中抛出一个与身份相反的结论",
+                "解释这个结论为什么与说话者原有立场冲突",
+                "指出前后两种处境遵循完全相反的规则",
+                "回到第一次关键经历，正式进入故事",
+            ],
+            [
+                "今年是我【不再做某件事】的第【持续年数】年，为了实现它，我前后经历了【次数】次【关键行动】。",
+                "但在整个经历里，我最想告诉你的结论只有【字数】个字：【反常识结论】。",
+                "这句话从我嘴里说出来可能很奇怪，因为我过去一直在【既有立场或公开身份】。",
+                "可我经历了【次数】次之后发现，【前一种处境】和【后一种处境】完全相反，这是两套不同的【规则系统】。",
+                "我第一次【关键行动】是在【时间节点】，那时我【年龄或身份】，也和所有想要【目标状态】的人一样。",
+            ],
+        )
+    if argument_pattern == "结果承诺＋案例证明＋方法预告":
+        return (
+            [
+                "先提出一个带明确时间限制的结果问题",
+                "用自己过去取得的具体结果证明方法有吸引力",
+                "主动回应标题党或不可实现的质疑",
+                "指出达成结果所依赖的关键条件",
+                "公开一个低门槛工具并预告后续方法",
+            ],
+            [
+                "如何在【时间限制】以内找到【目标结果】，并开始【进一步结果】？",
+                "我上次分享【同类方法】是在【时间】，发布后让我在【周期】内获得了【具体结果】。",
+                "虽然听起来很像【常见质疑】，但你看完会发现，这确实是一件【可实现判断】的事。",
+                "一个合适的【关键条件】真的可以让你在【短时间】内建立起【目标结果】。",
+                "今天我公开一套【工具或方法】，只用【低门槛载体】，就能找到适合自己【具体动作】的【目标对象】。",
+            ],
+        )
     if argument_pattern == "数据＋时间对比＋趋势推演":
         return (
             [
@@ -521,12 +784,65 @@ def build_skeleton(argument_pattern: str, functions: list[str], structures: list
                 "接下来我想把这个问题一次讲透。",
             ],
         )
-    abstract = [f"第{idx}句保留 `{function}` 功能，按 `{structure}` 组织表达" for idx, (function, structure) in enumerate(zip(functions, structures), start=1)]
-    templates = [f"第{idx}句模板：【按{structure}替换为新正文素材】。" for idx, structure in enumerate(structures, start=1)]
-    return abstract, templates
+    raise RuntimeError(f"论证方式 `{argument_pattern}` 尚无可复刻骨架，禁止生成空占位模板")
 
 
 def build_matching_rules(argument_pattern: str, functions: list[str]) -> dict[str, list[str] | str]:
+    if argument_pattern == "个人经历＋反常识冲突":
+        return {
+            "适合的新正文": "正文由真实长期经历得出一个与说话者身份或既有立场相冲突的结论，并会用具体经历解释规则为什么发生反转。",
+            "需要具备的素材条件": [
+                "说话者有可量化的持续经历或多次关键行动",
+                "正文存在一个明确且可解释的反常识结论",
+                "结论与说话者原有身份、立场或公开内容形成真实冲突",
+                "后续正文能从一次具体经历开始展开",
+            ],
+            "不适合的新正文": [
+                "只有普通建议，没有亲身经历",
+                "结论与说话者身份不存在冲突",
+                "只有情绪反转，无法解释两套规则的差异",
+                "需要虚构经历次数或身份背景才能填满模板",
+            ],
+            "复刻时必须保留": [
+                "先用长期经历建立可信度",
+                "第二句直接抛出反常识结论",
+                "中间两句形成身份冲突和规则反转",
+                "第五句落到一次具体经历进入正文",
+            ],
+            "复刻时禁止": [
+                "把真实经历改成泛泛的专家口吻",
+                "只有反常识口号却没有身份冲突",
+                "编造经历年限、次数或个人身份",
+            ],
+        }
+    if argument_pattern == "结果承诺＋案例证明＋方法预告":
+        return {
+            "适合的新正文": "正文承诺在明确时间内获得一个结果，并能用既往案例、可行条件和低门槛工具兑现后续方法。",
+            "需要具备的素材条件": [
+                "有清楚的目标结果和时间限制",
+                "有一个真实既往案例或结果数据作为证明",
+                "能正面回应用户对结果夸张或不可实现的质疑",
+                "正文会交付一个具体工具、表格或步骤方法",
+            ],
+            "不适合的新正文": [
+                "只有结果承诺，没有案例证明",
+                "正文没有可交付的方法或工具",
+                "无法说明结果成立所依赖的关键条件",
+                "需要编造涨粉、收入或时间数据才能复刻",
+            ],
+            "复刻时必须保留": [
+                "第一句明确时间限制和目标结果",
+                "第二句用真实案例证明吸引力",
+                "第三句回应用户质疑",
+                "第四句给出可行条件",
+                "第五句预告低门槛方法或工具",
+            ],
+            "复刻时禁止": [
+                "把案例证明写成空泛自夸",
+                "承诺正文无法兑现的结果",
+                "只替换行业关键词而不匹配素材条件",
+            ],
+        }
     if argument_pattern == "数据＋时间对比＋趋势推演":
         return {
             "适合的新正文": "正文核心结论依靠数据变化、时间对比或趋势推演成立。",
@@ -659,25 +975,7 @@ def build_matching_rules(argument_pattern: str, functions: list[str]) -> dict[st
                 "临时编造用户场景",
             ],
         }
-    return {
-        "适合的新正文": f"正文主要论证方式与 `{argument_pattern}` 接近，且能自然承接这条五句功能链。",
-        "需要具备的素材条件": [
-            "新正文素材能逐句填满原开头功能链",
-            "不需要额外编造数据、案例或故事",
-            "第5句能自然接上正文第一段",
-        ],
-        "不适合的新正文": [
-            "正文主要证明路径与这条开头不一致",
-            "五句模板中有关键素材缺失",
-            "需要大幅改变原开头功能顺序",
-        ],
-        "复刻时必须保留": [f"保留第{idx}句的 `{function}` 功能" for idx, function in enumerate(functions, start=1)],
-        "复刻时禁止": [
-            "只做关键词替换",
-            "改变五句推进顺序",
-            "编造正文不存在的素材",
-        ],
-    }
+    raise RuntimeError(f"论证方式 `{argument_pattern}` 尚无具体调用匹配规则")
 
 
 def get_existing_card_map(output_dir: Path) -> dict[tuple[str, str], Path]:
@@ -711,12 +1009,91 @@ def build_output_path(output_dir: Path, blogger: str, topic: str, existing_map: 
     return path, next_num + 1
 
 
-def render_output(path: Path, row: dict[str, str], function_sentences: list[str]) -> None:
+def format_failure_reason(exc: Exception) -> str:
+    message = normalize_space(str(exc))
+    replacements = [
+        ("未在任何账号表按链接命中记录", "链接未命中原始账号表"),
+        ("未在任何账号表按选题命中记录", "选题未命中原始账号表"),
+        ("链接在多个账号表中重复，无法自动判断", "链接命中多个账号表"),
+        ("选题在多个账号表中重复，必须在清单补充链接", "无链接且同题命中多个账号表"),
+        ("`文案` 为空，无法拆解", "原文文案为空"),
+        ("`视频信息` 为空，无法作为选题", "原始视频信息为空"),
+        ("未能切出前5个功能句", "前5个功能句切分失败"),
+    ]
+    for raw, friendly in replacements:
+        if raw in message:
+            return friendly
+    return message or "未知拆解失败原因"
+
+
+def han_len(text: str) -> int:
+    return len(re.findall(r"[\u4e00-\u9fff]", text))
+
+
+def validate_breakdown_components(
+    sentences: list[str],
+    functions: list[str],
+    structures: list[str],
+    skeleton_lines: list[str],
+    template_lines: list[str],
+    matching_rules: dict[str, list[str] | str],
+) -> list[str]:
+    issues: list[str] = []
+    if len(sentences) != 5:
+        issues.append(f"前5个功能句数量不合格：当前 {len(sentences)} 句")
+    for idx, sentence in enumerate(sentences, start=1):
+        length = han_len(sentence)
+        if length > HARD_SENTENCE_LIMIT:
+            issues.append(f"第{idx}句超过 {HARD_SENTENCE_LIMIT} 个汉字，属于切分失败")
+        elif length > SOFT_SENTENCE_LIMIT:
+            issues.append(f"第{idx}句超过 {SOFT_SENTENCE_LIMIT} 个汉字，必须人工复核语义边界")
+    if UNKNOWN_FUNCTION in functions:
+        issues.append("存在无法稳定判断的核心功能")
+    for idx in range(len(functions) - 1):
+        if functions[idx] == functions[idx + 1] == "内容预告":
+            issues.append(f"第{idx + 1}句和第{idx + 2}句连续标记为内容预告，疑似兜底误判")
+    forbidden_structure = ("关键信息＋表达动作＋句内承诺", "主题限定＋后文安排＋内容预告")
+    for idx, structure in enumerate(structures, start=1):
+        if structure in forbidden_structure and functions[idx - 1] != "内容预告":
+            issues.append(f"第{idx}句写作结构与核心功能不匹配")
+    if len(skeleton_lines) != len(sentences) or len(template_lines) != len(sentences):
+        issues.append("五句结构骨架或句式模板数量与原文功能句不一致")
+    for idx, line in enumerate(skeleton_lines, start=1):
+        if re.search(r"第\d+句保留|按.+组织表达", line):
+            issues.append(f"第{idx}条结构骨架是空占位说明")
+    for idx, line in enumerate(template_lines, start=1):
+        if "【" not in line or "】" not in line:
+            issues.append(f"第{idx}条句式模板没有可替换变量")
+        if re.search(r"按.+替换|替换为新正文素材", line):
+            issues.append(f"第{idx}条句式模板是空占位模板")
+    suitable = str(matching_rules.get("适合的新正文", ""))
+    if not suitable or "接近" in suitable or "自然承接这条五句功能链" in suitable:
+        issues.append("适合的新正文仍是泛化匹配说明")
+    return issues
+
+
+def render_output(
+    path: Path,
+    row: dict[str, str],
+    function_sentences: list[str],
+    source_path: Path,
+    source_row: int,
+) -> None:
     functions = [detect_core_function(sentence, idx, len(function_sentences)) for idx, sentence in enumerate(function_sentences, start=1)]
     structures = [build_structure(sentence, function) for sentence, function in zip(function_sentences, functions)]
     argument_pattern = detect_argument_pattern(function_sentences, functions)
     skeleton_lines, template_lines = build_skeleton(argument_pattern, functions, structures)
     matching_rules = build_matching_rules(argument_pattern, functions)
+    issues = validate_breakdown_components(
+        function_sentences,
+        functions,
+        structures,
+        skeleton_lines,
+        template_lines,
+        matching_rules,
+    )
+    if issues:
+        raise RuntimeError("；".join(issues))
     lines = [
         "# 爆款开头卡片",
         "",
@@ -726,6 +1103,8 @@ def render_output(path: Path, row: dict[str, str], function_sentences: list[str]
         f"- 点赞数：{row.get('点赞数', '')}",
         f"- 链接：{row.get('链接', '')}",
         f"- 发布时间：{row.get('发布时间', '')}",
+        f"- 来源账号表：{source_path.name}",
+        f"- 来源行：{source_row}",
         f"- 生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
         "",
         "### 1. 原文前5句",
@@ -804,40 +1183,99 @@ def run(root: str, blogger_filter: str = "", input_dir: str = "", output_dir: st
     resolved_output_dir = Path(output_dir) if output_dir else (root_path / "02_资产中心" / "05_爆款开头库")
     resolved_selection_file = Path(selection_file) if selection_file else (resolved_output_dir / "00_爆款开头选中清单.md")
     audit_dir = root_path / "03_工作流中心" / "01_短视频主工作流" / "99_运行记录"
+    candidate_dir = (
+        root_path
+        / "01_Agent系统"
+        / "04_小拆-内容拆解Agent"
+        / "99_执行记录"
+        / "爆款开头候选"
+    )
+    reviewer_script = (
+        root_path
+        / "01_Agent系统"
+        / "02_小审-质量审核Agent"
+        / "scripts"
+        / "audit_baokuan_openings.py"
+    )
     resolved_output_dir.mkdir(parents=True, exist_ok=True)
     audit_dir.mkdir(parents=True, exist_ok=True)
+    candidate_dir.mkdir(parents=True, exist_ok=True)
+    if not reviewer_script.exists():
+        raise RuntimeError(f"缺少小审爆款开头审核脚本：{reviewer_script}")
 
     generated = 0
     selected = 0
+    skipped = 0
+    failed = 0
     existing_map = get_existing_card_map(resolved_output_dir)
     next_num = next_bk_number(resolved_output_dir)
     selections = read_selection_file(resolved_selection_file)
     for selection in selections:
-        blogger = clean_filename(selection.get("博主名", ""))
-        if blogger_filter and normalize_match(blogger) != normalize_match(blogger_filter):
+        current_status = normalize_space(selection.get("状态", ""))
+        if current_status in {DONE_STATUS, FAILED_STATUS}:
+            skipped += 1
             continue
-        source_path = resolve_blogger_xlsx(resolved_input_dir, blogger)
-        row, row_number = find_source_row(source_path, selection)
-        selected += 1
-        script = str(row.get("文案") or "").strip()
-        if not script:
-            raise RuntimeError(f"{source_path.name} 第 {row_number} 行 `文案` 为空，无法拆解")
-        video_info = str(row.get("视频信息") or "").strip()
-        if not video_info:
-            raise RuntimeError(f"{source_path.name} 第 {row_number} 行 `视频信息` 为空，无法作为选题")
-        function_sentences = extract_function_sentences(script, limit=5)
-        if not function_sentences:
-            raise RuntimeError(f"{source_path.name} 第 {row_number} 行未能切出前5个功能句")
-        record = {
-            "博主名": blogger,
-            "选题": title_from(video_info),
-            "点赞数": str(row.get("点赞数") or "").strip(),
-            "链接": str(row.get("链接") or f"{source_path.name}#row{row_number}").strip(),
-            "发布时间": str(row.get("发布时间") or "").strip(),
-        }
-        output_path, next_num = build_output_path(resolved_output_dir, record["博主名"], record["选题"], existing_map, next_num)
-        render_output(output_path, record, function_sentences)
-        generated += 1
+        if current_status not in {"", PENDING_STATUS}:
+            skipped += 1
+            continue
+        try:
+            source_path, row, row_number = resolve_source_record(resolved_input_dir, selection)
+            blogger = clean_filename(source_path.stem)
+            if blogger_filter and normalize_match(blogger) != normalize_match(blogger_filter):
+                continue
+            selected += 1
+            script = str(row.get("文案") or "").strip()
+            if not script:
+                raise RuntimeError(f"{source_path.name} 第 {row_number} 行 `文案` 为空，无法拆解")
+            video_info = str(row.get("视频信息") or "").strip()
+            if not video_info:
+                raise RuntimeError(f"{source_path.name} 第 {row_number} 行 `视频信息` 为空，无法作为选题")
+            function_sentences = extract_function_sentences(script, limit=5)
+            if not function_sentences:
+                raise RuntimeError(f"{source_path.name} 第 {row_number} 行未能切出前5个功能句")
+            record = {
+                "博主名": blogger,
+                "选题": title_from(video_info),
+                "点赞数": str(row.get("点赞数") or "").strip(),
+                "链接": str(row.get("链接") or f"{source_path.name}#row{row_number}").strip(),
+                "发布时间": str(row.get("发布时间") or "").strip(),
+            }
+            output_path, next_num = build_output_path(
+                resolved_output_dir, record["博主名"], record["选题"], existing_map, next_num
+            )
+            candidate_path = candidate_dir / output_path.name
+            render_output(candidate_path, record, function_sentences, source_path, row_number)
+            audit_result = subprocess.run(
+                [
+                    sys.executable,
+                    str(reviewer_script),
+                    "--candidate",
+                    str(candidate_path),
+                    "--input-dir",
+                    str(resolved_input_dir),
+                    "--root",
+                    str(root_path),
+                    "--write-report",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                env={**os.environ, "PYTHONIOENCODING": "utf-8"},
+            )
+            if audit_result.returncode != 0:
+                reason = normalize_space(audit_result.stdout or audit_result.stderr)
+                raise RuntimeError(f"小审退回：{reason or '未提供退回原因'}")
+            candidate_path.replace(output_path)
+            selection["状态"] = DONE_STATUS
+            selection["备注"] = f"已生成 {output_path.stem.split('_', 1)[0]}，小审通过"
+            generated += 1
+        except Exception as exc:
+            selection["状态"] = FAILED_STATUS
+            selection["备注"] = format_failure_reason(exc)
+            failed += 1
+
+    write_selection_file(resolved_selection_file, selections)
 
     audit_path = audit_dir / f"{datetime.now().strftime('%Y-%m-%d_%H%M%S')}_爆款开头拆解审核.md"
     audit_path.write_text(
@@ -851,21 +1289,29 @@ def run(root: str, blogger_filter: str = "", input_dir: str = "", output_dir: st
                     f"- 选中清单：`{resolved_selection_file}`",
                     f"- 输出目录：`{resolved_output_dir}`",
                     f"- 运行范围：`{blogger_filter or '全部博主'}`",
-                    f"- 清单命中记录数：{selected}",
+                    f"- 实际处理条数：{selected}",
                     f"- 生成文件数：{generated}",
-                    "- 说明：本轮只读取外部选中清单，不新增、不回写、不修改原始 xlsx。",
+                    f"- 跳过条数：{skipped}",
+                    f"- 失败条数：{failed}",
+                    "- 说明：本轮读取开头选中清单作为直接入口；生成后会回写清单状态，不修改原始 xlsx。",
                     "",
                 ]
             )
         ),
         encoding="utf-8",
     )
-    return {"selected_rows": selected, "generated_files": generated, "audit_path": str(audit_path)}
+    return {
+        "selected_rows": selected,
+        "generated_files": generated,
+        "skipped_rows": skipped,
+        "failed_rows": failed,
+        "audit_path": str(audit_path),
+    }
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate baokuan opening cards from benchmark-account xlsx files.")
-    default_root = Path(__file__).resolve().parents[3]
+    default_root = ROOT
     parser.add_argument("--root", default=str(default_root), help="AI traffic factory root path")
     parser.add_argument("--blogger", default="", help="Only process one blogger xlsx by file stem.")
     parser.add_argument("--input-dir", default="", help="Override input xlsx directory for public install mode.")

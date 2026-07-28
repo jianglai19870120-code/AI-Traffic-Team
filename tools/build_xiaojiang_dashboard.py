@@ -18,6 +18,7 @@ BODY_ROOT = ROOT / "02_资产中心" / "06_生成正文库" / "01_干货型文�
 DRAFT_ROOT = ROOT / "02_资产中心" / "07_润色成稿库" / "01_干货型成稿"
 VISUAL_ROOT = ROOT / "02_资产中心" / "08_视觉配图库" / "01_干货型配图"
 AUDIT_DIR = ROOT / "01_Agent系统" / "02_小审-质量审核Agent" / "99_审核记录"
+CANDIDATE_ROOT = ROOT / "01_Agent系统" / "04_小拆-内容拆解Agent" / "99_执行记录" / "候选产物"
 GATE_FAILURE_DIR = ROOT / "01_Agent系统" / "01_小姜-CEO助理Agent" / "门禁失败事项"
 WORK_STATE = ROOT / "01_Agent系统" / "01_小姜-CEO助理Agent" / "01_工作记忆" / "当前推进状态.md"
 NEXT_STEP = ROOT / "01_Agent系统" / "01_小姜-CEO助理Agent" / "01_工作记忆" / "下一步建议.md"
@@ -55,7 +56,7 @@ def load_baokuan_topic_rows(topic_root: Path) -> list[dict[str, str]]:
     if not topic_root.exists():
         return rows
     for path in sorted(topic_root.glob("*选题表.md")):
-        if path.name == "00_手动输入选题表.md":
+        if path.name == "00_爆款选题选中清单.md":
             continue
         rows.extend(parse_table(path))
     return rows
@@ -99,6 +100,256 @@ def count_files(root: Path, pattern: str) -> int:
     if not root.exists():
         return 0
     return sum(1 for _ in root.glob(pattern))
+
+
+def extract_line_value(text: str, prefix: str) -> str:
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith(prefix):
+            return stripped[len(prefix) :].strip()
+    return ""
+
+
+def parse_int(text: str) -> int:
+    match = re.search(r"\d+", text)
+    return int(match.group(0)) if match else 0
+
+
+def normalize_book_title(text: str) -> str:
+    cleaned = text.strip().strip("`")
+    cleaned = re.sub(r"\.md$", "", cleaned, flags=re.I)
+    cleaned = cleaned.replace("三类干货模块", "").strip()
+    match = re.search(r"《([^》]+)》", cleaned)
+    if match:
+        return match.group(1).strip()
+    parts = re.split(r"[_\-—｜|]+", cleaned)
+    return parts[0].strip() if parts else cleaned
+
+
+def infer_audit_type(path: Path, text: str) -> str:
+    explicit = extract_line_value(text, "- 审核类型：")
+    if explicit:
+        return explicit
+    name = path.name
+    if "撤销通过并退回" in name:
+        return "正式模块撤销通过并退回"
+    if "候选充分拆解审核" in name:
+        return "候选充分拆解审核"
+    if "正式充分拆解放行审核" in name:
+        return "正式充分拆解放行审核"
+    if "成稿放行审核" in name:
+        return "成稿放行审核"
+    if "机器文案放行审核" in name:
+        return "机器文案放行审核"
+    if "原始资料入库审核" in name:
+        return "原始资料入库审核"
+    if "工作纪实原文直拆审核" in name:
+        return "工作纪实原文直拆审核"
+    if "工作纪实内容模块审核" in name:
+        return "工作纪实内容模块审核"
+    if "工作纪实原子模块迁移审核" in name:
+        return "工作纪实原子模块迁移审核"
+    if "工作纪实四段式拆解审核" in name:
+        return "工作纪实四段式拆解审核"
+    if "同步入库审核" in name:
+        return "同步入库审核"
+    return "未知审核"
+
+
+def infer_audit_status(text: str, audit_type: str) -> str:
+    explicit = extract_line_value(text, "- 审核结论：")
+    if explicit:
+        if "部分退回" in explicit:
+            return "部分退回"
+        if "退回" in explicit:
+            return "退回"
+        if "通过" in explicit:
+            return "通过"
+
+    if "## 审核结论" in text:
+        section = text.split("## 审核结论", 1)[1]
+        section = section.split("\n## ", 1)[0]
+        if "部分退回" in section:
+            return "部分退回"
+        if "退回" in section:
+            return "退回"
+        if "通过" in section:
+            return "通过"
+
+    if audit_type == "原始资料入库审核":
+        passed = parse_int(extract_line_value(text, "- 通过数："))
+        failed = parse_int(extract_line_value(text, "- 退回数："))
+        if passed > 0 and failed > 0:
+            return "部分退回"
+        if failed > 0:
+            return "退回"
+        if passed > 0:
+            return "通过"
+
+    return "未知已完成"
+
+
+def infer_audit_kind(audit_type: str) -> str:
+    if audit_type == "机器文案放行审核":
+        return "machine_draft"
+    if audit_type == "成稿放行审核":
+        return "final_draft"
+    if audit_type in {
+        "候选充分拆解审核",
+        "正式充分拆解放行审核",
+        "正式模块撤销通过并退回",
+        "工作纪实原文直拆审核",
+        "工作纪实内容模块审核",
+        "工作纪实原子模块迁移审核",
+        "工作纪实四段式拆解审核",
+    }:
+        return "module_candidate"
+    if audit_type in {"原始资料入库审核", "同步入库审核"}:
+        return "raw_material"
+    return "other"
+
+
+def normalize_audit_subject(subject: str, audit_kind: str, fallback: str) -> str:
+    raw = subject.strip().strip("`") or fallback
+    if raw == fallback:
+        match = re.search(r"审核_(.+)$", fallback)
+        if match:
+            raw = match.group(1).strip()
+    if audit_kind in {"module_candidate", "raw_material"}:
+        return normalize_book_title(raw)
+    return re.sub(r"\.md$", "", raw, flags=re.I)
+
+
+def infer_rework_owner(audit_type: str) -> str:
+    if audit_type in {"机器文案放行审核", "成稿放行审核"}:
+        return "小写"
+    if audit_type in {"原始资料入库审核", "同步入库审核"}:
+        return "小息"
+    if audit_type in {"候选充分拆解审核", "正式充分拆解放行审核", "正式模块撤销通过并退回", "工作纪实原文直拆审核", "工作纪实原子模块迁移审核", "工作纪实四段式拆解审核"}:
+        return "小拆"
+    return "小姜"
+
+
+def read_audit_records() -> list[dict[str, object]]:
+    if not AUDIT_DIR.exists():
+        return []
+    records: list[dict[str, object]] = []
+    for path in AUDIT_DIR.glob("*.md"):
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        audit_type = infer_audit_type(path, text)
+        audit_kind = infer_audit_kind(audit_type)
+        subject = extract_line_value(text, "- 审核对象：")
+        if not subject:
+            subject = extract_line_value(text, "- 资料标题：")
+        target = normalize_audit_subject(subject, audit_kind, path.stem)
+        status = infer_audit_status(text, audit_type)
+        records.append(
+            {
+                "path": path,
+                "name": path.name,
+                "audit_type": audit_type,
+                "audit_kind": audit_kind,
+                "subject": target,
+                "status": status,
+                "timestamp": path.stat().st_mtime,
+                "owner": infer_rework_owner(audit_type),
+            }
+        )
+    records.sort(key=lambda item: item["timestamp"], reverse=True)
+    return records
+
+
+def latest_audit_map(records: list[dict[str, object]]) -> dict[tuple[str, str], dict[str, object]]:
+    latest: dict[tuple[str, str], dict[str, object]] = {}
+    for record in records:
+        key = (str(record["audit_kind"]), str(record["subject"]))
+        if key not in latest:
+            latest[key] = record
+    return latest
+
+
+def latest_completed_audits(records: list[dict[str, object]], limit: int = 8) -> list[dict[str, object]]:
+    latest = latest_audit_map(records)
+    completed = [record for record in latest.values() if str(record["status"]) != "待审核"]
+    completed.sort(key=lambda item: float(item["timestamp"]), reverse=True)
+    return completed[:limit]
+
+
+def collect_rework_items(records: list[dict[str, object]], limit: int = 8) -> list[dict[str, object]]:
+    latest = latest_audit_map(records)
+    items = [record for record in latest.values() if str(record["status"]) in {"退回", "部分退回"}]
+    items.sort(key=lambda item: float(item["timestamp"]), reverse=True)
+    return items[:limit]
+
+
+def candidate_dir_mtime(path: Path) -> float:
+    times = [path.stat().st_mtime]
+    for child in path.rglob("*"):
+        times.append(child.stat().st_mtime)
+    return max(times)
+
+
+def scan_candidate_dirs() -> list[Path]:
+    dirs: list[Path] = []
+    if not CANDIDATE_ROOT.exists():
+        return dirs
+    for skill_dir in CANDIDATE_ROOT.iterdir():
+        if not skill_dir.is_dir():
+            continue
+        for title_dir in skill_dir.iterdir():
+            if title_dir.is_dir():
+                dirs.append(title_dir)
+    return sorted(dirs)
+
+
+def scan_formal_raw_md_files(raw_rows: list[dict[str, str]]) -> list[Path]:
+    files: list[Path] = []
+    seen: set[str] = set()
+    for row in raw_rows:
+        rel = row.get("原始资料文件路径", "").strip().strip("`")
+        status = row.get("当前状态", "").strip()
+        if not rel or not rel.lower().endswith(".md"):
+            continue
+        if status == "已拆解":
+            continue
+        key = rel.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        files.append(ROOT / "02_资产中心" / rel)
+    return sorted(path for path in files if path.exists())
+
+
+def collect_pending_audits(latest_map: dict[tuple[str, str], dict[str, object]], raw_rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    pending: list[dict[str, str]] = []
+
+    for candidate_dir in scan_candidate_dirs():
+        subject = normalize_book_title(candidate_dir.name)
+        latest = latest_map.get(("module_candidate", subject))
+        updated_at = candidate_dir_mtime(candidate_dir)
+        if latest is None or float(latest["timestamp"]) < updated_at:
+            pending.append({"subject": subject, "audit_type": "拆书候选审核", "owner": "小审"})
+
+    for path in sorted(BODY_ROOT.glob("*.md")) if BODY_ROOT.exists() else []:
+        subject = path.stem
+        latest = latest_map.get(("machine_draft", subject))
+        if latest is None or float(latest["timestamp"]) < path.stat().st_mtime:
+            pending.append({"subject": subject, "audit_type": "机器文案放行审核", "owner": "小审"})
+
+    for path in sorted(DRAFT_ROOT.glob("*.md")) if DRAFT_ROOT.exists() else []:
+        subject = path.stem
+        latest = latest_map.get(("final_draft", subject))
+        if latest is None or float(latest["timestamp"]) < path.stat().st_mtime:
+            pending.append({"subject": subject, "audit_type": "成稿放行审核", "owner": "小审"})
+
+    for path in scan_formal_raw_md_files(raw_rows):
+        subject = normalize_book_title(path.stem)
+        latest = latest_map.get(("raw_material", subject))
+        if latest is None or float(latest["timestamp"]) < path.stat().st_mtime:
+            pending.append({"subject": subject, "audit_type": "原始资料入库审核", "owner": "小审"})
+
+    pending.sort(key=lambda item: (item["audit_type"], item["subject"]))
+    return pending
 
 
 def read_raw_rows() -> list[dict[str, str]]:
@@ -149,7 +400,7 @@ def top_level_raw_bucket(path: Path) -> str:
 
 
 def read_hand_topic_rows() -> list[dict[str, str]]:
-    return parse_table(TOPIC_ROOT / "00_手动输入选题表.md")
+    return parse_table(TOPIC_ROOT / "00_爆款选题选中清单.md")
 
 
 def scan_benchmark_accounts() -> list[str]:
@@ -215,18 +466,18 @@ def build() -> str:
 
     opening_selection_rows = parse_opening_selection_rows()
     pending_openings = [row for row in opening_selection_rows if row.get("状态", "").strip() == "待拆解"]
+    done_openings = [row for row in opening_selection_rows if row.get("状态", "").strip() == "已拆解"]
+    failed_openings = [row for row in opening_selection_rows if row.get("状态", "").strip() == "拆解失败"]
     opening_cards = opening_card_rows()
 
     hand_rows = read_hand_topic_rows()
     generation = summarize_generation(hand_rows)
 
-    recent_audits = []
-    if AUDIT_DIR.exists():
-        recent_audits = sorted(
-            [p for p in AUDIT_DIR.glob("*.md")],
-            key=lambda p: p.stat().st_mtime,
-            reverse=True,
-        )[:8]
+    audit_records = read_audit_records()
+    latest_map = latest_audit_map(audit_records)
+    pending_audits = collect_pending_audits(latest_map, raw_rows)
+    recent_completed = latest_completed_audits(audit_records)
+    rework_items = collect_rework_items(audit_records)
 
     recent_gate_failures = load_gate_failures()
     current_state_excerpt = extract_action_lines(WORK_STATE, limit=4)
@@ -288,6 +539,8 @@ def build() -> str:
         "### C. 对标账号 -> 爆款开头",
         "",
         f"- 已选中待拆解开头数：{len(pending_openings)}",
+        f"- 最近已拆解开头数：{len(done_openings)}",
+        f"- 最近拆解失败开头数：{len(failed_openings)}",
         f"- 已生成 BK 开头卡片数：{len(opening_cards)}",
     ]
 
@@ -295,14 +548,14 @@ def build() -> str:
         lines += ["", "#### 待拆解开头明细", ""]
         for row in pending_openings[:12]:
             lines.append(
-                f"- {row.get('博主名','未知博主')}｜{row.get('视频信息','未填视频信息') or '未填视频信息'}｜{row.get('链接','无链接')}"
+                f"- {row.get('序号','')}｜{row.get('选题','未填选题') or '未填选题'}｜{row.get('链接','无链接')}"
             )
 
     lines += [
         "",
         "## 2. 待生成内容",
         "",
-        f"- 手动输入选题总数：{generation['total']}",
+        f"- 爆款选题选中清单条数：{generation['total']}",
         f"- 已生成正文文件数：{body_file_count}",
         f"- 已生成成稿文件数：{draft_file_count}",
         f"- 已生成视觉主题目录数：{visual_topic_dir_count}",
@@ -342,11 +595,30 @@ def build() -> str:
             lines.append(f"- {row.get('选题','未命名选题')}｜{row.get('文案结构','未分类')}")
 
     lines += ["", "## 3. 当前待审核事项", ""]
-    if recent_audits:
-        for path in recent_audits:
-            lines.append(f"- {path.name}")
+    if pending_audits:
+        lines.append(f"- 待审核总数：{len(pending_audits)}")
+        lines.append("- 待审核类型分布：")
+        for audit_type, count in Counter(item["audit_type"] for item in pending_audits).items():
+            lines.append(f"  - {audit_type}：{count}")
+        lines += ["", "### 待审核明细", ""]
+        for item in pending_audits[:12]:
+            lines.append(f"- {item['subject']}｜{item['audit_type']}｜当前责任人：{item['owner']}")
     else:
-        lines.append("- 当前没有可读取的真实审核记录。")
+        lines.append("- 当前没有新的待审核事项。")
+
+    lines += ["", "## 4. 最近审核结果", ""]
+    if recent_completed:
+        for record in recent_completed:
+            lines.append(f"- {record['subject']}｜{record['audit_type']}｜{record['status']}")
+    else:
+        lines.append("- 当前没有可读取的已完成审核结果。")
+
+    lines += ["", "## 5. 审核后待处理事项", ""]
+    if rework_items:
+        for record in rework_items:
+            lines.append(f"- {record['subject']}｜{record['audit_type']}｜退回给：{record['owner']}｜结论：{record['status']}")
+    else:
+        lines.append("- 当前没有新的审核退回事项。")
 
     if recent_gate_failures:
         lines += ["", "### 当前门禁失败事项", ""]
@@ -359,9 +631,16 @@ def build() -> str:
                 f"- 被拦任务：{first.get('task_name','未知任务')}｜原因：{first.get('status','未知状态')}｜说明：{first.get('message','')}"
             )
 
-    lines += ["", "## 4. 小姜下一步建议", ""]
-    if next_actions:
-        for item in next_actions:
+    lines += ["", "## 6. 小姜下一步建议", ""]
+    dynamic_actions: list[str] = []
+    if pending_audits:
+        dynamic_actions.append("先清掉当前待审核事项，再继续推进下游产物。")
+    if rework_items:
+        first_rework = rework_items[0]
+        dynamic_actions.append(f"优先处理最近被退回的 `{first_rework['subject']}`，退回给 {first_rework['owner']}。")
+    merged_actions = dynamic_actions + [item for item in next_actions if item not in dynamic_actions]
+    if merged_actions:
+        for item in merged_actions:
             lines.append(f"- {item}")
     else:
         lines.append("- 当前没有单独建议，优先处理待拆解和待生成事项。")

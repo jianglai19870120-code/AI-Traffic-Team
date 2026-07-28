@@ -1,6 +1,18 @@
 {
   "skillName": "书籍内容模块拆解Skill",
   "installDirName": "书籍内容模块拆解Skill",
-  "version": "1.0.0"
+  "entry": "SKILL.md",
+  "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceDependencies": [
+    "02_资产中心/01_原始知识库/00_原始资料输入清单.md",
+    "02_资产中心/01_原始知识库/01_好书原始资料",
+    "02_资产中心/02_内容模块库/01_干货型内容模块"
+  ],
+  "defaultOutputPaths": [
+    "02_资产中心/02_内容模块库/01_干货型内容模块"
+  ],
+  "optionalCommands": [
+    "python scripts/run_book_module_breakdown.py --title <book-title> --write-audit"
+  ]
 }
 

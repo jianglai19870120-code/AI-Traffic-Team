@@ -250,7 +250,9 @@ def scan_mistake_modules(base: Path, title: str) -> tuple[list[Path], list[str]]
         return files, ["误区模块不存在"]
     for path in files:
         text = path.read_text(encoding="utf-8", errors="ignore")
-        for issue in title_quality_issues(path.stem):
+        first_line = next((line.strip("# ").strip() for line in text.splitlines() if line.strip()), "")
+        title_probe = first_line or path.stem
+        for issue in title_quality_issues(title_probe):
             issues.append(f"{path.name} {issue}")
         hits = template_hits(path.name + "\n" + text)
         if hits:

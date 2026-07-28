@@ -2,12 +2,13 @@
   "skillName": "ip-ppt-skill",
   "installDirName": "ip-ppt-skill",
   "entry": "SKILL.md",
-  "workspaceRootEnv": "GANHUO_AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
   "workspaceDependencies": [
-    "05_视频配图大师"
+    "02_资产中心/07_润色成稿库",
+    "02_资产中心/08_视觉配图库"
   ],
   "defaultOutputPaths": [
-    "05_视频配图大师/01_短视频PPT配图"
+    "02_资产中心/08_视觉配图库/01_干货型配图"
   ],
   "optionalCommands": []
 }

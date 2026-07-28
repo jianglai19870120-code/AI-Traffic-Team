@@ -1,5 +1,15 @@
 {
   "skillName": "原始资料标准化入库Skill",
-  "installDirName": "原始资料标准化入库Skill"
+  "installDirName": "原始资料标准化入库Skill",
+  "entry": "SKILL.md",
+  "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceDependencies": [
+    "02_资产中心/01_原始知识库/00_原始资料输入清单.md",
+    "02_资产中心/01_原始知识库/01_好书原始资料"
+  ],
+  "defaultOutputPaths": [
+    "02_资产中心/01_原始知识库/01_好书原始资料"
+  ],
+  "optionalCommands": []
 }
 

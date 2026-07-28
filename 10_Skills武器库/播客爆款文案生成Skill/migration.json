@@ -2,14 +2,8 @@
   "skillName": "播客爆款文案生成Skill",
   "installDirName": "播客爆款文案生成Skill",
   "entry": "SKILL.md",
-  "workspaceRootEnv": "REMEN_BOKE_AI_TRAFFIC_FACTORY_ROOT",
-  "workspaceDependencies": [
-    "01_热门播客",
-    "02_对标视频",
-    "03_爆款文案"
-  ],
-  "defaultOutputPaths": [
-    "03_爆款文案/01_生成文案"
-  ],
+  "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceDependencies": [],
+  "defaultOutputPaths": [],
   "optionalCommands": []
 }

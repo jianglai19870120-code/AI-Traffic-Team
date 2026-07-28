@@ -2,13 +2,9 @@
   "skillName": "播客内容模块拆解Skill",
   "installDirName": "播客内容模块拆解Skill",
   "entry": "SKILL.md",
-  "workspaceRootEnv": "REMEN_BOKE_AI_TRAFFIC_FACTORY_ROOT",
-  "workspaceDependencies": [
-    "01_热门播客"
-  ],
-  "defaultOutputPaths": [
-    "01_热门播客/02_播客拆解"
-  ],
+  "workspaceRootEnv": "AI_TRAFFIC_FACTORY_ROOT",
+  "workspaceDependencies": [],
+  "defaultOutputPaths": [],
   "optionalCommands": []
 }
 
